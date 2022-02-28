@@ -175,12 +175,14 @@ div[class^="button"] {
 }
 
 .player-list-entry-title {
+    color: var(--black);
     font-weight: bold;
     font-size: 20px;
     text-align: center;
 }
 
 .player-list-entry-time {
+    color: var(--black);
     font-size: 15px;
     text-align: center;
     width: 100%;
@@ -218,6 +220,7 @@ div[class^="button"] {
     height: 15vh;
 }
 
+
 /* ------------- SKIP-PLAY-PAUSE ------------- */
 .bottom-left {
     display: flex;
@@ -226,6 +229,40 @@ div[class^="button"] {
     background-color: rgb(77, 77, 77);
     border-right: 2px solid black;
 }
+.player {
+    width: 45%;
+    margin: auto;
+    margin-top: 2vh;
+    padding-left: 37px;
+    padding-top:30px;
+    height: 80px;
+    background-color: var(--baby-blue-eyes);
+    border-radius: 15px;
+}
+.player-icon-backward {
+    background-image: url("../icons/skip-back.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 40px;
+    padding-top: 10px;
+    display: inline-block;
+}
+.player-icon-pause {
+    background-image: url("../icons/pause-circle.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 40px;
+    padding-top: 10px;
+    display: inline-block;
+}
+.player-icon-forward {
+    background-image: url("../icons/skip-forward.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 40px;
+    padding-top: 10px;
+    display: inline-block;
+}
 
 /* ------------- RECORD ------------- */
 .bottom-right {
@@ -233,4 +270,54 @@ div[class^="button"] {
     flex-direction: row;
     width: 70vw;
     background-color: rgb(77, 77, 77);
+}
+.recorder {
+    width: 75%;
+    margin: auto;
+    margin-top: 2vh;
+    padding-left: 37px;
+    padding-top:30px;
+    height: 80px;
+    background-color: var(--baby-blue-eyes);
+    border-radius: 15px;
+}
+.recorder-icon-light {
+    background-image: url("../icons/circle.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 40px;
+    padding-top: 10px;
+    display: inline-block;
+}
+.recorder-title {
+    background-repeat: no-repeat;
+    color: var(--black);
+    height: 25px;
+    width: 550px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.recorder-time {
+    background-repeat: no-repeat;
+    color: var(--black);
+    height: 25px;
+    width: 70px;
+    padding-top: 5px;
+    display: inline-block;
+}
+.recorder-icon-start {
+    background-image: url("../icons/mic.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 40px;
+    padding-top: 10px;
+    display: inline-block;
+}
+.recorder-icon-send {
+    background-image: url("../icons/send.svg");
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 40px;
+    padding-top: 10px;
+    display: inline-block;
 }
