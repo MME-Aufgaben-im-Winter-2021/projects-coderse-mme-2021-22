@@ -35,3 +35,17 @@ Im Repository befinden sich zu Beginn die folgenden Ordner und Dateien:
 - Die Anwendung wird über den Befehl `npm run build` (siehe oben) auf den GitHub-Servern gebaut.
 - Der Inhalt des so erstellten `deploy`-Ordners wird in die Branch `gh-pages` kopiert.
 - Die neue Webseite steht dann direkt unter der URL Ihres Projektes zur Verfügung.
+
+### Ablauf
+
+Unsere 1. Sitzung: 28.02.22 13:30
+
+- grundsätzliche Struktur auf Miro
+- Funktionen des MVP definieren
+- Aufteilung erster Aufgaben
+- Aufbau User-Edit-Screen + HTML-Implementierung
+
+
+### Verwendete Ressourcen
+https://feathericons.com/
+https://github.com/feathericons/feather#feather

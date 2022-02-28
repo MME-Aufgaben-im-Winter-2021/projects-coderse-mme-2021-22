@@ -4,16 +4,89 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MME: Projekte im WS 2021/22</title>
+    <title>Code-Cast Edit</title>
     <link rel="stylesheet" href="./resources/css/style.css">
+    <!-- <link rel="stylesheet" href="./resources/css/user-edit-screen.css"> -->
 </head>
 
 <body>
-    <div class="ui">
-        <h1>MME: Projekte im WS 2021/22</h1>
-    </div>
+    <div class="main">
+        <div class="nav-bar">
+            <div class="nav-align-left">
+                <div class="logo">
+                    <img src="./resources/custom-icons/MME-Codeverse-Logo.svg" width="50px" height="50px">
+                </div>
+                <div class="code-cast-title">
+                    code-cast-title
+                </div>
+            </div>
 
-   <script type="module" src="./src/index.js"></script>
+            <div class="nav-align-right">
+                <div class="button-save">
+                    save
+                </div>
+                <div class="home">
+                    HOME
+                </div>
+
+                <div class="user">
+                    <div class="user-name">name</div>
+                    <div class="user-icon">icon</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="main-content">
+            <div class="main-left">
+                <ul class="player-list">
+                    <li class="player-list-entry">
+                        <div class="player-list-entry-title">Title</div>
+                        <div class="player-list-entry-time">Time</div>
+                        <div class="player-list-entry-icon-play"></div>
+                        <div class="player-list-entry-icon-delete"></div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="main-right">
+                main-right
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="bottom-left">
+                bottom-left
+            </div>
+            <div class="bottom-right">
+                bottom-right
+            </div>
+        </div>
+
+
+        https://github.com/addpipe/simple-web-audio-recorder-demo/blob/master/index.html
+        <!-- <div style="max-width: 28em;"> -->
+        <!-- <p>Convert recorded audio to:</p> -->
+        <!-- <select id="encodingTypeSelect"> -->
+        <!-- <option value="mp3">MP3 (MPEG-1 Audio Layer III) (.mp3)</option> -->
+        <!-- </select> -->
+        <!-- <div id="controls"> -->
+        <!-- <button id="recordButton">Record</button> -->
+        <!-- <button id="stopButton" disabled>Stop</button> -->
+        <!-- </div> -->
+        <!-- <div id="formats"></div> -->
+
+
+    </div>
+    <!-- Template for single player frame, shown in timeline-->
+    <template id="player-template">
+        <li data-id="">
+
+
+        </li>
+    </template>
+    <!-- TODO: Verbindung zum JS -->
+    <script type="module" src="./src/index.js"></script>
 </body>
 
 </html>

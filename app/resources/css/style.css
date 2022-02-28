@@ -1,28 +1,39 @@
 /* Beispiel für die Einbindung zusätzlicher Schriftarten via Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 
 /* Beispiel für die einfache Einbindung eines Farbschema, generiert auf coolors.co */
 :root {
-    --turquoise-green: #b9e3c6ff;
-    --ocean-green: #59c9a5ff;
-    --ruby: #d81e5bff;
-    --prussian-blue: #23395bff;
-    --canary: #fffd98ff;
-    --snow: #f7f2f4ff;
-    --jet: #343434ff;
-}
+    --lemon-chiffon: #fbf8ccff;
+    --champagne-pink: #fde4cfff;
+    --baby-pink: #ffcfd2ff;
+    --pink-lavender: #f1c0e8ff;
+    --mauve: #cfbaf0ff;
+    --baby-blue-eyes: #a3c4f3ff;
+    --non-photo-blue: #90dbf4ff;
+    --electric-blue: #8eecf5ff;
+    --magic-mint: hsl(167, 82%, 78%);
+    --granny-smith-apple: hsl(126, 89%, 85%);
 
-.attachment-full {
-    position: fixed;
-    top: 0;
-    left: 0;
+    --black: #000000ff;
+    --eerie-black: #1a1a1aff;
+    --eerie-black-2: #262626ff;
+    --jet: #333333ff;
+    --onyx: #404040ff;
+
 }
 
 .hidden {
     display: none !important;
 }
 
+/* 
 body {
     background-color: var(--snow);
     font-family: 'Space Grotesk', sans-serif;
@@ -41,4 +52,185 @@ body {
 .ui h1 {
     text-align: center;
     color: var(--jet);
+} */
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--eerie-black);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ------------- NAVIGATION ------------- */
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    height: 4vh;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-align-left {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.nav-align-right {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
+}
+
+.nav-align-left>div {
+    margin: 0.2vh 1vw;
+}
+
+.nav-align-right>div {
+    margin: 0.2vh 1vw;
+}
+
+.logo {
+    overflow: hidden;
+}
+
+.code-cast-title {}
+
+
+div[class^="button"] {
+    padding-right: 1.5vw;
+    padding-left: 1.5vw;
+    border-radius: 4px;
+}
+
+.button-save {
+    background-color: var(--granny-smith-apple);
+    /* color: var(--eerie-black-2); */
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+}
+
+.button-save:hover {
+    background-color: hsl(126, 89%, 95%);
+    /* color: var(--eerie-black-2); */
+    border: 2px solid var(--granny-smith-apple);
+}
+
+.home:hover {
+    text-decoration: underline;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 0;
+}
+
+.user-icon {
+    margin-left: 1vw;
+}
+
+.user-name {}
+
+
+
+
+
+
+/* ------------- MAIN-SECTION ------------- */
+.main-content {
+    display: flex;
+    flex-direction: row;
+    height: 81vh;
+}
+
+/* ------------- PLAYER-TIMELINE ------------- */
+.main-left {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+}
+
+.player-list {
+    background-color: rgb(77, 77, 77);
+    height: 81vh;
+    padding: 5%;
+    list-style: none;
+    overflow: auto;
+    border: 2px solid black;
+}
+
+.player-list-entry {
+    width: 85%;
+    margin: auto;
+    margin-bottom: 2vh;
+    padding: 10px;
+    height: 100px;
+    background-color: var(--baby-blue-eyes);
+    border-radius: 15px;
+}
+
+.player-list-entry-title {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.player-list-entry-time {
+    font-size: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.player-list-entry-icon-play {
+    background-image: url("../icons/play-circle.svg");
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 20%;
+    padding-top: 10px;
+    padding-left: 30%;
+    display: inline-block;
+}
+
+.player-list-entry-icon-delete {
+    background-image: url("../icons/trash.svg");
+    background-repeat: no-repeat;
+    height: 25px;
+    width: 50%;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+/* ------------- CODE ------------- */
+.main-right {
+    width: 70vw;
+    background-color: var(---baby-pink);
+}
+
+/* ------------- BOTTOM-SECTION ------------- */
+.bottom-bar {
+    display: flex;
+    flex-direction: row;
+    height: 15vh;
+}
+
+/* ------------- SKIP-PLAY-PAUSE ------------- */
+.bottom-left {
+    display: flex;
+    flex-direction: row;
+    width: 30vw;
+    background-color: rgb(77, 77, 77);
+    border-right: 2px solid black;
+}
+
+/* ------------- RECORD ------------- */
+.bottom-right {
+    display: flex;
+    flex-direction: row;
+    width: 70vw;
+    background-color: rgb(77, 77, 77);
 }
