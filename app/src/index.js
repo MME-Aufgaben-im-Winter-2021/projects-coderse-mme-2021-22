@@ -1,6 +1,9 @@
 import CastController from "./controller/castController.js";
 
 function init() {
+
+  console.log("### Starting MME Project ###");
+  console.log('Hello World!');
   initControllers();
 }
 
