@@ -66,7 +66,7 @@ body {
 .nav-bar {
     display: flex;
     flex-direction: row;
-    height: 4vh;
+    height: 5vh;
     width: 100%;
     align-items: center;
 }
@@ -76,6 +76,7 @@ body {
     flex-direction: row;
     margin-right: auto;
     overflow: hidden;
+    align-items: center;
 }
 
 .nav-align-right {
@@ -95,9 +96,12 @@ body {
 
 .logo {
     overflow: hidden;
+    background-color: white;
 }
 
-.code-cast-title {}
+.code-cast-title {
+    height: fit-content;
+}
 
 
 div[class^="button"] {
@@ -117,10 +121,12 @@ div[class^="button"] {
     background-color: hsl(126, 89%, 95%);
     /* color: var(--eerie-black-2); */
     border: 2px solid var(--granny-smith-apple);
+    cursor: pointer;
 }
 
 .home:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .user {
@@ -169,22 +175,22 @@ div[class^="button"] {
     margin: auto;
     margin-bottom: 2vh;
     padding: 10px;
-    height: 100px;
+    padding-left: 25px;
+    height: 120px;
     background-color: var(--baby-blue-eyes);
     border-radius: 15px;
+    position: relative;
 }
 
 .player-list-entry-title {
     color: var(--black);
     font-weight: bold;
     font-size: 20px;
-    text-align: center;
 }
 
 .player-list-entry-time {
     color: var(--black);
     font-size: 15px;
-    text-align: center;
     width: 100%;
 }
 
@@ -192,25 +198,57 @@ div[class^="button"] {
     background-image: url("../icons/play-circle.svg");
     background-repeat: no-repeat;
     height: 25px;
-    width: 20%;
-    padding-top: 10px;
-    padding-left: 30%;
-    display: inline-block;
+    width: 25px;
+    position: absolute;
+    left: 30px;
+    top: 75px;
+    transform: scale(2);
+    transition: all 200ms ease-in-out;
+}
+
+.player-list-entry-icon-play:hover {
+    background-color: white;
+    border-radius: 25px;
+    cursor: pointer;
 }
 
 .player-list-entry-icon-delete {
     background-image: url("../icons/trash.svg");
     background-repeat: no-repeat;
     height: 25px;
-    width: 50%;
-    padding-top: 10px;
-    display: inline-block;
+    width: 25px;
+    position: absolute;
+    right: 10px; 
+    top: 10px;
+}
+
+.player-list-entry-icon-delete:hover {
+    cursor: pointer;
 }
 
 /* ------------- CODE ------------- */
 .main-right {
     width: 70vw;
-    background-color: var(---baby-pink);
+}
+
+.main-right-drag-drop-container {
+    background-color: var(--baby-pink);
+    height: 50%;
+    width: 50%;
+    margin: auto;
+    margin-top: 15vh;
+    text-align: center;
+    color: black;
+    font-size: 30px;
+    padding: 20px;
+}
+
+.main-right-drag-drop-field {
+    width: 80%;
+    height: 200px;
+    margin: auto;
+    margin-top: 15px ;
+    border: 1px dotted black;
 }
 
 /* ------------- BOTTOM-SECTION ------------- */

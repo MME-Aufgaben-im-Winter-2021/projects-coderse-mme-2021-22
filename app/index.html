@@ -41,8 +41,8 @@
             <div class="main-left">
                 <ul class="player-list">
                     <li class="player-list-entry">
-                        <div class="player-list-entry-title">Title</div>
-                        <div class="player-list-entry-time">Time</div>
+                        <div class="player-list-entry-title">Hello World Funktion</div>
+                        <div class="player-list-entry-time">02:55</div>
                         <div class="player-list-entry-icon-play"></div>
                         <div class="player-list-entry-icon-delete"></div>
                     </li>
@@ -50,7 +50,12 @@
                 </ul>
             </div>
             <div class="main-right">
-                main-right
+                <div class="main-right-drag-drop-container">
+                    Drag and Drop your file here!
+                    <div class="main-right-drag-drop-field">
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -90,9 +95,11 @@
     </div>
     <!-- Template for single player frame, shown in timeline-->
     <template id="player-template">
-        <li data-id="">
-
-
+        <li class="player-list-entry" data-id=""> 
+            <div class="player-list-entry-title">Title</div>
+            <div class="player-list-entry-time">Time</div>
+            <div class="player-list-entry-icon-play"></div>
+            <div class="player-list-entry-icon-delete"></div>
         </li>
     </template>
     <!-- TODO: Verbindung zum JS -->
