@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import PlayerEntry from './playerEntry.js';
+import PlayerEntry from './PlayerEntryView.js';
 
 // Class for the Audio Player in Code Cast Edit screen
 class Player {

@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import {Observable, Event} from "../../utils/Observable.js";
+import {Observable, Event} from "../../../utils/Observable.js";
 
  var iconLight, 
     title, 

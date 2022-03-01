@@ -1,13 +1,13 @@
-import Player from "../view/cast/player.js";
-import Recorder from "../view/cast/recorder.js";
+import PlayerView from "../view/cast/AudioPlayer/PlayerView.js";
+import RecorderView from "../view/cast/AudioRecorder/RecorderView.js";
 
 class CastController {
 
   constructor(){
     // Audio Player - Timeline for the Cast
-    this.player = new Player();
+    this.player = new PlayerView();
     // Audio Recorder
-    this.recorder = new Recorder();
+    this.recorder = new RecorderView();
     this.recorder.addEventListener("send-recording", this.onRecordingSend.bind(this));
   }
 

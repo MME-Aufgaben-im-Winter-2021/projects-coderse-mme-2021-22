@@ -1,4 +1,4 @@
-import {Observable, Event} from "../../utils/Observable.js";
+import {Observable, Event} from "../../../utils/Observable.js";
 
 /* eslint-env browser */
 const TEMPLATE = document.getElementById('player-template').innerHTML
