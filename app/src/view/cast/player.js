@@ -10,15 +10,16 @@ class Player {
   }
 
   // Add a Entry (A new Audio) to the list
-  addEntry() {
-    let entry = new PlayerEntry();
+  addEntry(name, time) {
+    let entry = new PlayerEntry(name, time);
+    entry.addEventListener("entry-delete", this.deleteEntry.bind(this));
     this.list.appendChild(entry.getNode());
   }
 
   // Delete a certain entry from the list with the event target
   // (Possible point which can be used with an Event on a Player Entry)
   deleteEntry(event) {
-    let entry = event.target;
+    let entry = event.data;
     this.list.removeChild(entry);
   }
 
