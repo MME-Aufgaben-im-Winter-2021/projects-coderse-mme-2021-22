@@ -11,10 +11,10 @@
 /* Beispiel für die einfache Einbindung eines Farbschema, generiert auf coolors.co */
 :root {
     --lemon-chiffon: #fbf8ccff;
-    --champagne-pink: #fde4cfff;
-    --baby-pink: #ffcfd2ff;
+    --champagne-pink: #fde4cf;
+    --baby-pink: #ffcfd2;
     --pink-lavender: #f1c0e8ff;
-    --mauve: #cfbaf0ff;
+    --mauve: hsl(263, 64%, 84%);
     --baby-blue-eyes: #a3c4f3ff;
     --non-photo-blue: #90dbf4ff;
     --electric-blue: #8eecf5ff;
@@ -66,7 +66,7 @@ body {
 .nav-bar {
     display: flex;
     flex-direction: row;
-    height: 5vh;
+    height: 7vh;
     width: 100%;
     align-items: center;
 }
@@ -95,14 +95,20 @@ body {
 }
 
 .logo {
+    width: 120px;
+    height: 60px;
+    /* width = 2 * height */
     overflow: hidden;
-    background-color: white;
 }
 
 .code-cast-title {
     height: fit-content;
 }
 
+.code-cast-title:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
 
 div[class^="button"] {
     padding-right: 1.5vw;
@@ -125,7 +131,7 @@ div[class^="button"] {
 }
 
 .home:hover {
-    text-decoration: underline;
+    color: var(--mauve);
     cursor: pointer;
 }
 
@@ -140,7 +146,10 @@ div[class^="button"] {
     margin-left: 1vw;
 }
 
-.user-name {}
+.user-name:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
 
 
 
@@ -158,16 +167,19 @@ div[class^="button"] {
 .main-left {
     display: flex;
     flex-direction: column;
-    width: 30vw;
+    width: 25vw;
 }
 
 .player-list {
-    background-color: rgb(77, 77, 77);
+    background-color: var(--eerie-black-2);
     height: 81vh;
     padding: 5%;
     list-style: none;
     overflow: auto;
-    border: 2px solid black;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+
 }
 
 .player-list-entry {
@@ -175,93 +187,133 @@ div[class^="button"] {
     margin: auto;
     margin-bottom: 2vh;
     padding: 10px;
-    padding-left: 25px;
-    height: 120px;
-    background-color: var(--baby-blue-eyes);
+    padding-left: 20px;
+    /* height: 124px; */
+    background-color: var(--onyx);
     border-radius: 15px;
     position: relative;
+    border: 2px solid black;
+    overflow: hidden;
 }
 
+.player-list-entry-play-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 2vh;
+    margin-bottom: 1.6vh;
+}
+
+.player-list-entry-play-group>* {
+    margin: 0 2vw;
+}
+
+.player-list-entry-play-time {}
+
 .player-list-entry-title {
-    color: var(--black);
+    color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: large;
 }
 
 .player-list-entry-time {
-    color: var(--black);
-    font-size: 15px;
+    color: white;
+    font-size: medium;
     width: 100%;
 }
 
 .player-list-entry-icon-play {
-    background-image: url("../icons/play-circle.svg");
-    background-repeat: no-repeat;
-    height: 25px;
-    width: 25px;
-    position: absolute;
-    left: 30px;
-    top: 75px;
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    width: 1.7vw;
+    height: 1.7vw;
+    margin: auto 0 auto 10px;
+    /* position: absolute; */
+    /* left: 30px; */
+    /* top: 75px; */
     transform: scale(2);
     border-radius: 25px;
     transition: all 200ms ease-in-out;
 }
 
 .player-list-entry-icon-play:hover {
-    background-color: white;
+    background-color: var(--mauve);
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
     cursor: pointer;
 }
 
 .player-list-entry-icon-delete {
-    background-image: url("../icons/trash.svg");
-    background-repeat: no-repeat;
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
     height: 25px;
     width: 25px;
     position: absolute;
-    right: 10px; 
+    right: 10px;
     top: 10px;
 }
 
 .player-list-entry-icon-delete:hover {
     cursor: pointer;
+    filter: invert(76%) sepia(7%) saturate(1019%) hue-rotate(308deg) brightness(108%) contrast(108%);
+    /* == baby pink*/
+    cursor: pointer;
 }
 
 /* ------------- CODE ------------- */
 .main-right {
-    width: 70vw;
+    width: 75vw;
     padding: 20px;
     overflow: auto;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+
 }
 
 .main-right-drag-drop-container {
-    background-color: var(--baby-pink);
-    height: 65%;
+    background-color: var(--eerie-black-2);
+    /* height: 65%; */
     width: 50%;
     margin: auto;
     margin-top: 15vh;
     text-align: center;
-    color: black;
-    font-size: 30px;
+    color: white;
+    font-size: xx-large;
     padding: 20px;
+    border-radius: 4px;
 }
+
+.main-right-drag-drop-container>* {
+    margin: 8vh;
+}
+
 
 .main-right-drag-drop-field {
     width: 80%;
     height: 200px;
     margin: auto;
-    margin-top: 15px ;
-    border: 1px dotted black;
-    font-size: 15px;
+    margin-top: 15px;
+    border: 0.8vh dashed white;
+    background-color: var(--onyx);
+    font-size: large;
+    color: var(--mauve);
 }
 
 .main-right-drag-drop-container-btn {
-    width: 50%;
+    border-radius: 4px;
+    width: 40%;
     padding: 10px;
-    margin-top: 10px;
-    font-weight: bold;
+    margin: 10px auto auto auto;
+    background-color: var(--mauve);
+    /* color: var(--eerie-black-2); */
+    border: 2px solid hsl(263, 64%, 94%);
+    color: var(--eerie-black-2);
+    font-size: medium;
+    /* font-weight: bold; */
 }
 
 .main-right-drag-drop-container-btn:hover {
+    background-color: hsl(263, 64%, 94%);
+    /* color: var(--eerie-black-2); */
+    border: 2px solid var(--mauve);
     cursor: pointer;
 }
 
@@ -269,7 +321,7 @@ div[class^="button"] {
 .bottom-bar {
     display: flex;
     flex-direction: row;
-    height: 15vh;
+    height: 12vh;
 }
 
 
@@ -277,99 +329,101 @@ div[class^="button"] {
 .bottom-left {
     display: flex;
     flex-direction: row;
-    width: 30vw;
-    background-color: rgb(77, 77, 77);
+    width: 25vw;
+    background-color: var(--eerie-black-2);
     border-right: 2px solid black;
 }
+
 .player {
-    width: 45%;
-    margin: auto;
-    margin-top: 2vh;
-    padding-left: 37px;
-    padding-top:30px;
-    height: 80px;
-    background-color: var(--baby-blue-eyes);
-    border-radius: 15px;
+    margin: auto auto;
 }
-.player-icon-backward {
-    background-image: url("../icons/skip-back.svg");
-    background-repeat: no-repeat;
-    height: 30px;
-    width: 40px;
-    padding-top: 10px;
-    display: inline-block;
+
+.player>* {
+    width: 3vw;
+    height: 3vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
 }
-.player-icon-pause {
-    background-image: url("../icons/pause-circle.svg");
-    background-repeat: no-repeat;
-    height: 30px;
-    width: 40px;
-    padding-top: 10px;
-    display: inline-block;
+
+.player>*:hover {
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
+    cursor: pointer;
 }
-.player-icon-forward {
-    background-image: url("../icons/skip-forward.svg");
-    background-repeat: no-repeat;
-    height: 30px;
-    width: 40px;
-    padding-top: 10px;
-    display: inline-block;
-}
+
+.player-icon-backward {}
+
+.player-icon-pause {}
+
+.player-icon-forward {}
 
 /* ------------- RECORD ------------- */
 .bottom-right {
     display: flex;
     flex-direction: row;
-    width: 70vw;
-    background-color: rgb(77, 77, 77);
+    width: 75vw;
+    background-color: var(--eerie-black-2);
 }
+
 .recorder {
-    width: 85%;
-    margin: auto;
-    margin-top: 2vh;
-    padding-left: 37px;
-    padding-top:30px;
-    height: 80px;
-    background-color: var(--baby-blue-eyes);
-    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
 }
-.recorder-icon-light {
-    background-image: url("../icons/circle.svg");
-    background-repeat: no-repeat;
-    height: 30px;
-    width: 40px;
-    padding-top: 10px;
-    display: inline-block;
+
+.recorder-left {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    overflow: hidden;
+    align-items: center;
 }
-.recorder-title {
-    background-repeat: no-repeat;
-    color: var(--black);
-    height: 25px;
-    width: 550px;
-    margin-top: 10px;
-    display: inline-block;
+
+.recorder-right {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
 }
-.recorder-time {
-    background-repeat: no-repeat;
-    color: var(--black);
-    height: 25px;
-    width: 70px;
-    padding-top: 5px;
-    display: inline-block;
+
+.recorder>*>div {
+    font-size: x-large;
+    margin-left: 2vw;
+    margin-right: 2vw;
 }
-.recorder-icon-start {
-    background-image: url("../icons/mic.svg");
-    background-repeat: no-repeat;
-    height: 30px;
-    width: 40px;
-    padding-top: 10px;
-    display: inline-block;
+
+.recorder>*>img {
+    /* https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element#53336754 Abgerufen am 01.03.22 */
+    /* https://codepen.io/sosuke/pen/Pjoqqp Abgerufen am 01.03.22 */
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    display: block;
+    width: 3vw;
+    height: 3vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
 }
-.recorder-icon-send {
-    background-image: url("../icons/send.svg");
-    background-repeat: no-repeat;
-    height: 30px;
-    width: 40px;
-    padding-top: 10px;
-    display: inline-block;
+
+.recorder>*>img:hover {
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
+    cursor: pointer;
 }
+
+.recorder-icon-light {}
+
+.recorder-title {}
+
+.recorder-title:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
+
+.recorder-time:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
+
+.recorder-icon-start {}
+
+.recorder-icon-send {}
