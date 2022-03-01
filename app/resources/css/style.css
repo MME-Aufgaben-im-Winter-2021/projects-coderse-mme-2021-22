@@ -203,12 +203,12 @@ div[class^="button"] {
     left: 30px;
     top: 75px;
     transform: scale(2);
+    border-radius: 25px;
     transition: all 200ms ease-in-out;
 }
 
 .player-list-entry-icon-play:hover {
     background-color: white;
-    border-radius: 25px;
     cursor: pointer;
 }
 
@@ -229,11 +229,13 @@ div[class^="button"] {
 /* ------------- CODE ------------- */
 .main-right {
     width: 70vw;
+    padding: 20px;
+    overflow: auto;
 }
 
 .main-right-drag-drop-container {
     background-color: var(--baby-pink);
-    height: 50%;
+    height: 65%;
     width: 50%;
     margin: auto;
     margin-top: 15vh;
@@ -249,6 +251,18 @@ div[class^="button"] {
     margin: auto;
     margin-top: 15px ;
     border: 1px dotted black;
+    font-size: 15px;
+}
+
+.main-right-drag-drop-container-btn {
+    width: 50%;
+    padding: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.main-right-drag-drop-container-btn:hover {
+    cursor: pointer;
 }
 
 /* ------------- BOTTOM-SECTION ------------- */

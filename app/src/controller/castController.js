@@ -1,5 +1,6 @@
 import PlayerView from "../view/cast/AudioPlayer/PlayerView.js";
 import RecorderView from "../view/cast/AudioRecorder/RecorderView.js";
+import CodeView from "../view/cast/CodeField/CodeView.js";
 
 class CastController {
 
@@ -9,6 +10,8 @@ class CastController {
     // Audio Recorder
     this.recorder = new RecorderView();
     this.recorder.addEventListener("send-recording", this.onRecordingSend.bind(this));
+    // Code View
+    this.code = new CodeView();
   }
 
   // Function for communication between player and recorder
