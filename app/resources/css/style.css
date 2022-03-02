@@ -215,6 +215,7 @@ div[class^="button"] {
     color: white;
     font-weight: bold;
     font-size: large;
+    padding-right: 20px;
 }
 
 .player-list-entry-time {
@@ -265,7 +266,7 @@ div[class^="button"] {
     overflow: auto;
     border-top: 2px solid black;
     border-bottom: 2px solid black;
-
+    white-space: pre;
 }
 
 .main-right-drag-drop-container {
@@ -279,6 +280,7 @@ div[class^="button"] {
     font-size: xx-large;
     padding: 20px;
     border-radius: 4px;
+    white-space: normal;
 }
 
 .main-right-drag-drop-container>* {
@@ -412,10 +414,13 @@ div[class^="button"] {
 
 .recorder-icon-light {}
 
-.recorder-title {}
+.recorder-title {
+    font-size: 20px;
+    padding: 5px;
+    border: 15px;
+}
 
 .recorder-title:hover {
-    color: var(--mauve);
     cursor: pointer;
 }
 

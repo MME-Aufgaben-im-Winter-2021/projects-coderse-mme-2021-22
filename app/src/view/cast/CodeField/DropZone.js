@@ -1,42 +1,44 @@
 /* eslint-env browser */
+import Config from "../../../utils/Config.js";
+import {Observable, Event} from "../../../utils/Observable.js";
+
+const VALID_FILES = Config.VALID_FILETYPES;
 
 // Drop Zone to drag files into the code field.
 // For more details: https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
-class DropZone {
+class DropZone extends Observable {
 
     constructor(){
+        super();
         this.view = document.querySelector("#drop_zone");
         this.view.addEventListener("drop", this.handleDrop.bind(this));
         this.view.addEventListener("dragover", this.handleDragOver.bind(this));
-        this.file = null;
     }
 
-    handleDrop(event){
-        event.preventDefault();
-        let file = checkFile(event);
-        console.log(file);
-        this.view.innerHTML = file.name;
-        this.file = file;
+    handleDrop(ev){
+        ev.preventDefault();
+        let event = new Event("file-dropped", ev);
+        this.notifyAll(event);
     }
 
     handleDragOver(event){
         event.preventDefault();
     }
 
-    getFile(){
-        return this.file;
-    }
-}
-
-// Checks if dropped file is actually a file and returns it if true
-function checkFile(event){
-    let res = "NO FILE";
-    if(event.dataTransfer.items) {
-        if(event.dataTransfer.items[0].kind === "file"){
-            res = event.dataTransfer.items[0].getAsFile();
+    onFileDropped(file){
+        // Only accepts file if its a valid type -> not null
+        // checkFile returns null if a file is not valid
+        if (file !== null){
+            this.view.innerHTML = file.name;
+            this.file = file;
+        }
+            // If a file is not valid, a error message is displayed to the user
+        else {
+            // TODO: Besser Loesung finden
+            this.view.innerHTML = "That is not a valid file type. \nValid file types are: <strong>" + VALID_FILES + "</strong>";
         }
     }
-    return res;
+
 }
 
 export default DropZone;
