@@ -40,11 +40,26 @@ Im Repository befinden sich zu Beginn die folgenden Ordner und Dateien:
 
 Unsere 1. Sitzung: 28.02.22 13:30
 
-- grundsätzliche Struktur auf Miro
+- Grundsätzliche Struktur auf Miro
 - Funktionen des MVP definieren
 - Aufteilung erster Aufgaben
 - Aufbau User-Edit-Screen + HTML-Implementierung
 
+Unsere 2. Sitzung: 01.03.22 08:00 - 12:00
+
+- Datei Drag and Drop
+- Timeline Entries erstellen
+- Komponenten Kommunikation
+
+Unsere 3. Sitzung: 01.03.22 20:00 - 22:00
+
+- Verschönerungen im CSS
+
+Unsere 4. Sitzung: 02.03.22 8:30 - 13:00
+
+- Strukturierung durch MVC
+- Aufnahme von Audio-Daten
+- Korrekte Anzeige von Audio-Daten im AudioPlayer
 
 ### Verwendete Ressourcen
 https://feathericons.com/
