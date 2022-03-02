@@ -61,6 +61,10 @@ Unsere 4. Sitzung: 02.03.22 8:30 - 13:00
 - Aufnahme von Audio-Daten
 - Korrekte Anzeige von Audio-Daten im AudioPlayer
 
+Unsere 5. Sitzung: 02.03.22 16:45 - 17:15
+
+- Verschönerungen im CSS
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather
