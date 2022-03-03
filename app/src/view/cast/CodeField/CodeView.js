@@ -17,21 +17,25 @@ class CodeView extends Observable {
     // Shows File
     handleFile(event) {
         this.container.innerHTML = event.data;
-        codeInput = this.container.innerHTML;
-        //this.getSelectedArea(codeInput);
     }
-    // (Clicked on button to mark file and) get the selected area
-    getSelectedArea(codeInput){
-        selectedCode = document.querySelector(codeInput).select();
-        //document.querySelector("button").onClick = function(){}
-        this.markSelectedArea(selectedCode);
-        //In Zwischenablage
-        //document.execCommand('copy');
-    }
-    // Marks selected area in File 
-    markSelectedArea(selectedCode){
-            selectedCode.style.backgroundColor = "yellow";
-    }
+    //Mark words: Set <mark class="[classname]"> [marked word] </mark>
+    //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mark
+            // (Clicked on button to mark file and) get the selected area
+            getSelectedArea(codeInput){
+                //let markedWords ="<mark class='markedclass'></mark";
+                //this.container.getAttribute("<mark>");
+                //selectedCode = markedWords.innerHTML(codeInput);
+                //console.log(selectedCode);
+                //}
+                //document.querySelector("button").onClick = function(){}
+                this.markSelectedArea(selectedCode);
+                //In Zwischenablage
+                //document.execCommand('copy');
+            }
+            // Marks selected area in File 
+            markSelectedArea(selectedCode){
+                    //selectedCode.style.backgroundColor = "yellow";
+            }
     // Inform CastController
     onFileDropped(file){
         this.dropView.onFileDropped(file);
