@@ -46,6 +46,7 @@ class Recorder extends Observable {
         },
             event = new Event("send-recording", data);
         this.notifyAll(event);
+        title.value = "";
     }
   
 }
@@ -69,6 +70,7 @@ function startTimer(){
 //Stops the timer and showing the time in the UI
 function stopTimer(){
     clearInterval(timerInterval);
+    time.innerHTML = "00:00";
 }
 
 function toggleIconLight(){}

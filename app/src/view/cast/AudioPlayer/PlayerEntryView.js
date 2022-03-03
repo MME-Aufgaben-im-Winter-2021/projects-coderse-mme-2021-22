@@ -7,9 +7,10 @@
     // A single Entry for the Audio Player consisting of a time, a name and a audio file
     class PlayerEntry extends Observable {
 
-    constructor(name, time) {
+    constructor(id, name, time) {
         super();
         this.view = this.createPlayerEntry();
+        this.view.setAttribute("data-id", id);
         this.view.querySelector(".player-list-entry-title").innerHTML = name;
         this.view.querySelector(".player-list-entry-time").innerHTML = time;
         this.deleteIcon = this.view.querySelector(".player-list-entry-icon-delete");
@@ -27,8 +28,8 @@
 
     // Plays the Audio of this Entry
     play() {
-        console.log("AUDIO IS PLAYING");
-        // Change Icon and play audio data
+        let event = new Event("entry-play", this.view.getAttribute("data-id"));
+        this.notifyAll(event);
     }
 
     // Deletes the Entry
