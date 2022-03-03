@@ -65,6 +65,15 @@ Unsere 5. Sitzung: 02.03.22 16:45 - 17:15
 
 - Verschönerungen im CSS
 
+Unsere 6. Sitzung: 03.03.22 08:45 - 10:45
+
+- Code Cast kann erstellt werden
+- Generelle Datenverwaltung in Models
+- Verbinden von Daten mit UI 
+    -> Audios können abgespielt werden
+    -> Timeline Einträge können gelöscht werden
+    -> Timeline Eintäge und Cast können benannt werden
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather
