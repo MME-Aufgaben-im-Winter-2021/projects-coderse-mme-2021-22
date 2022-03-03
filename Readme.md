@@ -74,6 +74,10 @@ Unsere 6. Sitzung: 03.03.22 08:45 - 10:45
     -> Timeline Einträge können gelöscht werden
     -> Timeline Eintäge und Cast können benannt werden
 
+Unsere 7. Sitzung: 03.03.22 20:11 - 21:11
+- CSS Verbesserungen (user select / neue Buttons / DropZone)
+- File Select
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

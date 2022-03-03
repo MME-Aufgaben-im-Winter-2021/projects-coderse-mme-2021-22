@@ -71,7 +71,7 @@ class CastManager extends Observable{
 // Creates JSON with data from the current cast
 function createCast(self){
     let data = {
-        id: 123456789,
+        id: Date.now(),
         title: self.title,
         file: self.file,
         records: recordManager.getAllRecords(),

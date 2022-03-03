@@ -29,6 +29,8 @@
     --jet: #333333ff;
     --onyx: #404040ff;
 
+    --strong-red: #ff0000;
+
 }
 
 .hidden {
@@ -79,6 +81,7 @@ body {
     margin-right: auto;
     overflow: hidden;
     align-items: center;
+    user-select: none;
 }
 
 .nav-align-right {
@@ -86,6 +89,7 @@ body {
     flex-direction: row;
     margin-left: auto;
     align-items: center;
+    user-select: none;
 }
 
 .nav-align-left>div {
@@ -216,6 +220,7 @@ div[class^="button"] {
     position: relative;
     border: 2px solid black;
     overflow: hidden;
+    user-select: none;
 }
 
 .player-list-entry-play-group {
@@ -276,8 +281,7 @@ div[class^="button"] {
 
 .player-list-entry-icon-delete:hover {
     cursor: pointer;
-    filter: invert(76%) sepia(7%) saturate(1019%) hue-rotate(308deg) brightness(108%) contrast(108%);
-    /* == baby pink*/
+    filter: invert(19%) sepia(95%) saturate(7487%) hue-rotate(6deg) brightness(99%) contrast(120%);
     cursor: pointer;
 }
 
@@ -300,13 +304,20 @@ div[class^="button"] {
     /* height: 65%; */
     width: 50%;
     margin: auto;
-    
+
     text-align: center;
     color: white;
     font-size: xx-large;
     padding: 20px;
     border-radius: 4px;
     white-space: normal;
+    user-select: none;
+}
+
+#drop_zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .main-right-drag-drop-container>* {
@@ -329,19 +340,33 @@ div[class^="button"] {
     border-radius: 4px;
     width: 40%;
     padding: 10px;
-    margin: 10px auto auto auto;
+    margin: 4vh 0 auto auto;
+    background-color: var(--granny-smith-apple);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+    font-size: medium;
+}
+
+.main-right-drag-drop-container-btn-select-file {
+    width: 50%;
+    margin: 2vh auto auto auto;
+    border-radius: 4px;
     background-color: var(--mauve);
-    /* color: var(--eerie-black-2); */
+    padding: 10px 0;
     border: 2px solid hsl(263, 64%, 94%);
     color: var(--eerie-black-2);
     font-size: medium;
-    /* font-weight: bold; */
+}
+
+.main-right-drag-drop-container-btn-select-file:hover {
+    background-color: hsl(263, 64%, 94%);
+    border: 2px solid var(--mauve);
+    cursor: pointer;
 }
 
 .main-right-drag-drop-container-btn:hover {
-    background-color: hsl(263, 64%, 94%);
-    /* color: var(--eerie-black-2); */
-    border: 2px solid var(--mauve);
+    background-color: hsl(126, 89%, 95%);
+    border: 2px solid var(--granny-smith-apple);
     cursor: pointer;
 }
 
@@ -360,6 +385,10 @@ div[class^="button"] {
     width: 25vw;
     background-color: var(--eerie-black-2);
     border-right: 2px solid black;
+}
+
+.bottom-left>* {
+    user-select: none;
 }
 
 .player {
@@ -431,6 +460,7 @@ div[class^="button"] {
     height: 3vw;
     margin-left: 2vw;
     margin-right: 2vw;
+    user-select: none;
 }
 
 .recorder>*>img:hover {
@@ -466,10 +496,9 @@ div[class^="button"] {
     cursor: pointer;
 }
 
-/* .recorder-time:hover {
-    color: var(--mauve);
-    cursor: pointer;
-} */
+.recorder-time {
+    user-select: none;
+}
 
 .recorder-icon-start {}
 

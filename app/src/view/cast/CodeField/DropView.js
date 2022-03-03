@@ -8,9 +8,10 @@ class DropView extends Observable {
         super();
         this.view = document.querySelector(".main-right-drag-drop-container");
         this.dropZone = new DropZone();
-        this.dropZone.addEventListener("file-dropped", e => {this.notifyAll(e);});
-        this.startBtn = this.view.querySelector(
-        ".main-right-drag-drop-container-btn");
+        this.dropZone.addEventListener("file-dropped", e => { this.notifyAll(e); });
+        this.chooseFileBtn = this.view.querySelector(".main-right-drag-drop-container-btn-select-file");
+        this.chooseFileBtn.addEventListener("click", this.onSelectFileFromDiscClicked.bind(this));
+        this.startBtn = this.view.querySelector(".main-right-drag-drop-container-btn");
         this.startBtn.addEventListener("click", this.onFileReady.bind(this));
         this.currentFile = null;
     }
@@ -21,20 +22,35 @@ class DropView extends Observable {
         let reader = new FileReader();
         // If a file is loaded, it fires a event with the file converted to a string
         reader.onload = (ev) => {
-        let event = new Event("file-ready", ev.target.result);
-        this.notifyAll(event);
-        this.view.classList.add("hidden");
+            let event = new Event("file-ready", ev.target.result);
+            this.notifyAll(event);
+            this.view.classList.add("hidden");
         };
         // If a file is available it is parsed to text
-        if(this.currentFile !== null){
-        reader.readAsText(this.currentFile);
+        if (this.currentFile !== null) {
+            reader.readAsText(this.currentFile);
         }
     }
 
     //informs CodeView and stores the current file
-    onFileDropped(file){
+    onFileDropped(file) {
         this.dropZone.onFileDropped(file);
         this.currentFile = file;
+    }
+
+    // https://stackoverflow.com/questions/16215771/how-to-open-select-file-dialog-via-js#16215950
+    onSelectFileFromDiscClicked() {
+        let inputEl = document.createElement("input");
+        inputEl.setAttribute("type", "file");
+        inputEl.setAttribute("name", "file");
+        inputEl.style.display = "none";
+        inputEl.click();
+
+        inputEl.onchange = ev => {
+            this.currentFile = ev.target.files[0];
+            let event = new Event("file-selected", this.currentFile);
+            this.notifyAll(event);
+        };
     }
 }
 

@@ -20,6 +20,10 @@ class FileTypeValidator{
         return this.file;
     }
 
+    checkValidFileType(file){
+        return checkValidFileType(file);
+    }
+
 }
 
 // Checks if dropped file is actually a file and returns it if true
@@ -50,7 +54,8 @@ function checkValidFileType(file){
             boolean = true;
         }
     });
+    console.log(boolean);
     return boolean;
 }
 
-export default FileTypeValidator;
+export default new FileTypeValidator();
