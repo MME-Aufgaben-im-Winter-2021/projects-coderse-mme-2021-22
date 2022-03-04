@@ -1,32 +1,50 @@
 /* eslint-env browser */
 
+import {Observable, Event} from "../utils/Observable.js";
+
 //Structure for one record in the file
-class Record {
+class Record extends Observable {
 
     constructor(title, time)
     {
+        super();
         this.id = Date.now();
         this.title = title;
         this.time = time;
-        this.audio = null;
+        this.audioFile = null;
+        this.currentAudio = null;
     }
 
     // Plays the audio file linked to this record
     playAudio(){
-        let audio = new Audio();
-        audio.src = this.audio;
+        let audio = new Audio(),
+            event = new Event("audio-play", this);
+        audio.src = this.audioFile;
         audio.load();
         audio.onloadeddata = () => audio.play();
+        audio.onended = () => onAudioEnd(this);
+        this.notifyAll(event);
+        this.currentAudio = audio;
     }
 
-    setAudio(audio){
-        this.audio = audio;
+    stopAudio(){
+        this.currentAudio.pause();
+    }
+
+    setAudio(audioFile){
+        this.audioFile = audioFile;
     }
 
     getID(){
         return this.id;
     }
 
+}
+
+// Listens on the end of this audio when its played
+function onAudioEnd(self){
+    let event = new Event("audio-end", self);
+    self.notifyAll(event);
 }
 
 export default Record;

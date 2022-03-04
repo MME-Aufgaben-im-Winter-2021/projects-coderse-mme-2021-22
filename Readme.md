@@ -75,8 +75,15 @@ Unsere 6. Sitzung: 03.03.22 08:45 - 10:45
     -> Timeline Eintäge und Cast können benannt werden
 
 Unsere 7. Sitzung: 03.03.22 20:11 - 21:11
+
 - CSS Verbesserungen (user select / neue Buttons / DropZone)
 - File Select
+
+Unsere 8. Sitzung: 04.03.22 08:00 - 12:05
+
+- Navigation zwischen den Audios
+- Gesamten Cast abspielen
+- Timer und Markierung der einzelnen Timeline Entrys beim Abspielen
 
 ### Verwendete Ressourcen
 https://feathericons.com/

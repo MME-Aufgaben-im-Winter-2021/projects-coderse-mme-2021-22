@@ -223,6 +223,10 @@ div[class^="button"] {
     user-select: none;
 }
 
+.player-list-entry-mark {
+    border: 2px solid #00FF00;
+}
+
 .player-list-entry-play-group {
     display: flex;
     flex-direction: row;

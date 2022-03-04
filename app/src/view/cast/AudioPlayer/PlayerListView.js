@@ -9,6 +9,8 @@ class Player extends Observable {
         super();
         // The list element from the html-doc
         this.list = document.querySelector(".player-list");
+        this.timerInterval = null;
+        this.entryViews = [];
     }
 
     // Add a Entry (A new Audio) to the list
@@ -17,6 +19,7 @@ class Player extends Observable {
         entry.addEventListener("entry-delete", this.deleteEntry.bind(this));
         entry.addEventListener("entry-play", event => this.notifyAll(event));
         this.list.appendChild(entry.getNode());
+        this.entryViews.push(entry);
     }
 
     // Delete a certain entry from the list with the event target
@@ -25,8 +28,34 @@ class Player extends Observable {
         let entry = event.data,
             ev = new Event("entry-delete", event);
         this.list.removeChild(entry);
+        this.entryViews = this.entryViews.filter(entry => entry.getId() !== event.data.getAttribute("data-id"));
         // To inform the model about deleting an entry
         this.notifyAll(ev);
+    }
+
+    // Return list entry node by id
+    getEntryById(id) {
+        let res;
+        this.entryViews.forEach(entry => {
+            if (parseInt(entry.getId()) === id) {
+                res = entry;
+            }
+        });
+        return res;
+    }
+
+    // Marks a entry as played and starts the timer
+    startPlayedEntry(event)
+    {
+        let entry = this.getEntryById(event.data.id);
+        entry.showPlay();    
+    }
+
+    // Removes the mark from a entry
+    endPlayedEntry(event)
+    {
+        let entry = this.getEntryById(event.data.id);
+        entry.stopPlay();
     }
 
 }

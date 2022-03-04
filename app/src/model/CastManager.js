@@ -21,6 +21,9 @@ class CastManager extends Observable{
         audioManager.addEventListener("audio-recorded", this.onAudioFileRecorded.bind(this));
         // These files are stored as records in the Record manager
         recordManager = new RecordManager();
+        recordManager.addEventListener("audio-end", event => this.notifyAll(event));
+
+        recordManager.addEventListener("audio-start", event => {this.notifyAll(event);});    
     }
 
     //the current file for the codecast
@@ -62,10 +65,25 @@ class CastManager extends Observable{
         this.notifyAll(ev);
     }
 
+    // Plays the whole cast
+    playCast(){
+        recordManager.playCast();
+    }
+
     // Returns all the data from the current cast -> So it can be stored
     getCast(){
         return createCast(this);
     }
+
+    onNextRecord()
+    {
+        recordManager.onNextRecord();
+    }    
+
+    onPreviousRecord(){
+        recordManager.onPreviousRecord();
+    }
+
 }
 
 // Creates JSON with data from the current cast

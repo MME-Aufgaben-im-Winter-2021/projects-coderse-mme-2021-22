@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
-import PlayerView from "../view/cast/AudioPlayer/PlayerView.js";
+import PlayerListView from "../view/cast/AudioPlayer/PlayerListView.js";
+import PlayerControlsView from "../view/cast/AudioPlayer/PlayerControlsView.js";
 import RecorderView from "../view/cast/AudioRecorder/RecorderView.js";
 import NavView from "../view/cast/Navbar/NavView.js";
 import CodeView from "../view/cast/CodeField/CodeView.js";
@@ -18,11 +19,18 @@ class CastController {
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
         castManager.addEventListener("audio-recorded", this.onAudioRecorded.bind(this));
+        castManager.addEventListener("audio-end", this.endPlayedEntry.bind(this));
+        castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
 
         // Audio Player - Timeline for the Cast
-        this.player = new PlayerView();
-        this.player.addEventListener("entry-delete", this.onEntryDelete.bind(this));
-        this.player.addEventListener("entry-play", this.onEntryPlay.bind(this));
+        this.playerList = new PlayerListView();
+        this.playerList.addEventListener("entry-delete", this.onEntryDelete.bind(this));
+        this.playerList.addEventListener("entry-play", this.onEntryPlay.bind(this));
+        // Audio Player - Controls
+        this.playerControls = new PlayerControlsView();
+        this.playerControls.addEventListener("play-records", this.onPlayRecords.bind(this));
+        this.playerControls.addEventListener("previous-record", this.onPreviousRecord.bind(this));
+        this.playerControls.addEventListener("next-record", this.onNextRecord.bind(this));
         // Audio Recorder
         this.recorder = new RecorderView();
         this.recorder.addEventListener("send-recording", this.onRecordingSend.bind(this));
@@ -72,7 +80,7 @@ class CastController {
     // When an audio file is recorded, it is transferred from the model to the view
     // to display a timeline entry
     onAudioRecorded(event) {
-        this.player.addEntry(event.data);
+        this.playerList.addEntry(event.data);
     }
 
     // Gets called when an Timeline/Player element gets deleted
@@ -92,6 +100,31 @@ class CastController {
         castManager.setTitle(event.data);
         console.log(castManager.getCast());
     }
+
+    // Play the cast when player controller view recognizes a click
+    onPlayRecords(){
+        castManager.playCast();
+    }
+    
+    // Skip to the next record
+    onNextRecord(){
+        castManager.onNextRecord();
+    }
+
+    // Get to the previous record
+    onPreviousRecord(){
+        castManager.onPreviousRecord();
+    }
+
+    startPlayedEntry(event){
+        this.playerList.startPlayedEntry(event);
+    }
+
+    endPlayedEntry(event){
+        this.playerList.endPlayedEntry(event);
+    }
+
+
 }
 
 export default CastController;
