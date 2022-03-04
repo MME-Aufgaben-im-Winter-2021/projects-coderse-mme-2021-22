@@ -179,9 +179,6 @@ div[class^="button"] {
 
 
 
-
-
-
 /* ------------- MAIN-SECTION ------------- */
 .main-content {
     display: flex;
@@ -472,7 +469,8 @@ div[class^="button"] {
     cursor: pointer;
 }
 
-.recorder-icon-light {}
+.recorder-icon-light {
+}
 
 .recorder-title {
     font-size: 20px;

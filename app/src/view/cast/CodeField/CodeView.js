@@ -3,7 +3,9 @@ import {Observable} from "../../../utils/Observable.js";
 import DropView from "./DropView.js";
 
 // View for the Code section of the Cast edit
-var codeInput, selectedCode;
+var buttonAdd, 
+    markedEl;
+
 class CodeView extends Observable {
     constructor(){
         super();
@@ -12,34 +14,27 @@ class CodeView extends Observable {
         this.dropView.addEventListener("file-dropped", e => {this.notifyAll(e);});
         this.dropView.addEventListener("file-selected", e => {this.notifyAll(e);});
         this.container = document.querySelector(".main-right-code-container");
+        
     }
 
     // Shows File
     handleFile(event) {
-        this.container.innerHTML = event.data;
+        let codeInput = event.data;
+        buttonAdd = document.querySelector(".code-icon-add");
+        buttonAdd.addEventListener("click", this.onMarkArea(codeInput));
     }
-    //Mark words: Set <mark class="[classname]"> [marked word] </mark>
-    //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mark
-            // (Clicked on button to mark file and) get the selected area
-            getSelectedArea(codeInput){
-                //let markedWords ="<mark class='markedclass'></mark";
-                //this.container.getAttribute("<mark>");
-                //selectedCode = markedWords.innerHTML(codeInput);
-                //console.log(selectedCode);
-                //}
-                //document.querySelector("button").onClick = function(){}
-                this.markSelectedArea(selectedCode);
-                //In Zwischenablage
-                //document.execCommand('copy');
-            }
-            // Marks selected area in File 
-            markSelectedArea(selectedCode){
-                    //selectedCode.style.backgroundColor = "yellow";
-            }
+    // Marks area
+    //TODO: Set Button-Listener and just mark selected part 
+    //Clicked Line -> this.container.innerHTML split on this line -> set mark 
+    onMarkArea(codeInput){
+    console.log("Plus-Button");
+    markedEl = document.createElement('mark');
+    this.container.appendChild(markedEl);
+        markedEl.innerHTML = codeInput;
+    }
     // Inform CastController
     onFileDropped(file){
         this.dropView.onFileDropped(file);
     }
 }
-
 export default CodeView;

@@ -72,7 +72,12 @@ function stopTimer(){
     clearInterval(timerInterval);
     time.innerHTML = "00:00";
 }
-
-function toggleIconLight(){}
+//Turns the Lightbulb on/off
+function toggleIconLight(){
+    if(iconLight.style.background !== "lemonchiffon"){
+        iconLight.style.borderRadius = "999px";
+        iconLight.style.background = "lemonchiffon";
+    } else {iconLight.style.background = " ";}
+}
 
 export default Recorder;
