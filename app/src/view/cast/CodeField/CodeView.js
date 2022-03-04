@@ -20,8 +20,9 @@ class CodeView extends Observable {
     // Shows File
     handleFile(event) {
         let codeInput = event.data;
+        this.container.innerHTML = codeInput;
         buttonAdd = document.querySelector(".code-icon-add");
-        buttonAdd.addEventListener("click", this.onMarkArea(codeInput));
+        //buttonAdd.addEventListener("click", this.onMarkArea(codeInput));
     }
     // Marks area
     //TODO: Set Button-Listener and just mark selected part 
