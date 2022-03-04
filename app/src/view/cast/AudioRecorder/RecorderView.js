@@ -72,6 +72,7 @@ function stopTimer(){
     clearInterval(timerInterval);
     time.innerHTML = "00:00";
 }
+
 //Turns the Lightbulb on/off
 function toggleIconLight(){
     if(iconLight.style.background !== "lemonchiffon"){

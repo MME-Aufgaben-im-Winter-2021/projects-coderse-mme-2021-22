@@ -37,6 +37,10 @@
     display: none !important;
 }
 
+mark {
+    background-color: var(--electric-blue);
+}
+
 /* 
 body {
     background-color: var(--snow);
