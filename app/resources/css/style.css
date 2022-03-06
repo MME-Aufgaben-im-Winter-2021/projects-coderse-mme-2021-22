@@ -39,6 +39,7 @@
 
 .invisible {
     visibility: hidden !important;
+    background-color: var(--electric-blue);
 }
 
 /* 

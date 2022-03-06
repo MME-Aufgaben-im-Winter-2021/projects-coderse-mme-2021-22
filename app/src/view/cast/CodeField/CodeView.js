@@ -2,10 +2,6 @@
 import {Observable} from "../../../utils/Observable.js";
 import DropView from "./DropView.js";
 
-// View for the Code section of the Cast edit
-var buttonAdd, 
-    markedEl;
-
 class CodeView extends Observable {
     constructor(){
         super();
@@ -14,25 +10,26 @@ class CodeView extends Observable {
         this.dropView.addEventListener("file-dropped", e => {this.notifyAll(e);});
         this.dropView.addEventListener("file-selected", e => {this.notifyAll(e);});
         this.container = document.querySelector(".main-right-code-container");
-        
+        this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
     }
 
     // Shows File
     handleFile(event) {
         let codeInput = event.data;
         this.container.innerHTML = codeInput;
-        buttonAdd = document.querySelector(".code-icon-add");
-        //buttonAdd.addEventListener("click", this.onMarkArea(codeInput));
     }
-    // Marks area
-    //TODO: Set Button-Listener and just mark selected part 
-    //Clicked Line -> this.container.innerHTML split on this line -> set mark 
-    onMarkArea(codeInput){
-    console.log("Plus-Button");
-    markedEl = document.createElement('mark');
-    this.container.appendChild(markedEl);
-        markedEl.innerHTML = codeInput;
+
+    // Marks a text selection
+    // Influenced by: https://stackoverflow.com/questions/8644428/how-to-highlight-text-using-javascript#8644513
+    onTextSelected(){
+        let range = window.getSelection().getRangeAt(0),
+            selectionContents = range.extractContents(),
+            mark = document.createElement("mark");
+
+        mark.appendChild(selectionContents);
+        range.insertNode(mark);
     }
+
     // Inform CastController
     onFileDropped(file){
         this.dropView.onFileDropped(file);

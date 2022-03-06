@@ -31,7 +31,7 @@ class Recorder extends Observable {
         this.iconTrash = document.querySelector(".recorder-icon-trash");
         this.iconTrash.addEventListener("click", this.onTrashClicked.bind(this));
     }
-
+  
     onStopRecordingClicked() {
         this.showIconTrash();
         this.hideIconStop();
@@ -149,12 +149,15 @@ function stopTimer() {
     time.innerHTML = "00:00";
 }
 
-//Turns the Lightbulb on/off
-function toggleIconLight() {
-    if (iconLight.style.background !== "lemonchiffon") {
+//Turns the Lightbulb on
+function turnLightOn(){
         iconLight.style.borderRadius = "999px";
-        iconLight.style.background = "lemonchiffon";
-    } else { iconLight.style.background = " "; }
+        iconLight.style.background = "grey";
 }
+//Turns the Lightbulb off
+function turnLightOff(){
+    iconLight.style.background = "transparent";
+}
+
 
 export default Recorder;
