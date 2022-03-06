@@ -37,6 +37,10 @@
     display: none !important;
 }
 
+.invisible {
+    visibility: hidden !important;
+}
+
 /* 
 body {
     background-color: var(--snow);
@@ -221,7 +225,7 @@ div[class^="button"] {
 }
 
 .player-list-entry-mark {
-    border: 2px solid #00FF00;
+    border: 2px solid var(--non-photo-blue);
 }
 
 .player-list-entry-play-group {
@@ -469,8 +473,11 @@ div[class^="button"] {
     cursor: pointer;
 }
 
-.recorder-icon-light {
-}
+.recorder-icon-light {}
+
+.recorder-icon-stop {}
+
+.recorder-icon-save {}
 
 .recorder-title {
     font-size: 20px;
