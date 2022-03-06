@@ -1,8 +1,8 @@
-    import {Observable, Event} from "../../../utils/Observable.js";
+    import { Observable, Event } from "../../../utils/Observable.js";
 
     /* eslint-env browser */
     const TEMPLATE = document.getElementById('player-template').innerHTML
-    .trim();
+        .trim();
 
     // A single Entry for the Audio Player consisting of a time, a name and a audio file
     class PlayerEntry extends Observable {
@@ -45,34 +45,34 @@
             return this.view;
         }
 
-        setTimeView(string){
+        setTimeView(string) {
             this.view.querySelector(".player-list-entry-play-time").innerHTML = string;
         }
-        
-        getId(){
+
+        getId() {
             return this.view.getAttribute("data-id");
         }
 
         // Adds mark to the played entry and the time the entry is played
-        showPlay(){
+        showPlay() {
             let audioLength,
                 startTime = Date.now();
             this.view.classList.add("player-list-entry-mark");
-            this.timerInterval = setInterval(()=>{
+            this.timerInterval = setInterval(() => {
                 let currentTime = Date.now(),
                     formatter = new Intl.NumberFormat('de-DE', { minimumIntegerDigits: 2 }),
                     minutes,
                     seconds;
-                audioLength = Math.floor((currentTime - startTime) /1000);
-                minutes = formatter.format(Math.floor(audioLength/60));
+                audioLength = Math.floor((currentTime - startTime) / 1000);
+                minutes = formatter.format(Math.floor(audioLength / 60));
                 seconds = formatter.format(audioLength % 60);
                 audioLength = minutes + ":" + seconds;
                 this.setTimeView(audioLength);
-            },1000);
+            }, 100);
         }
 
         // Removes marks from this entry and stops timer 
-        stopPlay(){
+        stopPlay() {
             this.view.classList.remove("player-list-entry-mark");
             clearInterval(this.timerInterval);
             this.setTimeView("00:00");

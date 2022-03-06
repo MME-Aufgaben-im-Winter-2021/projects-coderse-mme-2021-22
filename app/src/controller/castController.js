@@ -18,6 +18,7 @@ class CastController {
     constructor() {
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
+        castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
         castManager.addEventListener("audio-recorded", this.onAudioRecorded.bind(this));
         castManager.addEventListener("audio-end", this.endPlayedEntry.bind(this));
         castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
@@ -35,11 +36,16 @@ class CastController {
         this.recorder = new RecorderView();
         this.recorder.addEventListener("send-recording", this.onRecordingSend.bind(this));
         this.recorder.addEventListener("start-recording", this.onRecordingStart.bind(this));
+        this.recorder.addEventListener("stop-recording", this.onRecordingStop.bind(this));
+        this.recorder.addEventListener("delete-recording", this.onRecordingDelete.bind(this));
+        this.recorder.addEventListener("save-recording", this.onRecordingSave.bind(this));
+
         // Code View
         this.codeView = new CodeView();
-        this.codeView.addEventListener("file-dropped", this.onFileDropped.bind(this));
+        this.codeView.addEventListener("file-dropped", this.onFileDropped
+            .bind(this));
         this.codeView.addEventListener("file-selected", this.onFileSelected.bind(this));
-        
+
         // Navbar View
         this.navView = new NavView();
         this.navView.addEventListener("cast-safe", this.safeCast.bind(this));
@@ -47,12 +53,28 @@ class CastController {
 
     // Function for communication between player and recorder
     onRecordingSend(event) {
-        castManager.stopRecord(event);
+        castManager.saveRecord(event);
     }
 
     // Function for communication between player and recorder
     onRecordingStart(event) {
         castManager.startRecord();
+    }
+
+    onRecordingSave(event) {
+        castManager.saveRecord(event);
+        console.log("hi", event);
+    }
+
+    // Function for communication between player and recorder
+    onRecordingStop(event) {
+        castManager.stopRecord(event);
+    }
+
+    // Function for communication between player and recorder
+    onRecordingDelete(event) {
+        //TODO:
+        this.recorder.stopTimer(); //TODO:implement
     }
 
     // Validator checks dropped file
@@ -66,21 +88,28 @@ class CastController {
         this.codeView.onFileDropped(file);
     }
 
-    onFileSelected(event){
+    onFileSelected(event) {
         let file = event.data;
-        if(FileTypeValidator.checkValidFileType(file)){
+        if (FileTypeValidator.checkValidFileType(file)) {
             castManager.setFile(file);
             this.codeView.onFileDropped(file);
-        }
-        else{
+        } else {
             this.codeView.onFileDropped(null);
         }
     }
 
+
+    //When the audio is ready the option to save it is shown
+    onAudioRecorded(event) {
+        // this.playerList.addEntry(event.data);
+        this.recorder.showIconSave();
+    }
+
     // When an audio file is recorded, it is transferred from the model to the view
     // to display a timeline entry
-    onAudioRecorded(event) {
-        this.playerList.addEntry(event.data);
+    onAudioSaved(event) {
+        console.log(event, castManager.currentRecord);
+        this.playerList.addEntry(castManager.currentRecord);
     }
 
     // Gets called when an Timeline/Player element gets deleted
@@ -102,25 +131,25 @@ class CastController {
     }
 
     // Play the cast when player controller view recognizes a click
-    onPlayRecords(){
+    onPlayRecords() {
         castManager.playCast();
     }
-    
+
     // Skip to the next record
-    onNextRecord(){
+    onNextRecord() {
         castManager.onNextRecord();
     }
 
     // Get to the previous record
-    onPreviousRecord(){
+    onPreviousRecord() {
         castManager.onPreviousRecord();
     }
 
-    startPlayedEntry(event){
+    startPlayedEntry(event) {
         this.playerList.startPlayedEntry(event);
     }
 
-    endPlayedEntry(event){
+    endPlayedEntry(event) {
         this.playerList.endPlayedEntry(event);
     }
 

@@ -1,13 +1,13 @@
 /* eslint-env browser */
 
-import {Observable, Event} from "../utils/Observable.js";
+import { Observable, Event } from "../utils/Observable.js";
 
 var mediaRecorder,
     inputStream;
 
 // Model for computing audio files
 class AudioManager extends Observable {
-    
+
     constructor() {
         super();
         // The data object holds the current audio
@@ -46,7 +46,8 @@ function startInputStream(self) {
 }
 
 // Communicate the complete audio file with an event 
-function onAudioFileRecorded(file, self){
+function onAudioFileRecorded(file, self) {
+    console.log(file, self);
     self.data = file;
     let event = new Event("audio-recorded", file);
     self.notifyAll(event);

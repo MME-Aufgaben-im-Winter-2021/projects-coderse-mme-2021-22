@@ -2,15 +2,15 @@
 import AudioManager from "./AudioManager.js";
 import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
-import {Event, Observable} from "../utils/Observable.js";
+import { Event, Observable } from "../utils/Observable.js";
 
 var audioManager,
     recordManager;
 
 // Cast Model managing the data
-class CastManager extends Observable{
+class CastManager extends Observable {
 
-    constructor(){
+    constructor() {
         super();
         this.file = null;
         this.title = "";
@@ -23,71 +23,77 @@ class CastManager extends Observable{
         recordManager = new RecordManager();
         recordManager.addEventListener("audio-end", event => this.notifyAll(event));
 
-        recordManager.addEventListener("audio-start", event => {this.notifyAll(event);});    
+        recordManager.addEventListener("audio-start", event => { this.notifyAll(event); });
     }
 
     //the current file for the codecast
-    setFile(file)
-    {
+    setFile(file) {
         this.file = file;
     }
 
     // Sets current cast title
-    setTitle(string){
+    setTitle(string) {
         this.title = string;
     }
 
     //starts the record in the audioManager
-    startRecord(){
+    startRecord() {
         audioManager.record();
     }
 
     //stops the record and stores title and time in a new Record object
-    stopRecord(event){
-        audioManager.stopRecord();
+    stopRecord(event) {
         this.currentRecord = new Record(event.data.title, event.data.time);
-        recordManager.addRecord(this.currentRecord);
+        audioManager.stopRecord();
     }
 
-    deleteRecord(id){
+    saveRecord(event) {
+        // audioManager.stopRecord(); TODO:
+        this.currentRecord.title = event.data.title;
+        this.currentRecord.time = event.data.time;
+        recordManager.addRecord(this.currentRecord);
+        let ev = new Event("audio-saved", this.currentRecord);
+        this.notifyAll(ev);
+    }
+
+    deleteRecord(id) {
         recordManager.deleteRecord(id);
     }
 
-    playRecord(id){
+    playRecord(id) {
         recordManager.playRecord(id);
     }
 
     //adds Audio to the current Record object and informs the CastController
-    onAudioFileRecorded(event)
-    {
+    onAudioFileRecorded(event) {
+        console.log(event.data);
         this.currentRecord.setAudio(event.data);
         let ev = new Event("audio-recorded", this.currentRecord);
         this.notifyAll(ev);
     }
 
     // Plays the whole cast
-    playCast(){
+    playCast() {
         recordManager.playCast();
     }
 
     // Returns all the data from the current cast -> So it can be stored
-    getCast(){
+    getCast() {
         return createCast(this);
     }
 
-    onNextRecord()
-    {
+    onNextRecord() {
         recordManager.onNextRecord();
-    }    
+    }
 
-    onPreviousRecord(){
+    onPreviousRecord() {
         recordManager.onPreviousRecord();
     }
 
 }
 
 // Creates JSON with data from the current cast
-function createCast(self){
+function createCast(self) {
     let data = {
         id: Date.now(),
         title: self.title,
