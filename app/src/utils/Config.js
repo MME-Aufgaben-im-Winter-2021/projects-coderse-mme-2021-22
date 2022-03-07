@@ -5,7 +5,7 @@
  */
 
  const Config = {
-    VALID_FILETYPES: [".java",".py",".txt",".js"],
+    VALID_FILETYPES: [".java",".py",".txt",".js",".html"],
 };
   
 Object.freeze(Config);

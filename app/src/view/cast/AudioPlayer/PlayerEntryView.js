@@ -15,8 +15,10 @@
             this.view.querySelector(".player-list-entry-time").innerHTML = time;
             this.deleteIcon = this.view.querySelector(".player-list-entry-icon-delete");
             this.playIcon = this.view.querySelector(".player-list-entry-icon-play");
+            this.stopIcon = this.view.querySelector(".player-list-entry-icon-stop");
             this.deleteIcon.addEventListener("click", this.deleteEntry.bind(this));
             this.playIcon.addEventListener("click", this.play.bind(this));
+            this.stopIcon.addEventListener("click", this.stop.bind(this));
             this.timerInterval = null;
         }
 
@@ -30,6 +32,12 @@
         // Plays the Audio of this Entry
         play() {
             let event = new Event("entry-play", this.view.getAttribute("data-id"));
+            this.notifyAll(event);
+        }
+
+        // Stops a played audio
+        stop() {
+            let event = new Event("entry-stop", this.view.getAttribute("data-id"));
             this.notifyAll(event);
         }
 
@@ -69,6 +77,8 @@
                 audioLength = minutes + ":" + seconds;
                 this.setTimeView(audioLength);
             }, 100);
+            this.playIcon.classList.add("hidden");
+            this.stopIcon.classList.remove("hidden");
         }
 
         // Removes marks from this entry and stops timer 
@@ -76,6 +86,8 @@
             this.view.classList.remove("player-list-entry-mark");
             clearInterval(this.timerInterval);
             this.setTimeView("00:00");
+            this.playIcon.classList.remove("hidden");
+            this.stopIcon.classList.add("hidden");
         }
 
     }

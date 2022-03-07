@@ -18,6 +18,7 @@ class Player extends Observable {
         let entry = new PlayerEntry(record.id, record.title, record.time);
         entry.addEventListener("entry-delete", this.deleteEntry.bind(this));
         entry.addEventListener("entry-play", event => this.notifyAll(event));
+        entry.addEventListener("entry-stop", event => this.notifyAll(event));
         this.list.appendChild(entry.getNode());
         this.entryViews.push(entry);
     }
@@ -55,7 +56,9 @@ class Player extends Observable {
     endPlayedEntry(event)
     {
         let entry = this.getEntryById(event.data.id);
-        entry.stopPlay();
+        if(entry !== undefined && entry !== null) {
+            entry.stopPlay();
+        }
     }
 
 }

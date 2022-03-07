@@ -27,6 +27,7 @@ class Record extends Observable {
         this.currentAudio = audio;
     }
 
+    // Stop the audio
     stopAudio(){
         this.currentAudio.pause();
     }

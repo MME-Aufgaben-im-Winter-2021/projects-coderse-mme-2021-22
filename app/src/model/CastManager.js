@@ -24,6 +24,7 @@ class CastManager extends Observable {
         recordManager.addEventListener("audio-end", event => this.notifyAll(event));
 
         recordManager.addEventListener("audio-start", event => { this.notifyAll(event); });
+        recordManager.addEventListener("cast-end", event => { this.notifyAll(event); });
     }
 
     //the current file for the codecast
@@ -64,6 +65,10 @@ class CastManager extends Observable {
         recordManager.playRecord(id);
     }
 
+    stopPlayRecord(id) {
+        recordManager.stopRecord(id);
+    }
+
     //adds Audio to the current Record object and informs the CastController
     onAudioFileRecorded(event) {
         console.log(event.data);
@@ -75,6 +80,10 @@ class CastManager extends Observable {
     // Plays the whole cast
     playCast() {
         recordManager.playCast();
+    }
+
+    stopCast(){
+        recordManager.stopCast();
     }
 
     // Returns all the data from the current cast -> So it can be stored

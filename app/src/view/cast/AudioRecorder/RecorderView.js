@@ -31,7 +31,7 @@ class Recorder extends Observable {
         this.iconTrash = document.querySelector(".recorder-icon-trash");
         this.iconTrash.addEventListener("click", this.onTrashClicked.bind(this));
     }
-  
+
     onStopRecordingClicked() {
         this.showIconTrash();
         this.hideIconStop();
@@ -74,8 +74,8 @@ class Recorder extends Observable {
     onStartRecording() {
         console.log("Recording starts");
         this.hideIconMic();
-        this.showIconStop();
-        startTimer();
+        // this.showIconStop();
+        startTimer.call(this);
         // toggleIconLight();
         let event = new Event("start-recording", "data");
         this.notifyAll(event);
@@ -128,6 +128,7 @@ class Recorder extends Observable {
 }
 
 //Starts the timer, stores the start time and shows the current length of the recording audio file
+//minimum time is 3 sec
 function startTimer() {
     startTime = Date.now();
     timerInterval = setInterval(() => {
@@ -140,6 +141,9 @@ function startTimer() {
         seconds = formatter.format(audioLength % 60);
         audioLength = minutes + ":" + seconds;
         time.innerHTML = audioLength;
+        if (seconds >= 3) { //minimum time
+            this.showIconStop();
+        }
     }, 1000);
 }
 
@@ -150,12 +154,12 @@ function stopTimer() {
 }
 
 //Turns the Lightbulb on
-function turnLightOn(){
-        iconLight.style.borderRadius = "999px";
-        iconLight.style.background = "grey";
+function turnLightOn() {
+    iconLight.style.borderRadius = "999px";
+    iconLight.style.background = "grey";
 }
 //Turns the Lightbulb off
-function turnLightOff(){
+function turnLightOff() {
     iconLight.style.background = "transparent";
 }
 

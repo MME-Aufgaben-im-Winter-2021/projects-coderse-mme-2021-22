@@ -10,6 +10,8 @@ console.log('Hello World!');
 // For all the controllers in the code cast edit 
 function initManagers() {
     let castController = new CastController();
+
+    
 }
 
 init();

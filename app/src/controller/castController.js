@@ -22,14 +22,17 @@ class CastController {
         castManager.addEventListener("audio-recorded", this.onAudioRecorded.bind(this));
         castManager.addEventListener("audio-end", this.endPlayedEntry.bind(this));
         castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
+        castManager.addEventListener("cast-end", this.onCastEnded.bind(this));
 
         // Audio Player - Timeline for the Cast
         this.playerList = new PlayerListView();
         this.playerList.addEventListener("entry-delete", this.onEntryDelete.bind(this));
         this.playerList.addEventListener("entry-play", this.onEntryPlay.bind(this));
+        this.playerList.addEventListener("entry-stop", this.onEntryStop.bind(this));
         // Audio Player - Controls
         this.playerControls = new PlayerControlsView();
         this.playerControls.addEventListener("play-records", this.onPlayRecords.bind(this));
+        this.playerControls.addEventListener("stop-records", this.onStopRecords.bind(this));
         this.playerControls.addEventListener("previous-record", this.onPreviousRecord.bind(this));
         this.playerControls.addEventListener("next-record", this.onNextRecord.bind(this));
         // Audio Recorder
@@ -115,6 +118,8 @@ class CastController {
     // Gets called when an Timeline/Player element gets deleted
     onEntryDelete(event) {
         let entryID = event.data.data.attributes[1].value;
+        //event.data.getAttribute("data-id");
+        console.log("ID to delete: ", entryID);
         castManager.deleteRecord(entryID);
     }
 
@@ -122,6 +127,12 @@ class CastController {
     onEntryPlay(event) {
         let entryID = event.data;
         castManager.playRecord(entryID);
+    }
+
+    // Gets called when an Timeline/Player element gets played
+    onEntryStop(event) {
+        let entryID = event.data;
+        castManager.stopPlayRecord(entryID);
     }
 
     // Safes Cast in DB
@@ -133,6 +144,15 @@ class CastController {
     // Play the cast when player controller view recognizes a click
     onPlayRecords() {
         castManager.playCast();
+    }
+
+    // Stop the cast when player controller view recognizes a click
+    onStopRecords() {
+        castManager.stopCast();
+    }
+
+    onCastEnded() {
+        this.playerControls.resetIcons();
     }
 
     // Skip to the next record

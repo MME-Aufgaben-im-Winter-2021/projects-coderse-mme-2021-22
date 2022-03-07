@@ -85,6 +85,17 @@ Unsere 8. Sitzung: 04.03.22 08:00 - 12:05
 - Gesamten Cast abspielen
 - Timer und Markierung der einzelnen Timeline Entrys beim Abspielen
 
+Unsere 9. Sitzung: 07.03.22 09:00 - 
+
+- Bug fixes -> Audios können nun gestoppt und gelöscht werden
+- Audioaufnahme wurde verbessert -> weitere Icons
+- Markierung des Codes wurde eingeführt und verbessert
+
+TODO:
+    - RecordManager:
+        - wenn geskippt wird und dann gestoppt, soll auch der cast gestoppt werden
+        - cast-end event muss geworfen werden, wenn der letzte track fertig ist -> zeigt wieder den play button an und versteckt den stopp button
+        
 
 ### Verwendete Ressourcen
 https://feathericons.com/
