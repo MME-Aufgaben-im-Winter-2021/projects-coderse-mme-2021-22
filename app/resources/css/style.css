@@ -376,6 +376,10 @@ div[class^="button"] {
     cursor: pointer;
 }
 
+mark {
+    background-color: var(--non-photo-blue);
+}
+
 /* ------------- BOTTOM-SECTION ------------- */
 .bottom-bar {
     display: flex;

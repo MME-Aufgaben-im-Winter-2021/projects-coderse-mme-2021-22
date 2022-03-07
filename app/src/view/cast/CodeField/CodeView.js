@@ -16,6 +16,7 @@ class CodeView extends Observable {
     // Shows File
     handleFile(event) {
         let codeInput = event.data;
+        codeInput = parseFile(codeInput);
         this.container.innerHTML = codeInput;
     }
 
@@ -35,4 +36,9 @@ class CodeView extends Observable {
         this.dropView.onFileDropped(file);
     }
 }
+
+function parseFile(){
+    // "<", ">" escapen
+}
+
 export default CodeView;
