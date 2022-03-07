@@ -85,7 +85,7 @@ Unsere 8. Sitzung: 04.03.22 08:00 - 12:05
 - Gesamten Cast abspielen
 - Timer und Markierung der einzelnen Timeline Entrys beim Abspielen
 
-Unsere 9. Sitzung: 07.03.22 09:00 - 
+Unsere 9. Sitzung: 07.03.22 09:00 - 13:10
 
 - Bug fixes -> Audios können nun gestoppt und gelöscht werden
 - Audioaufnahme wurde verbessert -> weitere Icons
