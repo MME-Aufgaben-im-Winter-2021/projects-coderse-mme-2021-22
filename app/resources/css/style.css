@@ -233,7 +233,7 @@ div[class^="button"] {
 }
 
 .player-list-entry-highlight {
-    border: 2px solid var(--non-photo-blue);
+    box-shadow: 2px 0px 3px var(--non-photo-blue), 0px 2px 3px var(--non-photo-blue), -2px 0px 3px var(--non-photo-blue), 0px -2px 3px var(--non-photo-blue);
 }
 
 .player-list-entry-play-group {
@@ -270,11 +270,11 @@ div[class^="button"] {
     color: var(--mauve);
     cursor: pointer;
     background-image: url("../icons/edit-3.svg");
-    filter:invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
     background-repeat: no-repeat;
 }
 
-.player-list-entry-title:hover{
+.player-list-entry-title:hover {
     color: var(--mauve);
     cursor: pointer;
 }
@@ -468,13 +468,13 @@ mark {
     color: black;
 }
 
-.marking[data-id]{
+.marking[data-id] {
     transition: text-shadow 1s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
     text-shadow: 1px 0px 1px var(--eerie-black), 0px 1px 1px var(--eerie-black), -1px 0px 1px var(--eerie-black), 0px -1px 1px var(--eerie-black);
     background-color: var(--jet);
-    color:white;
+    color: white;
 }
 
 .marking:hover {
