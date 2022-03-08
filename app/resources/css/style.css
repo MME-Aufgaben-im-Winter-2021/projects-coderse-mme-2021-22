@@ -17,6 +17,7 @@
     --baby-pink: #ffcfd2;
     --pink-lavender: #f1c0e8ff;
     --mauve: hsl(263, 64%, 84%);
+    --mauve-dark: hsl(263, 64%, 74%);
     --baby-blue-eyes: #a3c4f3ff;
     --non-photo-blue: #90dbf4ff;
     --electric-blue: #8eecf5ff;
@@ -227,6 +228,11 @@ div[class^="button"] {
 }
 
 .player-list-entry-mark {
+    /* border: 2px solid var(--mauve); */
+    box-shadow: 2px 0px 3px hsl(263, 64%, 74%), 0px 2px 3px hsl(263, 64%, 74%), -2px 0px 3px hsl(263, 64%, 74%), 0px -2px 3px hsl(263, 64%, 74%);
+}
+
+.player-list-entry-highlight {
     border: 2px solid var(--non-photo-blue);
 }
 
@@ -457,27 +463,48 @@ mark {
     transition: text-shadow 1s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
-    text-shadow: 1px 1px 1px var(--baby-blue-eyes);
-    background-color: var(--non-photo-blue);
+    text-shadow: 1px 1px 1px var(--electric-blue);
+    background-color: var(--baby-blue-eyes);
+    color: black;
+}
+
+.marking[data-id]{
+    transition: text-shadow 1s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 1s;
+    text-shadow: 1px 0px 1px var(--eerie-black), 0px 1px 1px var(--eerie-black), -1px 0px 1px var(--eerie-black), 0px -1px 1px var(--eerie-black);
+    background-color: var(--jet);
+    color:white;
 }
 
 .marking:hover {
     transition: text-shadow 1s;
     transition: background-color 1s;
-    text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue);
+    /* text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue); */
     /* https://stackoverflow.com/questions/13426875/text-border-using-css-border-around-text#13427256 Abgerufen am 08.03.22 */
     /* text-shadow: 1px 1px 1px  */
-    background-color: rgba(255, 255, 255, 0.253);
+    color: var(--electric-blue);
+    background-color: rgba(255, 255, 255, 0.164);
 }
 
 .marking-highlight {
-    transition: text-shadow 1s;
+    transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
-    transition: background-color 1s;
+    transition: background-color 0.5s;
     transition: color 1s;
     color: black;
-    text-shadow: 1px 1px 1px var(--mauve);
-    background-color: var(--baby-pink);
+    text-shadow: 1px 1px 1px var(--pink-lavender);
+    background-color: var(--mauve);
+}
+
+.marking-highlight-play {
+    transition: text-shadow 0.5s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 0.5s;
+    transition: color 1s;
+    color: black;
+    text-shadow: 1px 1px 1px var(--pink-lavender);
+    background-color: var(--mauve-dark);
 }
 
 /* ------------- BOTTOM-SECTION ------------- */

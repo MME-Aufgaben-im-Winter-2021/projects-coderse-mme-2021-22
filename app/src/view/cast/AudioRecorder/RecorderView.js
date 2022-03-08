@@ -36,6 +36,7 @@ class Recorder extends Observable {
     onStopRecordingClicked() {
         this.showIconTrash();
         this.hideIconStop();
+        turnLightOff();
         clearInterval(timerInterval);
         let data = {
                 title: title.value,
@@ -55,7 +56,6 @@ class Recorder extends Observable {
     }
 
     onSaveRecordingClicked() {
-        console.log("Recording stops");
         stopTimer();
         if(title.value === ""){
         title.value = "Cast Title ("+unnamedCastTitleNumber+")";
@@ -75,9 +75,9 @@ class Recorder extends Observable {
     }
 
     onStartRecording() {
-        console.log("Recording starts");
         this.hideIconMic();
         // this.showIconStop();
+        turnLightOn();
         startTimer.call(this);
         let event = new Event("start-recording", "data");
         this.notifyAll(event);

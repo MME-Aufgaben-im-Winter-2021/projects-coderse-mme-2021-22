@@ -20,8 +20,8 @@ class CastController {
         castManager = new CastManager();
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
         castManager.addEventListener("audio-recorded", this.onAudioRecorded.bind(this));
-        castManager.addEventListener("audio-end", this.endPlayedEntry.bind(this));
         castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
+        castManager.addEventListener("audio-end", this.endPlayedEntry.bind(this));
         castManager.addEventListener("cast-end", this.onCastEnded.bind(this));
 
         // Audio Player - Timeline for the Cast
@@ -31,6 +31,7 @@ class CastController {
         this.playerList.addEventListener("entry-stop", this.onEntryStop.bind(this));
         this.playerList.addEventListener("mouse-over-player-entry", this.onHoverOverPlayerEntry.bind(this));
         this.playerList.addEventListener("mouse-out-player-entry", this.onMouseLeavePlayerEntry.bind(this));
+        this.playerList.addEventListener("entry-title-changed", this.onEntryTitleChanged.bind(this));
 
         // Audio Player - Controls
         this.playerControls = new PlayerControlsView();
@@ -48,13 +49,71 @@ class CastController {
 
         // Code View
         this.codeView = new CodeView();
-        this.codeView.addEventListener("file-dropped", this.onFileDropped
-            .bind(this));
+        this.codeView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.codeView.addEventListener("file-selected", this.onFileSelected.bind(this));
+        this.codeView.addEventListener("marking-mouse-over", (e) => this.playerList.onMouseOverMarking(e));
+        this.codeView.addEventListener("marking-mouse-out", (e) => this.playerList.onMouseOutMarking(e));
 
         // Navbar View
         this.navView = new NavView();
         this.navView.addEventListener("cast-safe", this.safeCast.bind(this));
+    }
+    
+/* ---------------------------------------------------castManager--------------------------------------------------------------- */
+
+    // When an audio file is recorded, it is transferred from the model to the view
+    // to display a timeline entry
+    onAudioSaved() {
+        let currRecord = castManager.currentRecord,
+            id = currRecord.id;
+        this.playerList.addEntry(currRecord);
+        this.codeView.assignNewMarkings(id);
+    }
+
+    //When the audio is ready the option to save it is shown
+    onAudioRecorded() {
+        // this.playerList.addEntry(event.data);
+        this.recorder.showIconSave();
+    }
+
+    startPlayedEntry(event) {
+        this.playerList.startPlayedEntry(event);
+        this.codeView.highlightPlayMarking(event.data.getID());
+    }
+    
+    endPlayedEntry(event) {
+        this.playerList.endPlayedEntry(event);
+        this.codeView.resetPlayMarking(event.data.getID());
+    }
+    
+    onCastEnded() {
+        this.playerControls.resetIcons();
+    }
+
+/* ---------------------------------------------------playerList--------------------------------------------------------------- */
+
+    // Gets called when an Timeline/Player element gets deleted
+    onEntryDelete(event) {
+        let entryID = event.data.data.attributes[1].value;
+        //event.data.getAttribute("data-id");
+        console.log("ID to delete: ", entryID);
+        castManager.deleteRecord(entryID);
+        this.codeView.removeMarkingsById(entryID);
+    }
+
+    // Gets called when an Timeline/Player element gets played
+    onEntryPlay(event) {
+        let entryID = event.data;
+        castManager.playRecord(entryID);
+        this.codeView.highlightPlayMarking(entryID);
+    }
+
+    // Gets called when an Timeline/Player element gets played
+    onEntryStop(event) {
+        let entryID = event.data;
+        castManager.stopPlayRecord(entryID);
+        this.playerControls.resetIcons();
+        this.codeView.resetPlayMarking(entryID);
     }
 
     //highlight code when hovering over player entry
@@ -69,18 +128,46 @@ class CastController {
         this.codeView.resetMarking(id);
     }
 
+    onEntryTitleChanged(event){
+        let data = event.data;
+        castManager.onEntryTitleChanged(data);
+    }
+
+/* ---------------------------------------------------playerControls--------------------------------------------------------------- */
+    // Play the cast when player controller view recognizes a click
+    onPlayRecords() {
+        if (this.playerList.hasNoEntries()) {
+            this.playerControls.resetIcons();
+        } else {
+            castManager.playCast();
+        }
+    }
+
+    // Stop the cast when player controller view recognizes a click
+    onStopRecords() {
+        castManager.stopCast();
+    }
+
+    // Skip to the next record
+    onNextRecord() {
+        castManager.onNextRecord();
+    }
+
+    // Get to the previous record
+    onPreviousRecord() {
+        castManager.onPreviousRecord();
+    }
+    
+
+/* ---------------------------------------------------recorder--------------------------------------------------------------- */
+
     // Function for communication between player and recorder
     onRecordingSend(event) {
         castManager.saveRecord(event);
     }
-
     // Function for communication between player and recorder
-    onRecordingStart(event) {
+    onRecordingStart() {
         castManager.startRecord();
-    }
-
-    onRecordingSave(event) {
-        castManager.saveRecord(event);
     }
 
     // Function for communication between player and recorder
@@ -89,10 +176,15 @@ class CastController {
     }
 
     // Function for communication between player and recorder
-    onRecordingDelete(event) {
+    onRecordingDelete() {
         this.recorder.stopTimer();
         this.codeView.removeUnconnectedMarkings();
     }
+    onRecordingSave(event) {
+        castManager.saveRecord(event);
+    }
+
+/* ---------------------------------------------------codeView--------------------------------------------------------------- */
 
     // Validator checks dropped file
     // File is stored in Cast Manager model
@@ -116,88 +208,13 @@ class CastController {
             this.codeView.hideButton();
         }
     }
-
-
-    //When the audio is ready the option to save it is shown
-    onAudioRecorded(event) {
-        // this.playerList.addEntry(event.data);
-        this.recorder.showIconSave();
-    }
-
-    // When an audio file is recorded, it is transferred from the model to the view
-    // to display a timeline entry
-    onAudioSaved(event) {
-        let currRecord = castManager.currentRecord,
-            id = currRecord.id;
-        this.playerList.addEntry(currRecord);
-        this.codeView.assignNewMarkings(id);
-    }
-
-    // Gets called when an Timeline/Player element gets deleted
-    onEntryDelete(event) {
-        let entryID = event.data.data.attributes[1].value;
-        //event.data.getAttribute("data-id");
-        console.log("ID to delete: ", entryID);
-        castManager.deleteRecord(entryID);
-        this.codeView.removeMarkingsById(entryID);
-    }
-
-    // Gets called when an Timeline/Player element gets played
-    onEntryPlay(event) {
-        let entryID = event.data;
-        castManager.playRecord(entryID);
-    }
-
-    // Gets called when an Timeline/Player element gets played
-    onEntryStop(event) {
-        let entryID = event.data;
-        castManager.stopPlayRecord(entryID);
-        this.playerControls.resetIcons();
-    }
+    
+/* ---------------------------------------------------navView--------------------------------------------------------------- */
 
     // Safes Cast in DB
     safeCast(event) {
         castManager.setTitle(event.data);
-        console.log(castManager.getCast());
     }
-
-    // Play the cast when player controller view recognizes a click
-    onPlayRecords() {
-        if (this.playerList.hasNoEntries()) {
-            this.playerControls.resetIcons();
-        } else {
-            castManager.playCast();
-        }
-    }
-
-    // Stop the cast when player controller view recognizes a click
-    onStopRecords() {
-        castManager.stopCast();
-    }
-
-    onCastEnded() {
-        this.playerControls.resetIcons();
-    }
-
-    // Skip to the next record
-    onNextRecord() {
-        castManager.onNextRecord();
-    }
-
-    // Get to the previous record
-    onPreviousRecord() {
-        castManager.onPreviousRecord();
-    }
-
-    startPlayedEntry(event) {
-        this.playerList.startPlayedEntry(event);
-    }
-
-    endPlayedEntry(event) {
-        this.playerList.endPlayedEntry(event);
-    }
-
-
 }
 
 export default CastController;

@@ -110,21 +110,37 @@
             this.inputTitle.classList.remove("hidden");
             this.title.classList.add("hidden");
             this.inputTitle.value = this.title.innerHTML;
-            //document.addEventListener("click", e => this.onChangeTitle(e));
-            //document.addEventListener("keypress", e => this.onChangeTitle(e));
             this.inputTitle.focus();
-            this.inputTitle.addEventListener("blur", e => this.onChangeTitle(e));
+            this.inputTitle.addEventListener("blur", this.onChangeTitle.bind(this));
+            this.inputTitle.addEventListener("keypress", event => {
+                if(event.key === "Enter") {
+                    this.onChangeTitle();
+                }
+            });
         }
 
-        onChangeTitle(event){
-            //document.removeEventListener("click", this.onChangeTitle(event));
-            //document.removeEventListener("keypress", this.onChangeTitle(event));
+        onChangeTitle(){
+            let event,
+                data;
             this.inputTitle.classList.add("hidden");
             this.title.classList.remove("hidden");
             if(this.inputTitle.value.length !== 0){
                 this.title.innerHTML = this.inputTitle.value;
             }
-            console.log(event.target.value);
+            data = {
+                id: this.id,
+                title: this.title.innerHTML,
+            };
+            event = new Event("entry-title-changed", data);
+            this.notifyAll(event);
+        }
+
+        showEntryHighlight() {
+            this.view.classList.add("player-list-entry-highlight");
+        }
+
+        deleteEntryHighlight() {
+            this.view.classList.remove("player-list-entry-highlight");
         }
 
     }

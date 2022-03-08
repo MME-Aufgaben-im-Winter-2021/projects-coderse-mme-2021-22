@@ -22,7 +22,6 @@ class CastManager extends Observable {
         // These files are stored as records in the Record manager
         recordManager = new RecordManager();
         recordManager.addEventListener("audio-end", event => this.notifyAll(event));
-
         recordManager.addEventListener("audio-start", event => { this.notifyAll(event); });
         recordManager.addEventListener("cast-end", event => { this.notifyAll(event); });
     }
@@ -99,6 +98,10 @@ class CastManager extends Observable {
         recordManager.onPreviousRecord();
     }
 
+    onEntryTitleChanged(data){
+        recordManager.onEntryTitleChanged(data);
+    }
+        
 }
 
 // Creates JSON with data from the current cast

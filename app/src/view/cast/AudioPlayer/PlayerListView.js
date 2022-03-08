@@ -21,6 +21,7 @@ class Player extends Observable {
         entry.addEventListener("mouse-over-player-entry", event => this.notifyAll(event));
         entry.addEventListener("mouse-out-player-entry", event => this.notifyAll(event));
         entry.addEventListener("entry-stop", event => this.notifyAll(event));
+        entry.addEventListener("entry-title-changed", event => this.notifyAll(event));
         this.list.appendChild(entry.getNode());
         this.entryViews.push(entry);
     }
@@ -63,6 +64,18 @@ class Player extends Observable {
 
     hasNoEntries() {
         return this.entryViews.length === 0;
+    }
+
+    onMouseOverMarking(event) {
+        let id = event.data,
+            entry = this.getEntryById(id);
+        entry.showEntryHighlight();    
+    }
+
+    onMouseOutMarking(event){
+        let id = event.data,
+            entry = this.getEntryById(id);
+        entry.deleteEntryHighlight(); 
     }
 
 }

@@ -150,6 +150,14 @@ class RecordManager extends Observable {
         this.notifyAll(event);
     }
 
+    onEntryTitleChanged(data){
+        let id = data.id,
+            record = this.data.filter(entry => entry.getID() === parseInt(id))[0],
+            index = this.getIndexFromRecord(record);
+        record.setTitle(data.title);
+        this.data[index] = record;
+    }
+
 }
 
 export default RecordManager;

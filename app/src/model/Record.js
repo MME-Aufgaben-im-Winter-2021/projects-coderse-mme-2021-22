@@ -50,8 +50,11 @@ class Record extends Observable {
         return this.id;
     }
 
+    setTitle(title){
+        this.title = title;
+    } 
 }
-
+   
 // Listens on the end of this audio when its played
 function onAudioEnd(self){
     let event = new Event("audio-end", self);

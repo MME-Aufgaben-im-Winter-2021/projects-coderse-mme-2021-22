@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import { Observable } from "../../../utils/Observable.js";
+import { Event, Observable } from "../../../utils/Observable.js";
 import DropView from "./DropView.js";
 
 class CodeView extends Observable {
@@ -76,10 +76,22 @@ class CodeView extends Observable {
             for (let i = 0; i < newMarkings.length; i++) {
                 if (!newMarkings[i].hasAttribute("data-id")) {
                     newMarkings[i].setAttribute("data-id", id);
+                    newMarkings[i].addEventListener("mouseover", this.onMouseOverMarking.bind(this, id));
+                    newMarkings[i].addEventListener("mouseout", this.onMouseOutMarking.bind(this, id));
                 }
             }
         }
-        console.log(newMarkings, "here", id);
+    }
+    // Sends id from hover over markings to CastController
+    onMouseOverMarking(id){
+        let event = new Event("marking-mouse-over", id);
+        this.notifyAll(event);
+    }
+
+    // Stops hover over markings 
+    onMouseOutMarking(id){
+        let event = new Event("marking-mouse-out", id);
+        this.notifyAll(event);
     }
 
     //remove markings by id
@@ -113,7 +125,9 @@ class CodeView extends Observable {
         let markings = document.querySelectorAll(
             `.main-right-code-container > mark[data-id="${id}"]`);
         markings.forEach(el => {
-            el.classList.add("marking-highlight");
+            if(!el.classList.contains("marking-highlight-play")){
+                el.classList.add("marking-highlight");
+            }
             el.classList.remove("marking");
         });
     }
@@ -123,6 +137,25 @@ class CodeView extends Observable {
             `.main-right-code-container > mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight");
+            if(!el.classList.contains("marking-highlight-play")){
+                el.classList.add("marking");
+            }
+        });
+    }
+
+    highlightPlayMarking(id) {
+        console.log("ID: ", id);
+        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        markings.forEach(el => {
+            el.classList.add("marking-highlight-play");
+            el.classList.remove("marking");
+        });
+    }
+
+    resetPlayMarking(id) {
+        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        markings.forEach(el => {
+            el.classList.remove("marking-highlight-play");
             el.classList.add("marking");
         });
     }
