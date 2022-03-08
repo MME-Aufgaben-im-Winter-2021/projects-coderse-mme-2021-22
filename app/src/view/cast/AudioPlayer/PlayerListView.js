@@ -1,5 +1,5 @@
 /* eslint-env browser */
-import {Observable, Event} from '../../../utils/Observable.js';
+import { Observable, Event } from '../../../utils/Observable.js';
 import PlayerEntry from './PlayerEntryView.js';
 
 // Class for the Audio Player in Code Cast Edit screen
@@ -18,6 +18,8 @@ class Player extends Observable {
         let entry = new PlayerEntry(record.id, record.title, record.time);
         entry.addEventListener("entry-delete", this.deleteEntry.bind(this));
         entry.addEventListener("entry-play", event => this.notifyAll(event));
+        entry.addEventListener("mouse-over-player-entry", event => this.notifyAll(event));
+        entry.addEventListener("mouse-out-player-entry", event => this.notifyAll(event));
         entry.addEventListener("entry-stop", event => this.notifyAll(event));
         this.list.appendChild(entry.getNode());
         this.entryViews.push(entry);
@@ -46,19 +48,21 @@ class Player extends Observable {
     }
 
     // Marks a entry as played and starts the timer
-    startPlayedEntry(event)
-    {
+    startPlayedEntry(event) {
         let entry = this.getEntryById(event.data.id);
-        entry.showPlay();    
+        entry.showPlay();
     }
 
     // Removes the mark from a entry
-    endPlayedEntry(event)
-    {
+    endPlayedEntry(event) {
         let entry = this.getEntryById(event.data.id);
-        if(entry !== undefined && entry !== null) {
+        if (entry !== undefined && entry !== null) {
             entry.stopPlay();
         }
+    }
+
+    hasNoEntries() {
+        return this.entryViews.length === 0;
     }
 
 }

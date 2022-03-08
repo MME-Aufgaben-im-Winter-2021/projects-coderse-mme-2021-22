@@ -29,11 +29,21 @@ class Record extends Observable {
 
     // Stop the audio
     stopAudio(){
-        this.currentAudio.pause();
+        if(this.isPlaying())
+        {
+            this.currentAudio.pause();
+        }
     }
 
     setAudio(audioFile){
         this.audioFile = audioFile;
+    }
+
+    isPlaying() {
+        if(this.currentAudio === null || this.currentAudio === undefined) {
+            return false;
+        }
+        return !this.currentAudio.paused && !this.currentAudio.ended;
     }
 
     getID(){

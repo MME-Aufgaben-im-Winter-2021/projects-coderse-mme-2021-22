@@ -9,9 +9,15 @@
 
         constructor(id, name, time) {
             super();
+            this.id = id;
             this.view = this.createPlayerEntry();
             this.view.setAttribute("data-id", id);
-            this.view.querySelector(".player-list-entry-title").innerHTML = name;
+            this.view.addEventListener("mouseover", this.onMouseOverView.bind(this));
+            this.view.addEventListener("mouseout", this.onMouseOut.bind(this));
+            this.title = this.view.querySelector(".player-list-entry-title");
+            this.title.innerHTML = name;
+            this.title.addEventListener("click", this.onTitleClicked.bind(this));
+            this.inputTitle = this.view.querySelector(".player-list-entry-title-input");
             this.view.querySelector(".player-list-entry-time").innerHTML = time;
             this.deleteIcon = this.view.querySelector(".player-list-entry-icon-delete");
             this.playIcon = this.view.querySelector(".player-list-entry-icon-play");
@@ -20,6 +26,16 @@
             this.playIcon.addEventListener("click", this.play.bind(this));
             this.stopIcon.addEventListener("click", this.stop.bind(this));
             this.timerInterval = null;
+        }
+
+        onMouseOverView() {
+            let event = new Event("mouse-over-player-entry", this.id);
+            this.notifyAll(event);
+        }
+
+        onMouseOut() {
+            let event = new Event("mouse-out-player-entry", this.id);
+            this.notifyAll(event);
         }
 
         // Creates a Entry by using the template from the html document
@@ -88,6 +104,27 @@
             this.setTimeView("00:00");
             this.playIcon.classList.remove("hidden");
             this.stopIcon.classList.add("hidden");
+        }
+        
+        onTitleClicked() {
+            this.inputTitle.classList.remove("hidden");
+            this.title.classList.add("hidden");
+            this.inputTitle.value = this.title.innerHTML;
+            //document.addEventListener("click", e => this.onChangeTitle(e));
+            //document.addEventListener("keypress", e => this.onChangeTitle(e));
+            this.inputTitle.focus();
+            this.inputTitle.addEventListener("blur", e => this.onChangeTitle(e));
+        }
+
+        onChangeTitle(event){
+            //document.removeEventListener("click", this.onChangeTitle(event));
+            //document.removeEventListener("keypress", this.onChangeTitle(event));
+            this.inputTitle.classList.add("hidden");
+            this.title.classList.remove("hidden");
+            if(this.inputTitle.value.length !== 0){
+                this.title.innerHTML = this.inputTitle.value;
+            }
+            console.log(event.target.value);
         }
 
     }

@@ -97,6 +97,22 @@ TODO:
         - cast-end event muss geworfen werden, wenn der letzte track fertig ist -> zeigt wieder den play button an und versteckt den stopp button
         
 
+Unsere 10. Sitzung: 08.03.22 09:45 - 12:20
+
+- Markierungen werden hervorgehoben, wenn man über die Audio hovert
+- Zusammengehörige Markierungen werden beim hovern über diese angezeigt
+- Audio-Abspiel-Bugs wurden behoben
+- Es ist nun möglich Aufnahmen zu skippen, solte man diese einzeln abspielen
+- Der Start Cast Button wird nur angezeigt, sollte ein valides File geladen werden
+- Der Audio-Title einer Aufnahme kann nun auch im nachhinein mit einem Click auf den Titel verändert werden
+- Sollte bei der Audioaufnahme kein Titel vergeben werden, wird ein nummerierter Titel vergeben
+
+TODO:
+    - Der Titel einer Audio muss auch in der Datenstruktur verändert werden nicht nur im HTML
+        - Auch bei der Vergabe eines generierten Titels überprüfen
+    - Beim Hovern über eine zugeteilte Markierung (data-id = Record ID) soll der Record hervorgehoben werden
+
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

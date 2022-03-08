@@ -29,6 +29,9 @@ class CastController {
         this.playerList.addEventListener("entry-delete", this.onEntryDelete.bind(this));
         this.playerList.addEventListener("entry-play", this.onEntryPlay.bind(this));
         this.playerList.addEventListener("entry-stop", this.onEntryStop.bind(this));
+        this.playerList.addEventListener("mouse-over-player-entry", this.onHoverOverPlayerEntry.bind(this));
+        this.playerList.addEventListener("mouse-out-player-entry", this.onMouseLeavePlayerEntry.bind(this));
+
         // Audio Player - Controls
         this.playerControls = new PlayerControlsView();
         this.playerControls.addEventListener("play-records", this.onPlayRecords.bind(this));
@@ -54,6 +57,18 @@ class CastController {
         this.navView.addEventListener("cast-safe", this.safeCast.bind(this));
     }
 
+    //highlight code when hovering over player entry
+    onHoverOverPlayerEntry(event) {
+        let id = event.data;
+        this.codeView.highlightMarking(id);
+    }
+
+    //reset highlight when mouse leaves player entry
+    onMouseLeavePlayerEntry(event) {
+        let id = event.data;
+        this.codeView.resetMarking(id);
+    }
+
     // Function for communication between player and recorder
     onRecordingSend(event) {
         castManager.saveRecord(event);
@@ -66,7 +81,6 @@ class CastController {
 
     onRecordingSave(event) {
         castManager.saveRecord(event);
-        console.log("hi", event);
     }
 
     // Function for communication between player and recorder
@@ -76,8 +90,8 @@ class CastController {
 
     // Function for communication between player and recorder
     onRecordingDelete(event) {
-        //TODO:
-        this.recorder.stopTimer(); //TODO:implement
+        this.recorder.stopTimer();
+        this.codeView.removeUnconnectedMarkings();
     }
 
     // Validator checks dropped file
@@ -96,8 +110,10 @@ class CastController {
         if (FileTypeValidator.checkValidFileType(file)) {
             castManager.setFile(file);
             this.codeView.onFileDropped(file);
+            this.codeView.showButton();
         } else {
             this.codeView.onFileDropped(null);
+            this.codeView.hideButton();
         }
     }
 
@@ -111,8 +127,10 @@ class CastController {
     // When an audio file is recorded, it is transferred from the model to the view
     // to display a timeline entry
     onAudioSaved(event) {
-        console.log(event, castManager.currentRecord);
-        this.playerList.addEntry(castManager.currentRecord);
+        let currRecord = castManager.currentRecord,
+            id = currRecord.id;
+        this.playerList.addEntry(currRecord);
+        this.codeView.assignNewMarkings(id);
     }
 
     // Gets called when an Timeline/Player element gets deleted
@@ -121,6 +139,7 @@ class CastController {
         //event.data.getAttribute("data-id");
         console.log("ID to delete: ", entryID);
         castManager.deleteRecord(entryID);
+        this.codeView.removeMarkingsById(entryID);
     }
 
     // Gets called when an Timeline/Player element gets played
@@ -133,6 +152,7 @@ class CastController {
     onEntryStop(event) {
         let entryID = event.data;
         castManager.stopPlayRecord(entryID);
+        this.playerControls.resetIcons();
     }
 
     // Safes Cast in DB
@@ -143,7 +163,11 @@ class CastController {
 
     // Play the cast when player controller view recognizes a click
     onPlayRecords() {
-        castManager.playCast();
+        if (this.playerList.hasNoEntries()) {
+            this.playerControls.resetIcons();
+        } else {
+            castManager.playCast();
+        }
     }
 
     // Stop the cast when player controller view recognizes a click

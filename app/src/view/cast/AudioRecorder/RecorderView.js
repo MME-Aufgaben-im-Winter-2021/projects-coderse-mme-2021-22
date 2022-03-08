@@ -9,7 +9,8 @@ var iconLight,
     iconStop,
     startTime,
     timerInterval,
-    audioLength;
+    audioLength,
+    unnamedCastTitleNumber =1;
 
 class Recorder extends Observable {
 
@@ -56,11 +57,13 @@ class Recorder extends Observable {
     onSaveRecordingClicked() {
         console.log("Recording stops");
         stopTimer();
+        if(title.value === ""){
+        title.value = "Cast Title ("+unnamedCastTitleNumber+")";
+        unnamedCastTitleNumber++;
+        }
         this.hideIconSave();
         this.hideIconTrash();
         this.showIconMic();
-
-        // toggleIconLight();
         let data = {
                 title: title.value,
                 time: audioLength,
@@ -76,7 +79,6 @@ class Recorder extends Observable {
         this.hideIconMic();
         // this.showIconStop();
         startTimer.call(this);
-        // toggleIconLight();
         let event = new Event("start-recording", "data");
         this.notifyAll(event);
     }
@@ -162,6 +164,5 @@ function turnLightOn() {
 function turnLightOff() {
     iconLight.style.background = "transparent";
 }
-
 
 export default Recorder;

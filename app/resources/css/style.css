@@ -141,6 +141,7 @@ body {
     cursor: pointer;
 }
 
+
 div[class^="button"] {
     padding-right: 1.5vw;
     padding-left: 1.5vw;
@@ -251,6 +252,28 @@ div[class^="button"] {
     padding-right: 20px;
 }
 
+/* https://stackoverflow.com/questions/18793428/put-an-icon-after-list-item-with-after-and-font-awesome Abgerufen am 08.03.22*/
+.player-list-entry-title:hover:after {
+    position: absolute;
+    top: 10px;
+    right: auto;
+    margin-left: 5px;
+    bottom: 0;
+    width: 30px;
+    content: "";
+    color: var(--mauve);
+    cursor: pointer;
+    background-image: url("../icons/edit-3.svg");
+    filter:invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    background-repeat: no-repeat;
+}
+
+.player-list-entry-title:hover{
+    color: var(--mauve);
+    cursor: pointer;
+}
+
+
 .player-list-entry-time {
     color: white;
     font-size: medium;
@@ -307,6 +330,34 @@ div[class^="button"] {
 .player-list-entry-icon-delete:hover {
     cursor: pointer;
     filter: invert(19%) sepia(95%) saturate(7487%) hue-rotate(6deg) brightness(99%) contrast(120%);
+    cursor: pointer;
+}
+
+.player-list-entry-title-input {
+    font-size: large;
+    padding: 5px;
+    border-radius: 4px;
+    border-color: var(--mauve);
+    border: 2px solid var(--mauve);
+    background-color: var(--eerie-black-2);
+    color: white;
+    padding-left: 0.6vw;
+    padding-bottom: 8px;
+    width: 75%;
+    overflow: scroll;
+}
+
+.player-list-entry-title-input:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: var(--mauve);
+}
+
+.player-list-entry-title-input:hover {
+    background-color: var(--onyx);
+    color: var(--mauve);
+    border-color: white;
     cursor: pointer;
 }
 
@@ -398,7 +449,35 @@ div[class^="button"] {
 }
 
 mark {
+    background-color: transparent;
+    color: white;
+}
+
+.marking {
+    transition: text-shadow 1s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 1s;
+    text-shadow: 1px 1px 1px var(--baby-blue-eyes);
     background-color: var(--non-photo-blue);
+}
+
+.marking:hover {
+    transition: text-shadow 1s;
+    transition: background-color 1s;
+    text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue);
+    /* https://stackoverflow.com/questions/13426875/text-border-using-css-border-around-text#13427256 Abgerufen am 08.03.22 */
+    /* text-shadow: 1px 1px 1px  */
+    background-color: rgba(255, 255, 255, 0.253);
+}
+
+.marking-highlight {
+    transition: text-shadow 1s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 1s;
+    transition: color 1s;
+    color: black;
+    text-shadow: 1px 1px 1px var(--mauve);
+    background-color: var(--baby-pink);
 }
 
 /* ------------- BOTTOM-SECTION ------------- */

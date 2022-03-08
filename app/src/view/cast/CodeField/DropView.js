@@ -9,6 +9,7 @@ class DropView extends Observable {
         this.view = document.querySelector(".main-right-drag-drop-container");
         this.dropZone = new DropZone();
         this.dropZone.addEventListener("file-dropped", e => { this.notifyAll(e); });
+        this.dropZone.addEventListener("file-not-valid", this.hideButton.bind(this));
         this.chooseFileBtn = this.view.querySelector(".main-right-drag-drop-container-btn-select-file");
         this.chooseFileBtn.addEventListener("click", this.onSelectFileFromDiscClicked.bind(this));
         this.startBtn = this.view.querySelector(".main-right-drag-drop-container-btn");
@@ -36,6 +37,14 @@ class DropView extends Observable {
     onFileDropped(file) {
         this.dropZone.onFileDropped(file);
         this.currentFile = file;
+    }
+
+    showButton() {
+        this.startBtn.classList.remove("hidden");
+    }
+
+    hideButton() {
+        this.startBtn.classList.add("hidden");
     }
 
     // https://stackoverflow.com/questions/16215771/how-to-open-select-file-dialog-via-js#16215950

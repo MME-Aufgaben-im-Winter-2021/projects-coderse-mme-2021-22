@@ -34,7 +34,8 @@ class DropZone extends Observable {
         }
             // If a file is not valid, a error message is displayed to the user
         else {
-            // TODO: Besser Loesung finden
+            let event = new Event("file-not-valid", "not valid");
+            this.notifyAll(event);
             this.view.innerHTML = "That is not a valid file type. \nValid file types are: <strong>" + VALID_FILES + "</strong>";
         }
     }

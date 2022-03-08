@@ -9,7 +9,6 @@ class RecordManager extends Observable {
         super();
         this.data = [];
         this.playAllActive = false;
-        this.currentRecord = null;
         this.index = 0;
     }
 
@@ -22,10 +21,9 @@ class RecordManager extends Observable {
     deleteRecord(id) {
         let recordToDelete = this.data.filter(entry => entry.getID() === parseInt(id))[0],
             deletedIndex = this.getIndexFromRecord(recordToDelete);
-        if (this.currentRecord !== null && this.currentRecord !== undefined) {
-            if (this.currentRecord.getID() === parseInt(id)) {
-                console.log("Stop Audio");
-                this.currentRecord.stopAudio();
+        if (this.data[this.index] !== null && this.data[this.index] !== undefined) {
+            if (this.data[this.index].getID() === parseInt(id)) {
+                this.data[this.index].stopAudio();
                 if (this.playAllActive) {
                     this.playCast(this.index + 1);
                 }
@@ -44,15 +42,14 @@ class RecordManager extends Observable {
     // Stops the currentRecord and filters a specific element and plays the certain audio file
     playRecord(id) {
         let record = this.data.filter(entry => entry.getID() === parseInt(id))[0];
-        if (this.currentRecord !== null && this.currentRecord !== undefined) {
-            if (this.currentRecord.getID() !== parseInt(id)) {
-                this.onAudioEnd(this.currentRecord);
+        if (this.data[this.index] !== null && this.data[this.index] !== undefined) {
+            if (this.data[this.index].getID() !== parseInt(id)) {
+                this.onAudioEnd(this.data[this.index]);
             }
         }
         this.onAudioPlayed(record);
         this.index = this.getIndexFromRecord(record);
-        this.currentRecord = record;
-        this.currentRecord.playAudio();
+        record.playAudio();
     }
 
     // Stops the currentRecord
@@ -62,7 +59,7 @@ class RecordManager extends Observable {
             this.onAudioEnd(record);
         }
         this.index = 0;
-        this.currentRecord = null;
+        this.playAllActive = false;
     }
 
     getAllRecords() {
@@ -72,31 +69,29 @@ class RecordManager extends Observable {
     // Plays the cast from top to bottom
     // Set the id to start from another timeline entry
     playCast(index = 0) {
-        if (this.currentRecord !== null && this.currentRecord !== undefined) {
-            this.onAudioEnd(this.currentRecord);
+        if (this.data[this.index] !== null && this.data[this.index] !== undefined) {
+            this.onAudioEnd(this.data[this.index]);
         }
         this.index = index;
-        this.currentRecord = this.data[this.index];
         this.playAllActive = true;
-        if (this.currentRecord === undefined) {
+        if (this.data[this.index] === undefined || this.data[this.index] === null) {
             this.playAllActive = false;
+            this.onEndOfAutoplay();
             return;
         }
-        console.log(this.currentRecord, "curr");
-        this.currentRecord.playAudio();
-        this.onAudioPlayed(this.currentRecord);
+        console.log(this.data[this.index], "curr");
+        this.data[this.index].playAudio();
+        this.onAudioPlayed(this.data[this.index]);
     }
 
-    //stop the cast
+    // Stop the cast
     stopCast() {
-        console.log(this.currentRecord);
-        if (this.currentRecord) {
+        if (this.data[this.index]) {
             console.trace();
-            this.onAudioEnd(this.currentRecord);
+            this.onAudioEnd(this.data[this.index]);
         }
         this.playAllActive = false;
-        let event = new Event("cast-end", "cast play ended");
-        this.notifyAll(event);
+        this.onEndOfAutoplay();
     }
 
     onAudioPlayed(record) {
@@ -115,25 +110,35 @@ class RecordManager extends Observable {
 
     // Skips to the next timeline entry and plays it
     onNextRecord() {
-        if (this.playAllActive) {
-            this.onAudioEnd(this.data[this.index]);
-            if (this.index + 1 < this.data.length) {
-                this.index++;
-                this.data[this.index].playAudio();
-                // Event to tell UI that this element is done playing
-                this.onAudioPlayed(this.data[this.index]);
-            }
+        this.onAudioEnd(this.data[this.index]);
+        if (this.index + 1 < this.data.length) {
+            this.index++;
+            this.data[this.index].playAudio();
+            // Event to tell UI that this element is done playing
+            this.onAudioPlayed(this.data[this.index]);
         }
+        else {
+            this.onEndOfAutoplay();
+        }
+    }
+
+    onEndOfAutoplay()
+    {
+        let event = new Event("cast-end", "cast play ended");
+        this.notifyAll(event);
     }
 
     // Returns to the previous record and plays it
     onPreviousRecord() {
-        if (this.playAllActive) {
+        if(this.data[this.index] !== undefined && this.data[this.index] !== null) {
             this.onAudioEnd(this.data[this.index]);
             if (this.index - 1 >= 0) {
                 this.index--;
                 this.data[this.index].playAudio();
                 this.onAudioPlayed(this.data[this.index]);
+            }
+            else {
+                this.onEndOfAutoplay();
             }
         }
     }
