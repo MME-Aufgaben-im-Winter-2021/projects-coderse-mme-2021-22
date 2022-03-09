@@ -8,7 +8,7 @@
         "end_with_newline": false,
         "indent_char": " ",
         "indent_level": 0,
-        "indent_size": 2,
+        "indent_size": 4,
         "indent_with_tabs": false,
         "jslint_happy": false, 
         "keep_array_indentation": false, 
@@ -20,6 +20,6 @@
         "space_in_empty_paren": false, 
         "space_in_paren": false, 
         "unescape_strings": false, 
-        "wrap_line_length": 80 
+        "wrap_line_length": 120 
       }
     }
