@@ -5,7 +5,7 @@ import PlayerControlsView from "../view/cast/AudioPlayer/PlayerControlsView.js";
 import RecorderView from "../view/cast/AudioRecorder/RecorderView.js";
 import NavView from "../view/cast/Navbar/NavView.js";
 import CodeView from "../view/cast/CodeField/CodeView.js";
-import CastManager from "../model/castManager.js";
+import CastManager from "../model/CastManager.js";
 import FileTypeValidator from "../utils/FileTypeValidator.js";
 import DropView from "../view/cast/CodeField/DropView.js";
 
@@ -142,7 +142,7 @@ class CastController {
     }
 
     /* ---------------------------------------------------playerControls--------------------------------------------------------------- */
-    
+
     // Play the cast when player controller view recognizes a click
     onPlayRecords() {
         if (this.playerList.hasNoEntries()) {
