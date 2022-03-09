@@ -1,12 +1,13 @@
 import CastController from "./controller/castController.js";
 
 function init() {
-    initManagers();
+    initController();
 }
 
 // For all the controllers in the code cast edit 
-function initManagers() {
-    let castController = new CastController(); 
+function initController() {
+    let castController = new CastController();
+    castController.init();
 }
 
 init();

@@ -1,6 +1,6 @@
 /* eslint-env browser */
-import { Observable, Event } from '../../../utils/Observable.js';
-import PlayerEntry from './PlayerEntryView.js';
+import { Observable, Event } from "../../../utils/Observable.js";
+import PlayerEntry from "./PlayerEntryView.js";
 
 // Class for the Audio Player in Code Cast Edit screen
 class Player extends Observable {
@@ -69,13 +69,13 @@ class Player extends Observable {
     onMouseOverMarking(event) {
         let id = event.data,
             entry = this.getEntryById(id);
-        entry.showEntryHighlight();    
+        entry.showEntryHighlight();
     }
 
-    onMouseOutMarking(event){
+    onMouseOutMarking(event) {
         let id = event.data,
             entry = this.getEntryById(id);
-        entry.deleteEntryHighlight(); 
+        entry.deleteEntryHighlight();
     }
 
 }

@@ -39,7 +39,6 @@ function startInputStream(self) {
         mediaRecorder.ondataavailable = event => {
             let file = URL.createObjectURL(event.data);
             onAudioFileRecorded(file, self);
-            // window.open(file);
         };
         mediaRecorder.start();
     });
@@ -47,7 +46,6 @@ function startInputStream(self) {
 
 // Communicate the complete audio file with an event 
 function onAudioFileRecorded(file, self) {
-    console.log(file, self);
     self.data = file;
     let event = new Event("audio-recorded", file);
     self.notifyAll(event);

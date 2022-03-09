@@ -7,6 +7,7 @@ import NavView from "../view/cast/Navbar/NavView.js";
 import CodeView from "../view/cast/CodeField/CodeView.js";
 import CastManager from "../model/castManager.js";
 import FileTypeValidator from "../utils/FileTypeValidator.js";
+import DropView from "../view/cast/CodeField/DropView.js";
 
 var castManager;
 
@@ -15,7 +16,11 @@ var castManager;
 
 class CastController {
 
-    constructor() {
+    // constructor() {
+    //     this.init();
+    // }
+
+    init() {
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
@@ -39,6 +44,7 @@ class CastController {
         this.playerControls.addEventListener("stop-records", this.onStopRecords.bind(this));
         this.playerControls.addEventListener("previous-record", this.onPreviousRecord.bind(this));
         this.playerControls.addEventListener("next-record", this.onNextRecord.bind(this));
+
         // Audio Recorder
         this.recorder = new RecorderView();
         this.recorder.addEventListener("send-recording", this.onRecordingSend.bind(this));
@@ -49,17 +55,21 @@ class CastController {
 
         // Code View
         this.codeView = new CodeView();
-        this.codeView.addEventListener("file-dropped", this.onFileDropped.bind(this));
-        this.codeView.addEventListener("file-selected", this.onFileSelected.bind(this));
         this.codeView.addEventListener("marking-mouse-over", (e) => this.playerList.onMouseOverMarking(e));
         this.codeView.addEventListener("marking-mouse-out", (e) => this.playerList.onMouseOutMarking(e));
+
+        // Drop View
+        this.dropView = new DropView();
+        this.dropView.addEventListener("file-ready", (e) => this.codeView.handleFile(e));
+        this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
+        this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
         // Navbar View
         this.navView = new NavView();
         this.navView.addEventListener("cast-safe", this.safeCast.bind(this));
     }
-    
-/* ---------------------------------------------------castManager--------------------------------------------------------------- */
+
+    /* ---------------------------------------------------castManager--------------------------------------------------------------- */
 
     // When an audio file is recorded, it is transferred from the model to the view
     // to display a timeline entry
@@ -80,23 +90,21 @@ class CastController {
         this.playerList.startPlayedEntry(event);
         this.codeView.highlightPlayMarking(event.data.getID());
     }
-    
+
     endPlayedEntry(event) {
         this.playerList.endPlayedEntry(event);
         this.codeView.resetPlayMarking(event.data.getID());
     }
-    
+
     onCastEnded() {
         this.playerControls.resetIcons();
     }
 
-/* ---------------------------------------------------playerList--------------------------------------------------------------- */
+    /* ---------------------------------------------------playerList--------------------------------------------------------------- */
 
     // Gets called when an Timeline/Player element gets deleted
     onEntryDelete(event) {
         let entryID = event.data.data.attributes[1].value;
-        //event.data.getAttribute("data-id");
-        console.log("ID to delete: ", entryID);
         castManager.deleteRecord(entryID);
         this.codeView.removeMarkingsById(entryID);
     }
@@ -128,12 +136,13 @@ class CastController {
         this.codeView.resetMarking(id);
     }
 
-    onEntryTitleChanged(event){
+    onEntryTitleChanged(event) {
         let data = event.data;
         castManager.onEntryTitleChanged(data);
     }
 
-/* ---------------------------------------------------playerControls--------------------------------------------------------------- */
+    /* ---------------------------------------------------playerControls--------------------------------------------------------------- */
+    
     // Play the cast when player controller view recognizes a click
     onPlayRecords() {
         if (this.playerList.hasNoEntries()) {
@@ -157,14 +166,14 @@ class CastController {
     onPreviousRecord() {
         castManager.onPreviousRecord();
     }
-    
 
-/* ---------------------------------------------------recorder--------------------------------------------------------------- */
+    /* ---------------------------------------------------recorder--------------------------------------------------------------- */
 
     // Function for communication between player and recorder
     onRecordingSend(event) {
         castManager.saveRecord(event);
     }
+
     // Function for communication between player and recorder
     onRecordingStart() {
         castManager.startRecord();
@@ -180,11 +189,12 @@ class CastController {
         this.recorder.stopTimer();
         this.codeView.removeUnconnectedMarkings();
     }
+
     onRecordingSave(event) {
         castManager.saveRecord(event);
     }
 
-/* ---------------------------------------------------codeView--------------------------------------------------------------- */
+    /* ---------------------------------------------------dropView--------------------------------------------------------------- */
 
     // Validator checks dropped file
     // File is stored in Cast Manager model
@@ -194,22 +204,22 @@ class CastController {
         FileTypeValidator.check(event.data);
         file = FileTypeValidator.getFile();
         castManager.setFile(file);
-        this.codeView.onFileDropped(file);
+        this.dropView.onFileDropped(file);
     }
 
     onFileSelected(event) {
         let file = event.data;
         if (FileTypeValidator.checkValidFileType(file)) {
             castManager.setFile(file);
-            this.codeView.onFileDropped(file);
-            this.codeView.showButton();
+            this.dropView.onFileDropped(file);
+            this.dropView.showButton();
         } else {
-            this.codeView.onFileDropped(null);
-            this.codeView.hideButton();
+            this.dropView.onFileDropped(null);
+            this.dropView.hideButton();
         }
     }
-    
-/* ---------------------------------------------------navView--------------------------------------------------------------- */
+
+    /* ---------------------------------------------------navView--------------------------------------------------------------- */
 
     // Safes Cast in DB
     safeCast(event) {

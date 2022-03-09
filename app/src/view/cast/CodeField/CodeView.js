@@ -1,29 +1,16 @@
 /* eslint-env browser */
+import Config from "../../../utils/Config.js";
 import { Event, Observable } from "../../../utils/Observable.js";
-import DropView from "./DropView.js";
 
 class CodeView extends Observable {
     constructor() {
         super();
-        this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", this.handleFile.bind(this));
-        this.dropView.addEventListener("file-dropped", e => { this.notifyAll(e); });
-        this.dropView.addEventListener("file-selected", e => { this.notifyAll(e); });
         this.container = document.querySelector(".main-right-code-container");
         this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
     }
 
-    showButton() {
-        this.dropView.showButton();
-    }
-
-    hideButton() {
-        this.dropView.hideButton();
-    }
-
     // Shows File
     handleFile(event) {
-        this.dropView.showButton();
         let codeInput = event.data;
         this.container.innerText = codeInput;
     }
@@ -50,7 +37,7 @@ class CodeView extends Observable {
         mark.appendChild(selectionContents);
         range.insertNode(mark);
 
-        this.clearMarkings(selection.focusOffset, mark);
+        this.clearMarkings(mark);
 
         this.clearSelection();
     }
@@ -62,11 +49,6 @@ class CodeView extends Observable {
         } else if (window.getSelection().removeAllRanges) {
             window.getSelection().removeAllRanges();
         }
-    }
-
-    // Inform CastController
-    onFileDropped(file) {
-        this.dropView.onFileDropped(file);
     }
 
     //assigns a data-property to the new markings
@@ -83,13 +65,13 @@ class CodeView extends Observable {
         }
     }
     // Sends id from hover over markings to CastController
-    onMouseOverMarking(id){
+    onMouseOverMarking(id) {
         let event = new Event("marking-mouse-over", id);
         this.notifyAll(event);
     }
 
     // Stops hover over markings 
-    onMouseOutMarking(id){
+    onMouseOutMarking(id) {
         let event = new Event("marking-mouse-out", id);
         this.notifyAll(event);
     }
@@ -125,7 +107,7 @@ class CodeView extends Observable {
         let markings = document.querySelectorAll(
             `.main-right-code-container > mark[data-id="${id}"]`);
         markings.forEach(el => {
-            if(!el.classList.contains("marking-highlight-play")){
+            if (!el.classList.contains("marking-highlight-play")) {
                 el.classList.add("marking-highlight");
             }
             el.classList.remove("marking");
@@ -137,14 +119,13 @@ class CodeView extends Observable {
             `.main-right-code-container > mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight");
-            if(!el.classList.contains("marking-highlight-play")){
+            if (!el.classList.contains("marking-highlight-play")) {
                 el.classList.add("marking");
             }
         });
     }
 
     highlightPlayMarking(id) {
-        console.log("ID: ", id);
         let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.add("marking-highlight-play");
@@ -161,15 +142,14 @@ class CodeView extends Observable {
     }
 
     // Removes overlapping and empty marks
-    clearMarkings(offset, mark) {
+    clearMarkings(mark) {
         let markings,
             elements, prevEl,
             range = document.createRange(),
             textEl = document.createElement("span"),
             textContent, emptyMark, spans;
-        if (mark.previousSibling.nodeType ===
-            3
-        ) { //if the previous element of the mark element is text, the text is packed in a span, so that it stays in the same position when connecting the mark elements
+        //if the previous element of the mark element is text, the text is packed in a span, so that it stays in the same position when connecting the mark elements
+        if (mark.previousSibling.nodeType === Config.NODE_TYPE_TEXT) {
             range.setStart(mark.previousSibling, 0);
             range.setEnd(mark, 0);
             textContent = range.extractContents();
@@ -178,20 +158,21 @@ class CodeView extends Observable {
             emptyMark = textEl.querySelector("mark");
             emptyMark.parentElement.removeChild(emptyMark);
         }
-        markings = document.querySelectorAll(
-            ".main-right-code-container > mark"); //remove empty top level mark tags
+        //remove empty top level mark tags
+        markings = document.querySelectorAll(".main-right-code-container > mark");
         markings.forEach(mark => {
             if (mark.innerHTML.length === 0) {
                 mark.parentNode.removeChild(mark);
             }
         });
-        spans = document.querySelectorAll(".main-right-code-container > span"); //remove empty top level span tags
+        //remove empty top level span tags
+        spans = document.querySelectorAll(".main-right-code-container > span");
         spans.forEach(span => {
             if (span.innerHTML.length === 0) {
                 span.parentNode.removeChild(span);
             }
         });
-        //replace all child mark tags of a top level mark tag with their content TODO: replace sth? based on id???
+        //replace all child mark tags of a top level mark tag with their content
         markings = document.querySelectorAll(".main-right-code-container > mark");
         markings.forEach(mark => {
             let els = mark.querySelectorAll("mark");
@@ -201,9 +182,9 @@ class CodeView extends Observable {
         });
         elements = document.querySelectorAll(".main-right-code-container > *");
         prevEl = elements[0];
-        for (let i = 1; i < elements.length - 1; i++) { //connect two consecutive mark elements to one
-            if (prevEl.tagName === "MARK" && elements[i].tagName ===
-                "MARK") {
+        //connect two consecutive mark elements to one
+        for (let i = 1; i < elements.length - 1; i++) {
+            if (prevEl.tagName === "MARK" && elements[i].tagName === "MARK") {
                 // if() check for previous id and connect only when id is same and then give new mark the same id
                 if (prevEl.getAttribute("data-id") === elements[i].getAttribute("data-id")) {
                     let newMark = document.createElement("mark");

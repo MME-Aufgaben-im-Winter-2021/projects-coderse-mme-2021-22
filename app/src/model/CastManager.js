@@ -48,7 +48,6 @@ class CastManager extends Observable {
     }
 
     saveRecord(event) {
-        // audioManager.stopRecord(); TODO:
         this.currentRecord.title = event.data.title;
         this.currentRecord.time = event.data.time;
         recordManager.addRecord(this.currentRecord);
@@ -70,7 +69,6 @@ class CastManager extends Observable {
 
     //adds Audio to the current Record object and informs the CastController
     onAudioFileRecorded(event) {
-        console.log(event.data);
         this.currentRecord.setAudio(event.data);
         let ev = new Event("audio-recorded", this.currentRecord);
         this.notifyAll(ev);

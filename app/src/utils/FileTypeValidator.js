@@ -13,7 +13,6 @@ class FileTypeValidator{
 
     check(event) {
         this.file = checkFile(event);
-        console.log(this.file);
     }
 
     getFile(){
@@ -54,7 +53,6 @@ function checkValidFileType(file){
             boolean = true;
         }
     });
-    console.log(boolean);
     return boolean;
 }
 

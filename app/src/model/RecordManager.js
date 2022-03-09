@@ -79,7 +79,6 @@ class RecordManager extends Observable {
             this.onEndOfAutoplay();
             return;
         }
-        console.log(this.data[this.index], "curr");
         this.data[this.index].playAudio();
         this.onAudioPlayed(this.data[this.index]);
     }
@@ -87,7 +86,6 @@ class RecordManager extends Observable {
     // Stop the cast
     stopCast() {
         if (this.data[this.index]) {
-            console.trace();
             this.onAudioEnd(this.data[this.index]);
         }
         this.playAllActive = false;

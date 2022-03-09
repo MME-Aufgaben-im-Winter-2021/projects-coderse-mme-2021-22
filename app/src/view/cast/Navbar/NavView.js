@@ -1,11 +1,11 @@
 /* eslint-env browser */
 
-import {Observable, Event} from "../../../utils/Observable.js";
+import { Observable, Event } from "../../../utils/Observable.js";
 
 // View for the Navbar of the Cast Creation - Useful for routing and setting the cast title
 class NavView extends Observable {
 
-    constructor(){
+    constructor() {
         super();
         this.view = document.querySelector(".nav-bar");
         this.safeBtn = this.view.querySelector(".button-save");
@@ -20,18 +20,18 @@ class NavView extends Observable {
     }
 
     // Event which fires on Save-Button click to safe/end the Cast
-    castSafe(){
+    castSafe() {
         let title = this.castTitle.value,
             event = new Event("cast-safe", title);
         this.notifyAll(event);
     }
 
-    switchUser(){
-        console.log("YOU ARE NOW ON THE USER PAGE");
+    switchUser() {
+        // console.log("YOU ARE NOW ON THE USER PAGE");
     }
 
-    switchHome(){
-        console.log("YOU ARE NOW ON THE HOME PAGE");
+    switchHome() {
+        // console.log("YOU ARE NOW ON THE HOME PAGE");
     }
 }
 

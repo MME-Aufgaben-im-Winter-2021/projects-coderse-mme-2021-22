@@ -1,7 +1,8 @@
+    import Config from "../../../utils/Config.js";
     import { Observable, Event } from "../../../utils/Observable.js";
 
     /* eslint-env browser */
-    const TEMPLATE = document.getElementById('player-template').innerHTML
+    const TEMPLATE = document.getElementById("player-template").innerHTML
         .trim();
 
     // A single Entry for the Audio Player consisting of a time, a name and a audio file
@@ -84,15 +85,15 @@
             this.view.classList.add("player-list-entry-mark");
             this.timerInterval = setInterval(() => {
                 let currentTime = Date.now(),
-                    formatter = new Intl.NumberFormat('de-DE', { minimumIntegerDigits: 2 }),
+                    formatter = new Intl.NumberFormat("de-DE", { minimumIntegerDigits: 2 }),
                     minutes,
                     seconds;
-                audioLength = Math.floor((currentTime - startTime) / 1000);
-                minutes = formatter.format(Math.floor(audioLength / 60));
-                seconds = formatter.format(audioLength % 60);
+                audioLength = Math.floor((currentTime - startTime) / Config.MS_OF_SEC);
+                minutes = formatter.format(Math.floor(audioLength / Config.SEC_OF_MIN));
+                seconds = formatter.format(audioLength % Config.SEC_OF_MIN);
                 audioLength = minutes + ":" + seconds;
                 this.setTimeView(audioLength);
-            }, 100);
+            }, Config.INTERVAL_REFRESH_RATE);
             this.playIcon.classList.add("hidden");
             this.stopIcon.classList.remove("hidden");
         }
@@ -105,7 +106,7 @@
             this.playIcon.classList.remove("hidden");
             this.stopIcon.classList.add("hidden");
         }
-        
+
         onTitleClicked() {
             this.inputTitle.classList.remove("hidden");
             this.title.classList.add("hidden");
@@ -113,18 +114,18 @@
             this.inputTitle.focus();
             this.inputTitle.addEventListener("blur", this.onChangeTitle.bind(this));
             this.inputTitle.addEventListener("keypress", event => {
-                if(event.key === "Enter") {
+                if (event.key === "Enter") {
                     this.onChangeTitle();
                 }
             });
         }
 
-        onChangeTitle(){
+        onChangeTitle() {
             let event,
                 data;
             this.inputTitle.classList.add("hidden");
             this.title.classList.remove("hidden");
-            if(this.inputTitle.value.length !== 0){
+            if (this.inputTitle.value.length !== 0) {
                 this.title.innerHTML = this.inputTitle.value;
             }
             data = {

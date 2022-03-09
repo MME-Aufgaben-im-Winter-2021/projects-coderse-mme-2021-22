@@ -4,6 +4,7 @@ import DropZone from "./DropZone.js";
 
 // View for the Code section of the Cast edit
 class DropView extends Observable {
+
     constructor() {
         super();
         this.view = document.querySelector(".main-right-drag-drop-container");
@@ -35,6 +36,7 @@ class DropView extends Observable {
 
     //informs CodeView and stores the current file
     onFileDropped(file) {
+        this.showButton();
         this.dropZone.onFileDropped(file);
         this.currentFile = file;
     }

@@ -113,6 +113,14 @@ TODO:
     - Beim Hovern über eine zugeteilte Markierung (data-id = Record ID) soll der Record hervorgehoben werden
 
 
+Unsere 11. Sitzung: 09.03.22 10:00 - 11:00
+
+- Entfernen der Log-Statements
+- Auslagern der Drop-View
+- Auslagern der Magic Numbers
+- Eslint Fehler behoben
+
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

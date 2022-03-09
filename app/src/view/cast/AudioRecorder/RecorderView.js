@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
 import { Observable, Event } from "../../../utils/Observable.js";
+import Config from "../../../utils/Config.js";
 
 var iconLight,
     title,
@@ -10,7 +11,7 @@ var iconLight,
     startTime,
     timerInterval,
     audioLength,
-    unnamedCastTitleNumber =1;
+    unnamedCastTitleNumber = 1;
 
 class Recorder extends Observable {
 
@@ -57,9 +58,9 @@ class Recorder extends Observable {
 
     onSaveRecordingClicked() {
         stopTimer();
-        if(title.value === ""){
-        title.value = "Cast Title ("+unnamedCastTitleNumber+")";
-        unnamedCastTitleNumber++;
+        if (title.value === "") {
+            title.value = "Cast Title (" + unnamedCastTitleNumber + ")";
+            unnamedCastTitleNumber++;
         }
         this.hideIconSave();
         this.hideIconTrash();
@@ -135,18 +136,18 @@ function startTimer() {
     startTime = Date.now();
     timerInterval = setInterval(() => {
         let currentTime = Date.now(),
-            formatter = new Intl.NumberFormat('de-DE', { minimumIntegerDigits: 2 }),
+            formatter = new Intl.NumberFormat("de-DE", { minimumIntegerDigits: 2 }),
             minutes,
             seconds;
-        audioLength = Math.floor((currentTime - startTime) / 1000);
-        minutes = formatter.format(Math.floor(audioLength / 60));
-        seconds = formatter.format(audioLength % 60);
+        audioLength = Math.floor((currentTime - startTime) / Config.MS_OF_SEC);
+        minutes = formatter.format(Math.floor(audioLength / Config.SEC_OF_MIN));
+        seconds = formatter.format(audioLength % Config.SEC_OF_MIN);
         audioLength = minutes + ":" + seconds;
         time.innerHTML = audioLength;
-        if (seconds >= 3) { //minimum time
+        if (seconds >= Config.MIN_SEC_OF_AUDIO_REC) { //minimum time
             this.showIconStop();
         }
-    }, 1000);
+    }, Config.INTERVAL_REFRESH_RATE);
 }
 
 //Stops the timer and showing the time in the UI
