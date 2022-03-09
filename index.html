@@ -4,16 +4,104 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MME: Projekte im WS 2021/22</title>
+    <title>Code-Cast Edit</title>
     <link rel="stylesheet" href="./resources/css/style.css">
+    <link rel="shortcut icon" type="image/jpg" href="./resources/custom-icons/MME-Codeverse-Logo logo.svg" />
+    <!-- <link rel="stylesheet" href="./resources/css/user-edit-screen.css"> -->
 </head>
 
 <body>
-    <div class="ui">
-        <h1>MME: Projekte im WS 2021/22</h1>
-    </div>
+    <div class="main">
+        <div class="nav-bar">
+            <div class="nav-align-left">
+                <div class="logo">
+                    <img src="./resources/custom-icons/MME-Codeverse-Logo2.svg">
+                </div>
+                <input class="code-cast-title" type="text" value="Code-Cast Title">
+            </div>
 
-   <script type="module" src="./src/index.js"></script>
+            <div class="nav-align-right">
+                <div class="button-save">
+                    Save
+                </div>
+                <div class="home">
+                    Home
+                </div>
+
+                <div class="user">
+                    <div class="user-name">Username</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="main-content">
+            <div class="main-left">
+                <ul class="player-list">
+
+
+                </ul>
+            </div>
+            <div class="main-right">
+                <div class="main-right-drag-drop-container">
+                    Drag and Drop your file here!
+                    <div id="drop_zone" class="main-right-drag-drop-field">
+                    </div>
+                    <div class="main-right-drag-drop-container-btn-select-file">Select file from disc</div>
+                    <div class="main-right-drag-drop-container-btn hidden">Start the Cast</div>
+                </div>
+                <div class="main-right-code-container">
+                    <!-- <img src ="./resources/icons/plus-circle.svg" class="code-icon-add"> -->
+                </div>
+
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="bottom-left">
+                <div class="player">
+                    <img src="./resources/icons/skip-back.svg" class="player-icon-backward">
+                    <img src="./resources/icons/play-circle.svg" class="player-icon-play">
+                    <img src="./resources/icons/stop-circle.svg" class="player-icon-stop hidden">
+                    <img src="./resources/icons/skip-forward.svg" class="player-icon-forward">
+                </div>
+            </div>
+            <div class="bottom-right">
+                <div class="recorder">
+                    <div class="recorder-left">
+                        <img src="./resources/icons/circle.svg" class="recorder-icon-light">
+                        <input class="recorder-title" type="text" value="Cast Title">
+                    </div>
+                    <div class="recorder-right">
+                        <div class="recorder-time">00:00</div>
+                        <img src="./resources/icons/mic.svg" class="recorder-icon-start">
+                        <img src="./resources/icons/trash-2.svg" class="recorder-icon-trash hidden">
+                        <img src="./resources/icons/stop-circle.svg" class="recorder-icon-stop hidden">
+                        <img src="./resources/icons/save.svg" class="recorder-icon-save hidden">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <!-- Template for single player frame, shown in timeline-->
+    <template id="player-template">
+        <li class="player-list-entry" data-id="">
+            <div class="player-list-entry-title"></div>
+            <input class="player-list-entry-title-input hidden" type="text">
+            <div class="player-list-entry-time"></div>
+            <div class="player-list-entry-play-group">
+                <img src="./resources/icons/play-circle.svg" class="player-list-entry-icon-play">
+                <img src="./resources/icons/stop-circle.svg" class="player-list-entry-icon-stop hidden">
+                <div class="player-list-entry-play-time">00:00</div>
+            </div>
+            <img src="./resources/icons/trash.svg" class="player-list-entry-icon-delete">
+        </li>
+    </template>
+    <script type="module" src="./src/index.js"></script>
 </body>
 
 </html>

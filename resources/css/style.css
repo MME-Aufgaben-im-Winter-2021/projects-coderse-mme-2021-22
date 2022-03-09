@@ -1,28 +1,49 @@
 /* Beispiel für die Einbindung zusätzlicher Schriftarten via Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 
 /* Beispiel für die einfache Einbindung eines Farbschema, generiert auf coolors.co */
 :root {
-    --turquoise-green: #b9e3c6ff;
-    --ocean-green: #59c9a5ff;
-    --ruby: #d81e5bff;
-    --prussian-blue: #23395bff;
-    --canary: #fffd98ff;
-    --snow: #f7f2f4ff;
-    --jet: #343434ff;
-}
+    --lemon-chiffon: #fbf8ccff;
+    --champagne-pink: #fde4cf;
+    --baby-pink: #ffcfd2;
+    --pink-lavender: #f1c0e8ff;
+    --mauve: hsl(263, 64%, 84%);
+    --mauve-dark: hsl(263, 64%, 74%);
+    --baby-blue-eyes: #a3c4f3ff;
+    --non-photo-blue: #90dbf4ff;
+    --electric-blue: #8eecf5ff;
+    --magic-mint: hsl(167, 82%, 78%);
+    --granny-smith-apple: hsl(126, 89%, 85%);
 
-.attachment-full {
-    position: fixed;
-    top: 0;
-    left: 0;
+    --black: #000000ff;
+    --eerie-black: #1a1a1aff;
+    --eerie-black-2: #262626ff;
+    --jet: #333333ff;
+    --onyx: #404040ff;
+
+    --strong-red: #ff0000;
+
 }
 
 .hidden {
     display: none !important;
 }
 
+.invisible {
+    visibility: hidden !important;
+    background-color: var(--electric-blue);
+}
+
+/* 
 body {
     background-color: var(--snow);
     font-family: 'Space Grotesk', sans-serif;
@@ -41,4 +62,567 @@ body {
 .ui h1 {
     text-align: center;
     color: var(--jet);
+} */
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--eerie-black);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+/* ------------- NAVIGATION ------------- */
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    height: 7vh;
+    width: 100%;
+    align-items: center;
+}
+
+.nav-align-left {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    overflow: hidden;
+    align-items: center;
+    user-select: none;
+}
+
+.nav-align-right {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
+    user-select: none;
+}
+
+.nav-align-left>div {
+    margin: 0.2vh 1vw;
+}
+
+.nav-align-right>div {
+    margin: 0.2vh 1vw;
+}
+
+.logo {
+    width: 120px;
+    height: 60px;
+    /* width = 2 * height */
+    overflow: hidden;
+}
+
+.code-cast-title {
+    height: fit-content;
+}
+
+.code-cast-title {
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 4px;
+    border-color: var(--mauve);
+    border: 2px solid var(--mauve);
+    background-color: var(--eerie-black-2);
+    color: white;
+    padding-left: 0.6vw;
+}
+
+.code-cast-title:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: var(--mauve);
+}
+
+.code-cast-title:hover {
+    background-color: var(--onyx);
+    color: var(--mauve);
+    border-color: white;
+    cursor: pointer;
+}
+
+
+div[class^="button"] {
+    padding-right: 1.5vw;
+    padding-left: 1.5vw;
+    border-radius: 4px;
+}
+
+.button-save {
+    background-color: var(--granny-smith-apple);
+    /* color: var(--eerie-black-2); */
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+}
+
+.button-save:hover {
+    background-color: hsl(126, 89%, 95%);
+    /* color: var(--eerie-black-2); */
+    border: 2px solid var(--granny-smith-apple);
+    cursor: pointer;
+}
+
+.home:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
+
+.user {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin: 0;
+}
+
+.user-icon {
+    margin-left: 1vw;
+}
+
+.user-name:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
+
+
+
+/* ------------- MAIN-SECTION ------------- */
+.main-content {
+    display: flex;
+    flex-direction: row;
+    height: 81vh;
+}
+
+/* ------------- PLAYER-TIMELINE ------------- */
+.main-left {
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+}
+
+.player-list {
+    background-color: var(--eerie-black-2);
+    height: 81vh;
+    padding: 5%;
+    list-style: none;
+    overflow: auto;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+
+}
+
+.player-list-entry {
+    width: 85%;
+    margin: auto;
+    margin-bottom: 2vh;
+    padding: 10px;
+    padding-left: 20px;
+    /* height: 124px; */
+    background-color: var(--onyx);
+    border-radius: 15px;
+    position: relative;
+    border: 2px solid black;
+    overflow: hidden;
+    user-select: none;
+}
+
+.player-list-entry-mark {
+    /* border: 2px solid var(--mauve); */
+    box-shadow: 2px 0px 3px hsl(263, 64%, 74%), 0px 2px 3px hsl(263, 64%, 74%), -2px 0px 3px hsl(263, 64%, 74%), 0px -2px 3px hsl(263, 64%, 74%);
+}
+
+.player-list-entry-highlight {
+    box-shadow: 2px 0px 3px var(--non-photo-blue), 0px 2px 3px var(--non-photo-blue), -2px 0px 3px var(--non-photo-blue), 0px -2px 3px var(--non-photo-blue);
+}
+
+.player-list-entry-play-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 2vh;
+    margin-bottom: 1.6vh;
+}
+
+.player-list-entry-play-group>* {
+    margin: 0 2vw;
+}
+
+.player-list-entry-title {
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    padding-right: 20px;
+}
+
+/* https://stackoverflow.com/questions/18793428/put-an-icon-after-list-item-with-after-and-font-awesome Abgerufen am 08.03.22*/
+.player-list-entry-title:hover:after {
+    position: absolute;
+    top: 10px;
+    right: auto;
+    margin-left: 5px;
+    bottom: 0;
+    width: 30px;
+    content: "";
+    color: var(--mauve);
+    cursor: pointer;
+    background-image: url("../icons/edit-3.svg");
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    background-repeat: no-repeat;
+}
+
+.player-list-entry-title:hover {
+    color: var(--mauve);
+    cursor: pointer;
+}
+
+
+.player-list-entry-time {
+    color: white;
+    font-size: medium;
+    width: 100%;
+}
+
+.player-list-entry-icon-play {
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    width: 1.7vw;
+    height: 1.7vw;
+    margin: auto 0 auto 10px;
+    /* position: absolute; */
+    /* left: 30px; */
+    /* top: 75px; */
+    transform: scale(2);
+    border-radius: 25px;
+    transition: all 200ms ease-in-out;
+}
+
+.player-list-entry-icon-play:hover {
+    background-color: var(--mauve);
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+.player-list-entry-icon-stop {
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    width: 1.7vw;
+    height: 1.7vw;
+    margin: auto 0 auto 10px;
+    /* position: absolute; */
+    /* left: 30px; */
+    /* top: 75px; */
+    transform: scale(2);
+    border-radius: 25px;
+    transition: all 200ms ease-in-out;
+}
+
+.player-list-entry-icon-stop:hover {
+    background-color: var(--mauve);
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+.player-list-entry-icon-delete {
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    height: 25px;
+    width: 25px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.player-list-entry-icon-delete:hover {
+    cursor: pointer;
+    filter: invert(19%) sepia(95%) saturate(7487%) hue-rotate(6deg) brightness(99%) contrast(120%);
+    cursor: pointer;
+}
+
+.player-list-entry-title-input {
+    font-size: large;
+    padding: 5px;
+    border-radius: 4px;
+    border-color: var(--mauve);
+    border: 2px solid var(--mauve);
+    background-color: var(--eerie-black-2);
+    color: white;
+    padding-left: 0.6vw;
+    padding-bottom: 8px;
+    width: 75%;
+    overflow: scroll;
+}
+
+.player-list-entry-title-input:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: var(--mauve);
+}
+
+.player-list-entry-title-input:hover {
+    background-color: var(--onyx);
+    color: var(--mauve);
+    border-color: white;
+    cursor: pointer;
+}
+
+/* ------------- CODE ------------- */
+.main-right {
+    width: 75vw;
+    padding: 20px;
+    overflow: auto;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    white-space: pre;
+    user-select: none;
+}
+
+.main-right-code-container {
+    font-family: 'Anonymous Pro', sans-serif;
+    user-select: text;
+}
+
+.main-right-drag-drop-container {
+    background-color: var(--eerie-black-2);
+    /* height: 65%; */
+    width: 50%;
+    margin: auto;
+
+    text-align: center;
+    color: white;
+    font-size: xx-large;
+    padding: 20px;
+    border-radius: 4px;
+    white-space: normal;
+    user-select: none;
+}
+
+#drop_zone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-right-drag-drop-container>* {
+    margin: 8vh;
+}
+
+
+.main-right-drag-drop-field {
+    width: 80%;
+    height: 200px;
+    margin: auto;
+    margin-top: 15px;
+    border: 0.8vh dashed white;
+    background-color: var(--onyx);
+    font-size: large;
+    color: var(--mauve);
+}
+
+.main-right-drag-drop-container-btn {
+    border-radius: 4px;
+    width: 40%;
+    padding: 10px;
+    margin: 4vh 0 auto auto;
+    background-color: var(--granny-smith-apple);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+    font-size: medium;
+}
+
+.main-right-drag-drop-container-btn-select-file {
+    width: 50%;
+    margin: 2vh auto auto auto;
+    border-radius: 4px;
+    background-color: var(--mauve);
+    padding: 10px 0;
+    border: 2px solid hsl(263, 64%, 94%);
+    color: var(--eerie-black-2);
+    font-size: medium;
+}
+
+.main-right-drag-drop-container-btn-select-file:hover {
+    background-color: hsl(263, 64%, 94%);
+    border: 2px solid var(--mauve);
+    cursor: pointer;
+}
+
+.main-right-drag-drop-container-btn:hover {
+    background-color: hsl(126, 89%, 95%);
+    border: 2px solid var(--granny-smith-apple);
+    cursor: pointer;
+}
+
+mark {
+    background-color: transparent;
+    color: white;
+}
+
+.marking {
+    transition: text-shadow 1s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 1s;
+    text-shadow: 1px 1px 1px var(--electric-blue);
+    background-color: var(--baby-blue-eyes);
+    color: black;
+}
+
+.marking[data-id] {
+    transition: text-shadow 1s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 1s;
+    text-shadow: 1px 0px 1px var(--eerie-black), 0px 1px 1px var(--eerie-black), -1px 0px 1px var(--eerie-black), 0px -1px 1px var(--eerie-black);
+    background-color: var(--jet);
+    color: white;
+}
+
+.marking:hover {
+    transition: text-shadow 1s;
+    transition: background-color 1s;
+    /* text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue); */
+    /* https://stackoverflow.com/questions/13426875/text-border-using-css-border-around-text#13427256 Abgerufen am 08.03.22 */
+    /* text-shadow: 1px 1px 1px  */
+    color: var(--electric-blue);
+    background-color: rgba(255, 255, 255, 0.164);
+}
+
+.marking-highlight {
+    transition: text-shadow 0.5s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 0.5s;
+    transition: color 1s;
+    color: black;
+    text-shadow: 1px 1px 1px var(--pink-lavender);
+    background-color: var(--mauve);
+}
+
+.marking-highlight-play {
+    transition: text-shadow 0.5s;
+    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
+    transition: background-color 0.5s;
+    transition: color 1s;
+    color: black;
+    text-shadow: 1px 1px 1px var(--pink-lavender);
+    background-color: var(--mauve-dark);
+}
+
+/* ------------- BOTTOM-SECTION ------------- */
+.bottom-bar {
+    display: flex;
+    flex-direction: row;
+    height: 12vh;
+}
+
+
+/* ------------- SKIP-PLAY-PAUSE ------------- */
+.bottom-left {
+    display: flex;
+    flex-direction: row;
+    width: 25vw;
+    background-color: var(--eerie-black-2);
+    border-right: 2px solid black;
+}
+
+.bottom-left>* {
+    user-select: none;
+}
+
+.player {
+    margin: auto auto;
+}
+
+.player>* {
+    width: 3vw;
+    height: 3vw;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+}
+
+.player>*:hover {
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+/* ------------- RECORD ------------- */
+.bottom-right {
+    display: flex;
+    flex-direction: row;
+    width: 75vw;
+    background-color: var(--eerie-black-2);
+}
+
+.recorder {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.recorder-left {
+    display: flex;
+    flex-direction: row;
+    margin-right: auto;
+    overflow: hidden;
+    align-items: center;
+}
+
+.recorder-right {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
+}
+
+.recorder>*>div {
+    font-size: x-large;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+.recorder>*>img {
+    /* https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element#53336754 Abgerufen am 01.03.22 */
+    /* https://codepen.io/sosuke/pen/Pjoqqp Abgerufen am 01.03.22 */
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+    display: block;
+    width: 3vw;
+    height: 3vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    user-select: none;
+}
+
+.recorder>*>img:hover {
+    filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
+    cursor: pointer;
+}
+
+.recorder-title {
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 4px;
+    border-color: var(--mauve);
+    border: 2px solid var(--mauve);
+    background-color: var(--eerie-black-2);
+    color: white;
+    padding-left: 0.6vw;
+}
+
+.recorder-title:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: var(--mauve);
+}
+
+
+.recorder-title:hover {
+    background-color: var(--onyx);
+    color: var(--mauve);
+    border-color: white;
+    cursor: pointer;
+}
+
+.recorder-time {
+    user-select: none;
 }
