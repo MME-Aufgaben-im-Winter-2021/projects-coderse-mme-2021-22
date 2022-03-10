@@ -1,13 +1,11 @@
-import CastController from "./controller/castController.js";
+import AppController from "./controller/AppController.js";
 
-function init() {
-    initController();
+
+// Starting point of project CODERSE
+function start() {
+    // Init your App Controller and set the Starting page (Login in this case)
+    let app = new AppController();
+    app.setHash("login");
 }
 
-// For all the controllers in the code cast edit 
-function initController() {
-    let castController = new CastController();
-    castController.init();
-}
-
-init();
+start();
