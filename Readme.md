@@ -85,6 +85,41 @@ Unsere 8. Sitzung: 04.03.22 08:00 - 12:05
 - Gesamten Cast abspielen
 - Timer und Markierung der einzelnen Timeline Entrys beim Abspielen
 
+Unsere 9. Sitzung: 07.03.22 09:00 - 13:10
+
+- Bug fixes -> Audios können nun gestoppt und gelöscht werden
+- Audioaufnahme wurde verbessert -> weitere Icons
+- Markierung des Codes wurde eingeführt und verbessert
+
+TODO:
+    - RecordManager:
+        - wenn geskippt wird und dann gestoppt, soll auch der cast gestoppt werden
+        - cast-end event muss geworfen werden, wenn der letzte track fertig ist -> zeigt wieder den play button an und versteckt den stopp button
+        
+
+Unsere 10. Sitzung: 08.03.22 09:45 - 12:20
+
+- Markierungen werden hervorgehoben, wenn man über die Audio hovert
+- Zusammengehörige Markierungen werden beim hovern über diese angezeigt
+- Audio-Abspiel-Bugs wurden behoben
+- Es ist nun möglich Aufnahmen zu skippen, solte man diese einzeln abspielen
+- Der Start Cast Button wird nur angezeigt, sollte ein valides File geladen werden
+- Der Audio-Title einer Aufnahme kann nun auch im nachhinein mit einem Click auf den Titel verändert werden
+- Sollte bei der Audioaufnahme kein Titel vergeben werden, wird ein nummerierter Titel vergeben
+
+TODO:
+    - Der Titel einer Audio muss auch in der Datenstruktur verändert werden nicht nur im HTML
+        - Auch bei der Vergabe eines generierten Titels überprüfen
+    - Beim Hovern über eine zugeteilte Markierung (data-id = Record ID) soll der Record hervorgehoben werden
+
+
+Unsere 11. Sitzung: 09.03.22 10:00 - 11:00
+
+- Entfernen der Log-Statements
+- Auslagern der Drop-View
+- Auslagern der Magic Numbers
+- Eslint Fehler behoben
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/
