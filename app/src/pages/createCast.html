@@ -38,10 +38,22 @@
             </div>
             <div class="recorder-right">
                 <div class="recorder-time">00:00</div>
-                <img src="./resources/icons/mic.svg" class="recorder-icon-start">
-                <img src="./resources/icons/trash-2.svg" class="recorder-icon-trash hidden">
-                <img src="./resources/icons/stop-circle.svg" class="recorder-icon-stop hidden">
-                <img src="./resources/icons/save.svg" class="recorder-icon-save hidden">
+                <div class="recorder-icon-start tooltip-container">
+                    <img src="./resources/icons/mic.svg" class="recorder-icon-start">
+                    <span class="tooltip">Click me to start recording</span>
+                </div>
+                <div class="recorder-icon-trash hidden tooltip-container">
+                    <img src="./resources/icons/trash-2.svg" class="recorder-icon-trash">
+                    <span class="tooltip">Click me to discard the current record</span>
+                </div>
+                <div class="recorder-icon-stop hidden tooltip-container">
+                    <img src="./resources/icons/stop-circle.svg" class="recorder-icon-stop">
+                    <span class="tooltip">Click me to stop recording</span>
+                </div>
+                <div class="recorder-icon-save hidden tooltip-container">
+                    <img src="./resources/icons/save.svg" class="recorder-icon-save">
+                    <span class="tooltip">Click me to safe your record</span>
+                </div>
             </div>
         </div>
     </div>

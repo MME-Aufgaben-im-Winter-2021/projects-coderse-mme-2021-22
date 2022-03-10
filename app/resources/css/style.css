@@ -105,7 +105,15 @@ body {
     margin: 0.2vh 1vw;
 }
 
+.nav-align-left>a {
+    margin: 0.2vh 1vw;
+}
+
 .nav-align-right>div {
+    margin: 0.2vh 1vw;
+}
+
+.nav-align-right>a {
     margin: 0.2vh 1vw;
 }
 
@@ -583,7 +591,7 @@ mark {
     margin-right: 2vw;
 }
 
-.recorder>*>img {
+.recorder>*>img, .recorder>*>*>img {
     /* https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element#53336754 Abgerufen am 01.03.22 */
     /* https://codepen.io/sosuke/pen/Pjoqqp Abgerufen am 01.03.22 */
     filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
@@ -595,7 +603,7 @@ mark {
     user-select: none;
 }
 
-.recorder>*>img:hover {
+.recorder>*>img:hover, .recorder>*>*>img:hover {
     filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(139deg) brightness(103%) contrast(101%);
     cursor: pointer;
 }
@@ -629,3 +637,29 @@ mark {
 .recorder-time {
     user-select: none;
 }
+
+/* -------------- TOOLTIP ------------ */
+.tooltip-container{
+    position: relative;
+}
+
+.tooltip-container:hover .tooltip {
+    visibility: visible;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    top: -170%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: var(--eerie-black-2);
+    font-size: 10px;
+    border: 1px solid var(--non-photo-blue);
+    transform: translateY(-100%);
+    transition: all 100ms ease;
+    opacity: 0;
+}
+

@@ -120,6 +120,11 @@ Unsere 11. Sitzung: 09.03.22 10:00 - 11:00
 - Auslagern der Magic Numbers
 - Eslint Fehler behoben
 
+Unsere 12. Sitzung: 10.03.22 10:00 - 14:30
+
+- Hash Router zur Navigation in der SPA
+- Tooltip feature über Css Klassen und HTMl Elemente
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/
