@@ -12,6 +12,7 @@ class AppController {
     constructor(){
         this.router = new Router();
         window.addEventListener("hashchange", this.router.onHashChanged.bind(this.router));
+        window.addEventListener("load", this.router.onHashChanged.bind(this.router));
         this.btn = document.querySelector(".home").addEventListener("click", this.router.pushRoute);
         this.router.addEventListener("template-ready", this.onTemplateReady.bind(this));
 
@@ -33,14 +34,14 @@ class AppController {
         this.container.innerHTML = template.template;
         switch(template.route){
             case "#home":
-                console.log("HOME");
+                
                 break;
             case "#login":
-                console.log("LOGIN");
+                
                 break;
             case "#create":
-                console.log("CREATE-CAST");
                 this.controller = new CastController();
+                this.controller.init();
                 break;
             default:
                 console.log(404);
