@@ -1,12 +1,9 @@
-import { appwrite } from "../../appwrite";
+import appwrite from "../../appwrite";
 
 // Create a stored file
-async function deleteFile(id){
-    await appwrite.database.deleteFile(id).then(res => {
-        console.log("FILE DELETED " + res);
-    }, error => {
-        console.log("THERE HAS BEEN AN ERROR " + error);
-    });
+function deleteFile(id){
+    let promise = appwrite.database.deleteFile(id);
+    return promise;
 }
 
 export {deleteFile};

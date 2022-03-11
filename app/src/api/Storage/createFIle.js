@@ -1,12 +1,9 @@
-import { appwrite } from "../../appwrite";
+import appwrite from "../../appwrite";
 
 // Create a stored file
-async function createFile(id,data){
-    await appwrite.database.createFile(id, data).then(res => {
-        console.log("FILE CREATED " + res);
-    }, error => {
-        console.log("THERE HAS BEEN AN ERROR " + error);
-    });
+function createFile(id,data){
+    let promise = appwrite.database.createFile(id, data);
+    return promise;
 }
 
 export {createFile};

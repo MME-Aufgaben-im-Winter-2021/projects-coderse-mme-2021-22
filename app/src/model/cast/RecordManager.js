@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import { Event, Observable } from "../utils/Observable.js";
+import { Event, Observable } from "../../utils/Observable.js";
 
 // Manages the list of records of a code cast
 class RecordManager extends Observable {

@@ -2,7 +2,8 @@
 import Router from "../utils/Router.js";
 
 // Controllers
-import CastController from "./castController.js";
+import CastController from "./CastController.js";
+import LoginController from "./LoginController.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -36,7 +37,8 @@ class AppController {
                 
                 break;
             case "#login":
-                
+                this.controller = new LoginController();
+                this.controller.init();
                 break;
             case "#create":
                 this.controller = new CastController();

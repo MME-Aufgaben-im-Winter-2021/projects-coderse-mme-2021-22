@@ -2,7 +2,7 @@
 import AudioManager from "./AudioManager.js";
 import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
-import { Event, Observable } from "../utils/Observable.js";
+import { Event, Observable } from "../../utils/Observable.js";
 
 var audioManager,
     recordManager;

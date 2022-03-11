@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import {Observable, Event} from "../utils/Observable.js";
+import {Observable, Event} from "../../utils/Observable.js";
 
 //Structure for one record in the file
 class Record extends Observable {
