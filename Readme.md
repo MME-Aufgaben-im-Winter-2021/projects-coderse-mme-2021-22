@@ -125,6 +125,12 @@ Unsere 12. Sitzung: 10.03.22 10:00 - 14:30
 - Hash Router zur Navigation in der SPA
 - Tooltip feature über Css Klassen und HTMl Elemente
 
+Unsere 13. Sitzung: 11.03.22 10:30 - 14:00 , 15:00 - 16:00
+
+- Appwrite Test und Überarbeitung
+- User Authentication gestartet
+- Login Page gestartet (kein css)
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/

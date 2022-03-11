@@ -5,9 +5,12 @@ import PlayerControlsView from "../view/cast/AudioPlayer/PlayerControlsView.js";
 import RecorderView from "../view/cast/AudioRecorder/RecorderView.js";
 import NavView from "../view/cast/Navbar/NavView.js";
 import CodeView from "../view/cast/CodeField/CodeView.js";
-import CastManager from "../model/CastManager.js";
+import CastManager from "../model/cast/CastManager.js";
 import FileTypeValidator from "../utils/FileTypeValidator.js";
 import DropView from "../view/cast/CodeField/DropView.js";
+
+// TEST
+import { getAuth } from "../api/Auth/getAuth.js";
 
 var castManager;
 
@@ -21,6 +24,8 @@ class CastController {
     // }
 
     init() {
+        // JUST FOR TESTING - FUNCTION TO TEST AUTHENTICATION
+        getAuth().then(res => console.log(res), error => console.log(error));
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
