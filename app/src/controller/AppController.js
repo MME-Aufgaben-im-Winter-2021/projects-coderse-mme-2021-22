@@ -19,7 +19,6 @@ class AppController {
         // The currently used templates and the controller which takes care of the functionality regarding the template
         this.container = document.querySelector(".content-container");
         this.controller = undefined;
-        
     }
 
     setHash(hash){
