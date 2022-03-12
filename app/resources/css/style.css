@@ -663,3 +663,12 @@ mark {
     opacity: 0;
 }
 
+/* ------ LOGIN ----------- */
+
+.login-template {
+    margin: auto;
+    width: 50%;
+    background-color: var(--onyx);
+    padding: 25px;
+}
+

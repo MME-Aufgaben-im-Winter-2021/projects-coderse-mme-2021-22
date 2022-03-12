@@ -7,23 +7,27 @@ const ROUTES = {
     "#create": "./src/pages/createCast.html",
     "#home": "./src/pages/home.html",
     "#login": "./src/pages/login.html",
+    "#account": "./src/pages/account.html",
 };
 
 // Router Class to navigate between pages with templates
 class Router extends Observable {
 
-    constructor(currentRoute = "/#login"){
+    constructor(){
         super();
-        this.currentRoute = currentRoute;
     }
 
+    // Pushes a route on the "stack" -> enables navigation via browser arrow keys
     pushRoute(event){
         event.preventDefault();
         let url = event.target.href;
         history.pushState(null,null,url);
+        // Push state does not fire hashchange -> dispatch the event on the window
         window.dispatchEvent(new HashChangeEvent("hashchange"));
     }
 
+    // When the URL hash changes the linked html template is retrieved
+    // When the route is not available a 404 Error page will be shown
     onHashChanged(){
         const hash = window.location.hash, 
               route = ROUTES[hash] || ROUTES[404];

@@ -1,7 +1,7 @@
 /* eslint-env browser */
 
 import { createSession } from "../../api/Session/createSession.js";
-import Observable from "../../utils/Observable.js";
+import {Observable, Event} from "../../utils/Observable.js";
 
 class LoginManager extends Observable {
 
@@ -9,19 +9,29 @@ class LoginManager extends Observable {
         super();
     }
 
-    createSession(email, password){
-        let promise = createSession(email,password);
-        computePromise(promise);
+    // If a user wants to login, the database is asked to create a session with this user
+    // If this is not possible -> user account is not real
+    async createSession(email, password){
+        let promise = createSession(email,password),
+            res = await computePromise(promise),
+        // res is either true or false and is passed to the controller
+            event = new Event("login-result", res);
+        this.notifyAll(event);
     }
 
 }
 
-function computePromise(promise){
-    promise.then(res => {
-        console.log("SUCCESS", res);
-    }, error => {
-        console.log("ERROR", error);
+// If the account credentials are real -> return true (User is granted access)
+// TODO: Returns the reason why login was not successful too -> use for validation/ error animations in view
+//       On success it returns the user, which could be used to greet him or such stuff
+async function computePromise(promise){
+    let res = await promise.then(() => {
+        return true;
+    }, () => {
+        return false;
     });
+    return res;
+        
 }
 
 export default LoginManager;

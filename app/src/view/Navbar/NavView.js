@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import { Observable, Event } from "../../../utils/Observable.js";
+import { Observable, Event } from "../../utils/Observable.js";
 
 // View for the Navbar of the Cast Creation - Useful for routing and setting the cast title
 class NavView extends Observable {
@@ -9,8 +9,9 @@ class NavView extends Observable {
         super();
         this.view = document.querySelector(".nav-bar");
         this.safeBtn = this.view.querySelector(".button-save");
-        this.homeBtn = this.view.querySelector(".home");
-        this.userBtn = this.view.querySelector(".user");
+        this.homeBtn = this.view.querySelector("#home-link");
+        this.createBtn = this.view.querySelector("#create-link");
+        this.userBtn = this.view.querySelector("#user-link");
         this.castTitle = this.view.querySelector(".code-cast-title");
 
         // Eventlistener
@@ -32,6 +33,34 @@ class NavView extends Observable {
 
     switchHome() {
         // console.log("YOU ARE NOW ON THE HOME PAGE");
+    }
+
+    showLinks(){
+        this.homeBtn.classList.remove("hidden");
+        this.createBtn.classList.remove("hidden");
+        this.userBtn.classList.remove("hidden");
+    }
+
+    showSafeBtn(){
+        this.safeBtn.classList.remove("hidden");
+    }
+
+    showTitleInput(){
+        this.castTitle.classList.remove("hidden");
+    }
+
+    hideLinks(){
+        this.homeBtn.classList.add("hidden");
+        this.createBtn.classList.add("hidden");
+        this.userBtn.classList.add("hidden");
+    }
+
+    hideSafeBtn(){
+        this.safeBtn.classList.add("hidden");
+    }
+
+    hideTitleInput(){
+        this.castTitle.classList.add("hidden");
     }
 }
 
