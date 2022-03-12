@@ -131,6 +131,12 @@ Unsere 13. Sitzung: 11.03.22 10:30 - 14:00 , 15:00 - 16:00
 - User Authentication gestartet
 - Login Page gestartet (kein css)
 
+Unsere 14. Sitzung: 11.03.22 13:00 - 14:00 , 15:00 - 17:30
+
+- Navbar Veränderung während dem routing
+- User Authentication 
+- Login Page 
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/
