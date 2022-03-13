@@ -11,6 +11,7 @@ const Config = {
     INTERVAL_REFRESH_RATE: 100,
     MIN_SEC_OF_AUDIO_REC: 3,
     NODE_TYPE_TEXT: 3,
+    CAST_COLLECTION_ID: "622de1da30d840a4c304",
 };
 
 Object.freeze(Config);

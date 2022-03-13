@@ -1,4 +1,4 @@
-import appwrite from "../../appwrite";
+import appwrite from "../appwrite.js";
 
 // Create a stored file
 function createFile(id,data){

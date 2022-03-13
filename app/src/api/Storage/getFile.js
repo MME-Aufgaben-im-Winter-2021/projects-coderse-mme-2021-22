@@ -1,4 +1,4 @@
-import appwrite from "../../appwrite";
+import appwrite from "../appwrite.js";
 
 // Retrieve a stored file
 function getFile(id){

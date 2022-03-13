@@ -1,6 +1,6 @@
-import appwrite from "../appwrite";
+import appwrite from "../appwrite.js";
 
-// Create a document in the CodeCast Collection with a unique ID (not tested!) by handing your data
+// Create a document in a Collection 
 function createDocument(collection, data){
     let promise = appwrite.database.createDocument(collection , 'unique()', data);
     return promise;

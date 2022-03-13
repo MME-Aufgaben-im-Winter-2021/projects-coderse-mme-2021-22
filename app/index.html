@@ -31,7 +31,7 @@
                     Create Cast
                 </a>
 
-                <a id="user-link" href="#account" class="user nav-link hidden">
+                <a id="user-link" href="#account" class="home nav-link hidden">
                     Account
                 </a>
             </div>
@@ -42,7 +42,7 @@
 
         </div>
     </div>
-    <!-- Template for single player frame, shown in timeline-->
+    <!-- Template for single player frame, shown in timeline of creation page-->
     <template id="player-template">
         <li class="player-list-entry" data-id="">
             <div class="player-list-entry-title"></div>
@@ -54,6 +54,15 @@
                 <div class="player-list-entry-play-time">00:00</div>
             </div>
             <img src="./resources/icons/trash.svg" class="player-list-entry-icon-delete">
+        </li>
+    </template>
+
+    <!-- Template for cast list, shown on home screen -->
+    <template id="home-cast-template">
+        <li class="cast-element">
+            <div> Thats a Cast!</div>
+            <div> More Information </div>
+            <button> View </button>
         </li>
     </template>
     <script type="module" src="./src/index.js"></script>

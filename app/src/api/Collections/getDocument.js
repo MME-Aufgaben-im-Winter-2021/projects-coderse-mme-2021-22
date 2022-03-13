@@ -1,6 +1,6 @@
-import appwrite from "../../appwrite";
+import appwrite from "../appwrite.js";
 
-// Get a document in the CodeCast Collection with a ID
+// Get a document in a Collection 
 function getDocument(collection, docId){
     let promise = appwrite.database.getDocument(collection, docId);
     return promise;
