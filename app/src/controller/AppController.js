@@ -7,12 +7,16 @@ import LoginController from "./LoginController.js";
 import HomeController from "./HomeController.js";
 import AccountController from "./AccountController.js";
 import ErrorController from "./ErrorController.js";
+import RegisterController from "./RegisterController.js";
 
 // Authentication
 import { getAuth } from "../api/Auth/getAuth.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
+// To create a new page: - Create a html template in pages folder
+//                       - create a route in Router.js for the new page
+//                       - add a case in the below templateReady functions switch structure
 
 class AppController {
 
@@ -81,6 +85,10 @@ class AppController {
                 this.controller = new AccountController();
                 this.controller.init();
                 break;
+            case "#register":
+                this.controller = new RegisterController();
+                this.controller.init();
+                break;
             default:
                 this.controller = new ErrorController();
                 this.controller.init();
@@ -91,8 +99,9 @@ class AppController {
     // This function is redirecting to "home" if so.
     computeCurrentPage(event){
         let currentHash = window.location.hash;
-        if(currentHash === "#login"){
-             this.setHash("home");
+        // If a user is logged in, he should not be able to view login and register page
+        if(currentHash === "#login" || currentHash === "#register"){
+              this.setHash("home");
         }
         this.router.onHashChanged(event);
     }

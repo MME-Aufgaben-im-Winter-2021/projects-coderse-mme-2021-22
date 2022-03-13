@@ -8,6 +8,7 @@ const ROUTES = {
     "#home": "./src/pages/home.html",
     "#login": "./src/pages/login.html",
     "#account": "./src/pages/account.html",
+    "#register": "./src/pages/register.html",
 };
 
 // Router Class to navigate between pages with templates
