@@ -34,10 +34,12 @@ class LoginController {
 
     // If the result from the login try is ready, the user will be taken to the home page (if login was successful)
     onLoginResult(event){
-        let bool = event.data;
+        console.log(event);
+        let bool = event.data.login;
         if(bool){
             window.location.hash = "home";
         }
+        this.loginView.setServerAnswer(event.data.answer);
     }
 
 }

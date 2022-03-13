@@ -1,6 +1,6 @@
-import appwrite from "../appwrite";
+import appwrite from "../appwrite.js";
 
-// Update a document in the CodeCast Collection with a ID by handing your data
+// Update a document in a Collection 
 function updateDocument(collection, docId, data){
     let promise = appwrite.database.updateDocument(collection, docId, data);
     return promise;

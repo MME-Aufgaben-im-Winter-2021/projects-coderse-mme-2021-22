@@ -1,6 +1,6 @@
-import appwrite from "../../appwrite";
+import appwrite from "../appwrite.js";
 
-// Delete a document in the CodeCast Collection with a ID
+// Delete a document in a Collection
 function deleteDocument(collection, docId){
     let promise = appwrite.database.deleteDocument(collection, docId);
     return promise;

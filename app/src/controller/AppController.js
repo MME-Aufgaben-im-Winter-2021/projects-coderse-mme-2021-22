@@ -63,6 +63,7 @@ class AppController {
     onTemplateReady(event){
         let template = event.data;
         this.container.innerHTML = template.template;
+        // After a template is set, we init a controller which takes care of the functionality
         switch(template.route){
             case "#home":
                 this.controller = new HomeController();
@@ -90,9 +91,9 @@ class AppController {
     // This function is redirecting to "home" if so.
     computeCurrentPage(event){
         let currentHash = window.location.hash;
-        // if(currentHash === "#login"){
-        //     this.setHash("home");
-        // }
+        if(currentHash === "#login"){
+             this.setHash("home");
+        }
         this.router.onHashChanged(event);
     }
 

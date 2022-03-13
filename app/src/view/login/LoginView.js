@@ -10,6 +10,9 @@ class LoginView extends Observable {
         this.viewPassword = document.getElementById("input-password");
         this.viewBtn = document.getElementById("input-btn");
         this.viewBtn.addEventListener("click", this.onSubmit.bind(this));
+
+        // TODO: Better way for Error animations
+        this.answerView = document.getElementById("server-answer");
     }
 
     // User wants to login
@@ -22,6 +25,10 @@ class LoginView extends Observable {
         // Data is send with an new login-submit event
         event = new Event("login-submit",data);
         this.notifyAll(event);
+    }
+
+    setServerAnswer(string){
+        this.answerView.innerText = string; 
     }
 
 }

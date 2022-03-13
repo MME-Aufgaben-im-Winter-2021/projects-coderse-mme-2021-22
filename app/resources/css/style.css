@@ -672,3 +672,25 @@ mark {
     padding: 25px;
 }
 
+/* ------ HOME ----------- */
+
+.home-template {
+    margin: auto;
+    width: 50%;
+    padding: 25px;
+}
+
+.cast-list {
+    
+}
+
+.cast-element {
+    width: 90%;
+    background-color: var(--electric-blue);
+    height: 100px;
+    color: black;
+    text-align: center;
+    margin-top: 50px;
+    list-style: none;
+}
+

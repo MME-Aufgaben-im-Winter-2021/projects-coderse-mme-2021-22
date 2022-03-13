@@ -22,13 +22,19 @@ class LoginManager extends Observable {
 }
 
 // If the account credentials are real -> return true (User is granted access)
-// TODO: Returns the reason why login was not successful too -> use for validation/ error animations in view
-//       On success it returns the user, which could be used to greet him or such stuff
+// Returns the reason why login was not successful too -> use for validation/ error animations in view
+// On success it returns the user, which could be used to greet him or such stuff
 async function computePromise(promise){
-    let res = await promise.then(() => {
-        return true;
-    }, () => {
-        return false;
+    let res = await promise.then((res) => {
+        return {
+            login: true,
+            answer: res,
+        };
+    }, (error) => {
+        return {
+            login: false,
+            answer: error,
+        };
     });
     return res;
         
