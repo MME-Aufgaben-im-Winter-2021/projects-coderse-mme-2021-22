@@ -125,13 +125,19 @@ Unsere 12. Sitzung: 10.03.22 10:00 - 14:30
 - Hash Router zur Navigation in der SPA
 - Tooltip feature über Css Klassen und HTMl Elemente
 
-Unsere 13. Sitzung: 12.03.22 10:30 - 14:00 , 15:00 - 16:00
+Unsere 13. Sitzung: 11.03.22 10:30 - 14:00 , 15:00 - 16:00
 
 - Appwrite Test und Überarbeitung
 - User Authentication gestartet
 - Login Page gestartet (kein css)
 
-Unsere 14. Sitzung: 13.03.22 11:00 - 12:30
+Unsere 14. Sitzung: 12.03.22 13:00 - 14:00 , 15:00 - 17:30
+
+- Navbar Veränderung während dem routing
+- User Authentication 
+- Login Page 
+
+Unsere 15. Sitzung: 13.03.22 11:00 - 12:30
 
 - Home screen cast liste mit Cast Collection verbunden
 - Appwrite Verbesserungen
