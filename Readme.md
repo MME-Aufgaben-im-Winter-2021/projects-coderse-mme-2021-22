@@ -143,6 +143,11 @@ Unsere 15. Sitzung: 13.03.22 11:00 - 12:30
 - Appwrite Verbesserungen
 - Login Verbesserungen
 
+Unsere 16. Sitzung: 13.03.22 17:00 - 19:00
+
+- Register Screen (fast fertig (wieder nur JS))
+- TODO: Session erzeugen bei erfolgreicher Creation
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/

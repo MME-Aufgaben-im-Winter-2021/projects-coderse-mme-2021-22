@@ -672,6 +672,19 @@ mark {
     padding: 25px;
 }
 
+/* ------ LOGIN ----------- */
+
+.register-template {
+    margin: auto;
+    width: 50%;
+    background-color: var(--onyx);
+    padding: 25px;
+}
+
+#register-btn:hover {
+    cursor: pointer;
+}
+
 /* ------ HOME ----------- */
 
 .home-template {
