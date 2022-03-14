@@ -120,10 +120,12 @@ Unsere 11. Sitzung: 09.03.22 10:00 - 11:00
 - Auslagern der Magic Numbers
 - Eslint Fehler behoben
 
+
 Unsere 12. Sitzung: 10.03.22 10:00 - 14:30
 
 - Hash Router zur Navigation in der SPA
 - Tooltip feature über Css Klassen und HTMl Elemente
+
 
 Unsere 13. Sitzung: 11.03.22 10:30 - 14:00 , 15:00 - 16:00
 
@@ -131,11 +133,13 @@ Unsere 13. Sitzung: 11.03.22 10:30 - 14:00 , 15:00 - 16:00
 - User Authentication gestartet
 - Login Page gestartet (kein css)
 
+
 Unsere 14. Sitzung: 12.03.22 13:00 - 14:00 , 15:00 - 17:30
 
 - Navbar Veränderung während dem routing
 - User Authentication 
 - Login Page 
+
 
 Unsere 15. Sitzung: 13.03.22 11:00 - 12:30
 
@@ -143,11 +147,22 @@ Unsere 15. Sitzung: 13.03.22 11:00 - 12:30
 - Appwrite Verbesserungen
 - Login Verbesserungen
 
+
 Unsere 16. Sitzung: 13.03.22 17:00 - 19:00
 
 - Register Screen (fast fertig (wieder nur JS))
 - TODO: Session erzeugen bei erfolgreicher Creation
 
+
+Wichtiger zwischen-Commit: 14.03.2022 10:51
+
+Löst folgende Probleme:
+- Zu viele Serveranfragen wenn nicht authorisiert
+- wenn nicht eingeloggt -> man gibt "home" oder eine andere route einfach oben rein, dann läd die Seite trotzdem 
+
+TODO:
+    - Logout option
+    
 
 ### Verwendete Ressourcen
 https://feathericons.com/

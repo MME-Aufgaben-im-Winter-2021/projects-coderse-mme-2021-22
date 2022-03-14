@@ -43,6 +43,7 @@ class Router extends Observable {
                 this.notifyAll(event);
             });
         });
+        console.trace();
         console.log("Fetching ", route);    
     }
 }
