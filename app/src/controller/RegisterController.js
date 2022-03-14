@@ -1,7 +1,6 @@
 /* eslint-env browser */
 
 import RegisterView from "../view/register/RegisterView.js";
-import NavView from "../view/Navbar/NavView.js";
 
 import RegisterManager from "../model/register/RegisterManager.js";
 
@@ -10,12 +9,12 @@ import RegisterManager from "../model/register/RegisterManager.js";
 // The Register View is there to show proceedings to the user. 
 class RegisterController {
 
-    init(){
+    init(navView){
         this.registerView = new RegisterView();
         this.registerView.addEventListener("account-submit", this.onSubmit.bind(this));
 
         // Navbar Viev
-        this.navView = new NavView();
+        this.navView = navView;
         this.navView.hideLinks();
         this.navView.hideSafeBtn();
         this.navView.hideTitleInput();
@@ -39,8 +38,10 @@ class RegisterController {
     onAccountResult(event){
         let bool = event.data.register;
         if(bool){
-             window.location.hash = "home";
-            //  TODO: Create a session for the new user
+            // Instead of creating a session for the new user, we redirect to the login page
+            // where he can login
+            window.location.hash = "login";
+    
         }
         this.registerView.setServerAnswer(event.data.answer);
 

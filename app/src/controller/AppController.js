@@ -9,6 +9,8 @@ import AccountController from "./AccountController.js";
 import ErrorController from "./ErrorController.js";
 import RegisterController from "./RegisterController.js";
 
+import NavView from "../view/Navbar/NavView.js";
+
 // Authentication
 import { getAuth } from "../api/Auth/getAuth.js";
 
@@ -17,13 +19,15 @@ import { getAuth } from "../api/Auth/getAuth.js";
 // To create a new page: - Create a html template in pages folder
 //                       - create a route in Router.js for the new page
 //                       - add a case in the below templateReady functions switch structure
+// 
+// If you want to work with login or registration comment the marked section in the computeCurrentPage function
 
 class AppController {
 
     constructor() {
         this.router = new Router();
         window.addEventListener("hashchange", this.onHashChanged.bind(this));
-        window.addEventListener("load", this.onHashChanged.bind(this));
+        // window.addEventListener("load", this.onHashChanged.bind(this));
         this.router.addEventListener("template-ready", this.onTemplateReady.bind(this));
 
         // Navbar links (This listener is used to push this page onto the stack)
@@ -37,6 +41,9 @@ class AppController {
         // The currently used templates and the controller which takes care of the functionality regarding the template
         this.container = document.querySelector(".content-container");
         this.controller = undefined;
+
+        // We only need one NavView, if we would do one in each controller it would cause problems
+        this.navView = new NavView();
     }
 
     setHash(hash) {
@@ -71,27 +78,27 @@ class AppController {
         switch (template.route) {
             case "#home":
                 this.controller = new HomeController();
-                this.controller.init();
+                this.controller.init(this.navView);
                 break;
             case "#login":
                 this.controller = new LoginController();
-                this.controller.init();
+                this.controller.init(this.navView);
                 break;
             case "#create":
                 this.controller = new CastController();
-                this.controller.init();
+                this.controller.init(this.navView);
                 break;
             case "#account":
                 this.controller = new AccountController();
-                this.controller.init();
+                this.controller.init(this.navView);
                 break;
             case "#register":
                 this.controller = new RegisterController();
-                this.controller.init();
+                this.controller.init(this.navView);
                 break;
             default:
                 this.controller = new ErrorController();
-                this.controller.init();
+                this.controller.init(this.navView);
         }
     }
 
@@ -100,6 +107,7 @@ class AppController {
     computeCurrentPage(event, loggedIn) {
         let currentHash = window.location.hash;
         // If a user is logged in, he should not be able to view login and register page
+        // FROM HERE
         if (loggedIn) {
             if (currentHash === "#login" || currentHash === "#register") {
                 this.setHash("home");
@@ -109,6 +117,7 @@ class AppController {
                 this.setHash("login");
             }
         }
+        // TO HERE
         this.router.onHashChanged(event);
     }
 

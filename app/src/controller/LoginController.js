@@ -1,7 +1,6 @@
 /* eslint-env browser */
 
 import LoginView from "../view/login/LoginView.js";
-import NavView from "../view/Navbar/NavView.js";
 
 import LoginManager from "../model/login/LoginManager.js";
 
@@ -10,13 +9,13 @@ import LoginManager from "../model/login/LoginManager.js";
 // The Login View is there to show proceedings to the user. 
 class LoginController {
 
-    init(){
+    init(navView){
         this.loginView = new LoginView();
         this.loginView.addEventListener("login-submit", this.onSubmit.bind(this));
 
         // Navbar View
         // Just because if you route back to the Login from another Page, the elements still show
-        this.navView = new NavView();
+        this.navView = navView;
         this.navView.hideLinks();
         this.navView.hideSafeBtn();
         this.navView.hideTitleInput();

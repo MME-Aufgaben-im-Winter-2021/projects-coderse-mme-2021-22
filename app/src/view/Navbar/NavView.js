@@ -11,13 +11,12 @@ class NavView extends Observable {
         this.safeBtn = this.view.querySelector(".button-save");
         this.homeBtn = this.view.querySelector("#home-link");
         this.createBtn = this.view.querySelector("#create-link");
-        this.userBtn = this.view.querySelector("#user-link");
+        this.userBtn = this.view.querySelector("#user-dropdown");
         this.castTitle = this.view.querySelector(".code-cast-title");
 
         // Eventlistener
         this.safeBtn.addEventListener("click", this.castSafe.bind(this));
-        this.homeBtn.addEventListener("click", this.switchHome.bind(this));
-        this.userBtn.addEventListener("click", this.switchUser.bind(this));
+        this.userBtn.addEventListener("click", this.toggleDropdown.bind(this));
     }
 
     // Event which fires on Save-Button click to safe/end the Cast
@@ -27,12 +26,10 @@ class NavView extends Observable {
         this.notifyAll(event);
     }
 
-    switchUser() {
-        // console.log("YOU ARE NOW ON THE USER PAGE");
-    }
-
-    switchHome() {
-        // console.log("YOU ARE NOW ON THE HOME PAGE");
+    toggleDropdown(){
+        let dropdown = document.querySelector("#nav-dropdown"),
+            bool = dropdown.classList.toggle("hidden");
+            console.log(bool);
     }
 
     showLinks(){
@@ -61,6 +58,27 @@ class NavView extends Observable {
 
     hideTitleInput(){
         this.castTitle.classList.add("hidden");
+    }
+
+    setHomeActive(){
+        this.removeActive();
+        this.homeBtn.classList.add("active-link");
+    }
+
+    setCreateActive(){
+        this.removeActive();
+        this.createBtn.classList.add("active-link");
+    }
+
+    setUserActive(){
+        this.removeActive();
+        this.userBtn.classList.add("active-link");
+    }
+
+    removeActive(){
+        this.homeBtn.classList.remove("active-link");
+        this.userBtn.classList.remove("active-link");
+        this.createBtn.classList.remove("active-link");
     }
 }
 

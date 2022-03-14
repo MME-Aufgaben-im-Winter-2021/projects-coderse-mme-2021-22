@@ -1,16 +1,15 @@
 /* eslint-env browser */
 
-import NavView from "../view/Navbar/NavView.js";
-
 class AccountController {
 
-    init(){
+    init(navView){
         
         // Navbar View
-        this.navView = new NavView();
+        this.navView = navView;
         this.navView.showLinks();
         this.navView.hideSafeBtn();
         this.navView.hideTitleInput();
+        this.navView.setUserActive();
     }
 
 }

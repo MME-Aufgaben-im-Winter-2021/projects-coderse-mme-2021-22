@@ -19,7 +19,6 @@ class HomeManager extends Observable {
         let res = await listDocuments(Config.CAST_COLLECTION_ID),
             event = new Event("casts-retrieved", res);
         this.notifyAll(event);
-
     }
 
 }

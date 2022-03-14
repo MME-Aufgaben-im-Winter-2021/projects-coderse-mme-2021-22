@@ -151,17 +151,20 @@ Unsere 15. Sitzung: 13.03.22 11:00 - 12:30
 Unsere 16. Sitzung: 13.03.22 17:00 - 19:00
 
 - Register Screen (fast fertig (wieder nur JS))
-- TODO: Session erzeugen bei erfolgreicher Creation
 
 
-Wichtiger zwischen-Commit: 14.03.2022 10:51
+Unsere 17. Sitzung: 14.03.2022 10:51
 
 Löst folgende Probleme:
 - Zu viele Serveranfragen wenn nicht authorisiert
 - wenn nicht eingeloggt -> man gibt "home" oder eine andere route einfach oben rein, dann läd die Seite trotzdem 
 
-TODO:
-    - Logout option
+Unsere 18. Sitzung: 14.03.2022 17:00 - 19:00
+
+- major bugfixes
+- Navigation Account dropdown
+- Registration beendet
+
     
 
 ### Verwendete Ressourcen
