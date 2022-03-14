@@ -7,8 +7,8 @@ class CastListView {
         this.view = document.querySelector("#cast-list");
     }
 
-    addElement(){
-        let element = new CastListElementView();
+    addElement(title){
+        let element = new CastListElementView(title);
         this.view.appendChild(element.getView());
     }
 

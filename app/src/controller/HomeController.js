@@ -39,7 +39,8 @@ class HomeController {
         data.documents.forEach(document => {
             // Hand document 
             console.log(document);
-            this.homeView.addElement();
+            let title = document.title;
+            this.homeView.addElement(title);
         });
     }
 

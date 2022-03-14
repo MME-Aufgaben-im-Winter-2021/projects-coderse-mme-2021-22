@@ -13,8 +13,8 @@ class HomeView{
         console.log(string);
     }
 
-    addElement(){
-        this.castListView.addElement();
+    addElement(title){
+        this.castListView.addElement(title);
     }
 
 }

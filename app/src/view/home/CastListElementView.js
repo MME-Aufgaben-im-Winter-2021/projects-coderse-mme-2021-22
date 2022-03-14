@@ -4,8 +4,13 @@ const TEMPLATE = document.getElementById("home-cast-template").innerHTML.trim();
 
 class CastListElementView {
 
-    constructor(){
+    constructor(title){
         this.view = this.createView();
+        this.setTitle(title);
+    }
+
+    setTitle(title){
+        this.view.querySelector(".cast-title").innerText = title;
     }
 
     createView(){
