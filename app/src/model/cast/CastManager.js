@@ -4,9 +4,7 @@ import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
 import { Event, Observable } from "../../utils/Observable.js";
 import { getUser } from "../../api/User/getUser.js";
-import { getFile } from "../../api/Storage/getFile.js";
-import { deleteFile } from "../../api/Storage/deleteFile.js";
-import { createFile } from "../../api/Storage/createFile.js";
+// 
 import { listDocuments } from "../../api/Collections/listDocuments.js";
 import { updateDocument } from "../../api/Collections/updateDocument.js";
 import { createDocument } from "../../api/Collections/createDocument.js";
@@ -124,7 +122,6 @@ async function saveCast(title, codeHTML, self) {
         castDocumentJSON,
         recordIDs,
         userID = user.$id;
-    console.log(userID);
     if (self.castID) {
         allCasts.forEach(castDoc => {
             if (castDoc.castID === self.castID) {
@@ -165,10 +162,10 @@ async function saveCast(title, codeHTML, self) {
 }
 
 //https://redstapler.co/generate-text-file-javascript/ Abgerufen am 15.03.22
-async function saveCodeAsFileToServer(codeHTML, self) {
-    let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
-        file = new File([blob], self.codeFileID, { type: "text/plain;charset=utf-8" });
-    await createFile(self.codeFileID, file);
-}
+// async function saveCodeAsFileToServer(codeHTML, self) {
+//     let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
+//         file = new File([blob], self.codeFileID, { type: "text/plain;charset=utf-8" });
+//     await createFile(self.codeFileID, file);
+// }
 
 export default CastManager;

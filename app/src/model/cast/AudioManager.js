@@ -40,7 +40,7 @@ function startInputStream(self) {
         mediaRecorder.onstop = () => {
             var blob = new Blob(chunks, { "type": "audio/ogg; codecs=opus" }),
                 audioURL = window.URL.createObjectURL(blob);
-            console.log(blob, audioURL);
+            // console.log(blob, audioURL);
             onAudioFileRecorded(audioURL, self);
         };
         mediaRecorder.ondataavailable = event => {

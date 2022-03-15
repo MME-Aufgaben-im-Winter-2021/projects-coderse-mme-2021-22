@@ -1,7 +1,6 @@
 /* eslint-env browser */
 
 import { Event, Observable } from "../../utils/Observable.js";
-import { getFile } from "../../api/Storage/getFile.js";
 import { deleteFile } from "../../api/Storage/deleteFile.js";
 import { createFile } from "../../api/Storage/createFile.js";
 
@@ -24,7 +23,7 @@ class RecordManager extends Observable {
         let files = this.getRecords(),
             results = [];
         files.forEach(async (file) => {
-            console.log("Name of file to store", file.name);
+            // console.log("Name of file to store", file.name);
             await deleteFile(file.name);
             await createFile(file.name, file);
             results.push(file.name);

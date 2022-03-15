@@ -41,7 +41,7 @@ class Player extends Observable {
     getEntryById(id) {
         let res;
         this.entryViews.forEach(entry => {
-            if (parseInt(entry.getId()) === id) {
+            if (entry.getId() === id) {
                 res = entry;
             }
         });
