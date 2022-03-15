@@ -13,10 +13,17 @@ class NavView extends Observable {
         this.createBtn = this.view.querySelector("#create-link");
         this.userBtn = this.view.querySelector("#user-dropdown");
         this.castTitle = this.view.querySelector(".code-cast-title");
+        this.userLogout = this.view.querySelector("#user-logout");
 
         // Eventlistener
         this.safeBtn.addEventListener("click", this.castSafe.bind(this));
         this.userBtn.addEventListener("click", this.toggleDropdown.bind(this));
+        this.userLogout.addEventListener("click", this.onUserLogOutClicked.bind(this));
+    }
+
+    onUserLogOutClicked() {
+        let event = new Event("user-logout", "user wants to log out"); //TODO: needs more data?
+        this.notifyAll(event);
     }
 
     // Event which fires on Save-Button click to safe/end the Cast
@@ -26,56 +33,61 @@ class NavView extends Observable {
         this.notifyAll(event);
     }
 
-    toggleDropdown(){
+    toggleDropdown() {
         let dropdown = document.querySelector("#nav-dropdown"),
             bool = dropdown.classList.toggle("hidden");
-            console.log(bool);
+        console.log(bool);
     }
 
-    showLinks(){
+    hideDropDown() {
+        let dropdown = document.querySelector("#nav-dropdown");
+        dropdown.classList.add("hidden");
+    }
+
+    showLinks() {
         this.homeBtn.classList.remove("hidden");
         this.createBtn.classList.remove("hidden");
         this.userBtn.classList.remove("hidden");
     }
 
-    showSafeBtn(){
+    showSafeBtn() {
         this.safeBtn.classList.remove("hidden");
     }
 
-    showTitleInput(){
+    showTitleInput() {
         this.castTitle.classList.remove("hidden");
     }
 
-    hideLinks(){
+    hideLinks() {
         this.homeBtn.classList.add("hidden");
         this.createBtn.classList.add("hidden");
         this.userBtn.classList.add("hidden");
     }
 
-    hideSafeBtn(){
+    hideSafeBtn() {
         this.safeBtn.classList.add("hidden");
     }
 
-    hideTitleInput(){
+    hideTitleInput() {
         this.castTitle.classList.add("hidden");
     }
 
-    setHomeActive(){
+    setHomeActive() {
         this.removeActive();
         this.homeBtn.classList.add("active-link");
     }
 
-    setCreateActive(){
+    setCreateActive() {
         this.removeActive();
         this.createBtn.classList.add("active-link");
     }
 
-    setUserActive(){
+    setUserActive() {
         this.removeActive();
         this.userBtn.classList.add("active-link");
     }
 
-    removeActive(){
+    removeActive() {
         this.homeBtn.classList.remove("active-link");
         this.userBtn.classList.remove("active-link");
         this.createBtn.classList.remove("active-link");

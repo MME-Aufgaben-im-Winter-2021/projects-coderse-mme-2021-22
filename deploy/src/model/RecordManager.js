@@ -1,6 +1,9 @@
 /* eslint-env browser */
 
 import { Event, Observable } from "../utils/Observable.js";
+import { getFile } from "../../src/api/Storage/getFile.js";
+import { deleteFile } from "../../src/api/Storage/deleteFile.js";
+import { createFile } from "../../src/api/Storage/createFile.js";
 
 // Manages the list of records of a code cast
 class RecordManager extends Observable {

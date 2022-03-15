@@ -1,6 +1,9 @@
 /* eslint-env browser */
 
 import { Event, Observable } from "../../utils/Observable.js";
+import { getFile } from "../../api/Storage/getFile.js";
+import { deleteFile } from "../../api/Storage/deleteFile.js";
+import { createFile } from "../../api/Storage/createFile.js";
 
 // Manages the list of records of a code cast
 class RecordManager extends Observable {
@@ -17,19 +20,31 @@ class RecordManager extends Observable {
         record.addEventListener("audio-end", event => { this.onRecordEnd(event); });
     }
 
+    async createDBRecord() {
+        let files = this.getRecords(),
+            results = [];
+        files.forEach(async (file) => {
+            console.log("Name of file to store", file.name);
+            await deleteFile(file.name);
+            await createFile(file.name, file);
+            results.push(file.name);
+        });
+        return results;
+    }
+
     // Stops the audio if it is playing and filters a element with certain id out of the record list
     deleteRecord(id) {
-        let recordToDelete = this.data.filter(entry => entry.getID() === parseInt(id))[0],
+        let recordToDelete = this.data.filter(entry => entry.getID() === id)[0],
             deletedIndex = this.getIndexFromRecord(recordToDelete);
         if (this.data[this.index] !== null && this.data[this.index] !== undefined) {
-            if (this.data[this.index].getID() === parseInt(id)) {
+            if (this.data[this.index].getID() === id) {
                 this.data[this.index].stopAudio();
                 if (this.playAllActive) {
                     this.playCast(this.index + 1);
                 }
             }
         }
-        this.data = this.data.filter(entry => entry.getID() !== parseInt(id));
+        this.data = this.data.filter(entry => entry.getID() !== id);
         if (this.index > deletedIndex) {
             this.index--;
         }
@@ -41,9 +56,9 @@ class RecordManager extends Observable {
 
     // Stops the currentRecord and filters a specific element and plays the certain audio file
     playRecord(id) {
-        let record = this.data.filter(entry => entry.getID() === parseInt(id))[0];
+        let record = this.data.filter(entry => entry.getID() === id)[0];
         if (this.data[this.index] !== null && this.data[this.index] !== undefined) {
-            if (this.data[this.index].getID() !== parseInt(id)) {
+            if (this.data[this.index].getID() !== id) {
                 this.onAudioEnd(this.data[this.index]);
             }
         }
@@ -54,7 +69,7 @@ class RecordManager extends Observable {
 
     // Stops the currentRecord
     stopRecord(id) {
-        let record = this.data.filter(entry => entry.getID() === parseInt(id))[0];
+        let record = this.data.filter(entry => entry.getID() === id)[0];
         if (record !== null && record !== undefined) {
             this.onAudioEnd(record);
         }
@@ -114,28 +129,25 @@ class RecordManager extends Observable {
             this.data[this.index].playAudio();
             // Event to tell UI that this element is done playing
             this.onAudioPlayed(this.data[this.index]);
-        }
-        else {
+        } else {
             this.onEndOfAutoplay();
         }
     }
 
-    onEndOfAutoplay()
-    {
+    onEndOfAutoplay() {
         let event = new Event("cast-end", "cast play ended");
         this.notifyAll(event);
     }
 
     // Returns to the previous record and plays it
     onPreviousRecord() {
-        if(this.data[this.index] !== undefined && this.data[this.index] !== null) {
+        if (this.data[this.index] !== undefined && this.data[this.index] !== null) {
             this.onAudioEnd(this.data[this.index]);
             if (this.index - 1 >= 0) {
                 this.index--;
                 this.data[this.index].playAudio();
                 this.onAudioPlayed(this.data[this.index]);
-            }
-            else {
+            } else {
                 this.onEndOfAutoplay();
             }
         }
@@ -148,14 +160,25 @@ class RecordManager extends Observable {
         this.notifyAll(event);
     }
 
-    onEntryTitleChanged(data){
+    onEntryTitleChanged(data) {
         let id = data.id,
-            record = this.data.filter(entry => entry.getID() === parseInt(id))[0],
+            record = this.data.filter(entry => entry.getID() === id)[0],
             index = this.getIndexFromRecord(record);
         record.setTitle(data.title);
         this.data[index] = record;
     }
 
+    getRecords() {
+        let promises = [],
+            files = [];
+        this.data.forEach(record => {
+            promises.push(record.getOggFile());
+        });
+        Promise.all(promises)
+            .then(function(file) { files.push(file); })
+            .catch(function() { return undefined; });
+        return files;
+    }
 }
 
 export default RecordManager;

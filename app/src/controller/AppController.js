@@ -15,11 +15,16 @@ import NavView from "../view/Navbar/NavView.js";
 // Authentication
 import { getAuth } from "../api/Auth/getAuth.js";
 
+
 // Validating a shared cast
 import { getDocument } from "../api/Collections/getDocument.js";
 
 // Config which keeps important numbers;
 import Config from "../utils/Config.js";
+
+// Session deletion
+import { deleteSession } from "../api/Session/deleteSession.js";
+
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -34,7 +39,7 @@ class AppController {
     constructor() {
         this.router = new Router();
         window.addEventListener("hashchange", this.onHashChanged.bind(this));
-        // window.addEventListener("load", this.onHashChanged.bind(this));
+        window.addEventListener("load", this.onHashChanged.bind(this));
         this.router.addEventListener("template-ready", this.onTemplateReady.bind(this));
 
         // Navbar links (This listener is used to push this page onto the stack)
@@ -51,6 +56,13 @@ class AppController {
 
         // We only need one NavView, if we would do one in each controller it would cause problems
         this.navView = new NavView();
+        this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
+    }
+
+    onUserLogOutClicked() {
+        deleteSession().then(() => {
+            this.setHash("login");
+        });
     }
 
     setHash(hash) {
@@ -66,7 +78,7 @@ class AppController {
             let logged = res.login,
                 user = res.user;
 
-            this.computeCurrentPage(event, logged); //user is logged in
+            this.computeCurrentPage(event, logged);
 
         }, (error) => {
             //What to do when there is an error?

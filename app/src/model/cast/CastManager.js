@@ -3,6 +3,14 @@ import AudioManager from "./AudioManager.js";
 import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
 import { Event, Observable } from "../../utils/Observable.js";
+import { getUser } from "../../api/User/getUser.js";
+import { getFile } from "../../api/Storage/getFile.js";
+import { deleteFile } from "../../api/Storage/deleteFile.js";
+import { createFile } from "../../api/Storage/createFile.js";
+import { listDocuments } from "../../api/Collections/listDocuments.js";
+import { updateDocument } from "../../api/Collections/updateDocument.js";
+import { createDocument } from "../../api/Collections/createDocument.js";
+import Config from "../../utils/Config.js";
 
 var audioManager,
     recordManager;
@@ -14,6 +22,11 @@ class CastManager extends Observable {
         super();
         this.file = null;
         this.title = "";
+        this.castID = undefined; //TODO: if cast is loaded into CastManager -> replace castID with existing ID!
+        this.codeFileID =
+            undefined; //TODO: if cast is loaded into CastManager -> replace codeFileID with existing ID!
+
+
         // The last Record (Just a help variable for Record Creation)
         this.currentRecord = null;
         // The Audio manager creates audio files
@@ -79,13 +92,8 @@ class CastManager extends Observable {
         recordManager.playCast();
     }
 
-    stopCast(){
+    stopCast() {
         recordManager.stopCast();
-    }
-
-    // Returns all the data from the current cast -> So it can be stored
-    getCast() {
-        return createCast(this);
     }
 
     onNextRecord() {
@@ -96,21 +104,67 @@ class CastManager extends Observable {
         recordManager.onPreviousRecord();
     }
 
-    onEntryTitleChanged(data){
+    onEntryTitleChanged(data) {
         recordManager.onEntryTitleChanged(data);
     }
-        
+
+    // Returns all the data from the current cast -> So it can be stored
+    async saveCast(title, codeHTML) {
+        return await saveCast(title, codeHTML, this);
+    }
+
 }
 
 // Creates JSON with data from the current cast
-function createCast(self) {
-    let data = {
-        id: Date.now(),
-        title: self.title,
-        file: self.file,
-        records: recordManager.getAllRecords(),
+//TODO: needs UserID (serverID)
+//TODO: needs AudioIDs (serverIDs)
+//TODO: needs CodeFileID (serverID)
+async function saveCast(title, codeHTML, self) {
+    let user = await getUser(),
+        allCasts = await listDocuments(Config.CAST_COLLECTION_ID),
+        castServerID,
+        castDocumentJSON, recordIDs;
+    console.log(self);
+    if (self.castID) {
+        allCasts.forEach(castDoc => {
+            if (castDoc.castID === self.castID) {
+                castServerID = castDoc.$id;
+            }
+        });
+    } else {
+        self.castID = crypto.randomUUID() + "_cast";
+    }
+
+    if (self.codeFileID) {
+        //delete -> to "update"
+        await deleteFile(self.codeFileID);
+    } else {
+        self.codeFileID = crypto.randomUUID() + "_code";
+    }
+    await saveCodeAsFileToServer(codeHTML, self);
+
+    recordIDs = await recordManager.createDBRecord();
+    castDocumentJSON = {
+        castID: self.castID,
+        title: title,
+        userID: user,
+        codeFileID: self.codeFileID,
+        audioFileIDs: recordIDs,
     };
-    return data;
+
+    if (castServerID) { //if the cast was already once saved in the cloud then update and don't create a new one
+        await updateDocument(Config.CAST_COLLECTION_ID, castServerID, castDocumentJSON); //TODO: fehlt
+    } else { //create a new castDocument on the server
+        await createDocument(Config.CAST_COLLECTION_ID, castDocumentJSON);
+    }
+    //TODO: send to cloud -> update or create
+}
+
+//https://redstapler.co/generate-text-file-javascript/ Abgerufen am 15.03.22
+async function saveCodeAsFileToServer(codeHTML, self) {
+    let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
+        file = new File([blob], self.codeFileID, { type: "text/plain;charset=utf-8" });
+    await createFile(self.codeFileID, file);
 }
 
 export default CastManager;
