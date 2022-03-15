@@ -8,14 +8,23 @@ import HomeController from "./HomeController.js";
 import AccountController from "./AccountController.js";
 import ErrorController from "./ErrorController.js";
 import RegisterController from "./RegisterController.js";
+import ShareController from "./ShareController.js";
 
 import NavView from "../view/Navbar/NavView.js";
 
 // Authentication
 import { getAuth } from "../api/Auth/getAuth.js";
 
+
+// Validating a shared cast
+import { getDocument } from "../api/Collections/getDocument.js";
+
+// Config which keeps important numbers;
+import Config from "../utils/Config.js";
+
 // Session deletion
 import { deleteSession } from "../api/Session/deleteSession.js";
+
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -72,8 +81,7 @@ class AppController {
             this.computeCurrentPage(event, logged);
 
         }, (error) => {
-            // TODO: What to do when there is an error?
-            this.setHash("login");
+            //What to do when there is an error?
             console.log("onHashChangedError", error);
         });
 
@@ -81,32 +89,46 @@ class AppController {
 
     // Recieves a template from the router and a hash identifier
     // Diminishes between certain cases, then inits the relevant parts
-    onTemplateReady(event) {
-        let template = event.data;
-        this.container.innerHTML = template.template;
+    async onTemplateReady(event) {
+        let template = event.data,
+            shareData;
         // After a template is set, we init a controller which takes care of the functionality
         switch (template.route) {
             case "#home":
+                this.container.innerHTML = template.template;
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
                 break;
             case "#login":
+                this.container.innerHTML = template.template;
                 this.controller = new LoginController();
                 this.controller.init(this.navView);
                 break;
             case "#create":
+                this.container.innerHTML = template.template;
                 this.controller = new CastController();
                 this.controller.init(this.navView);
                 break;
             case "#account":
+                this.container.innerHTML = template.template;
                 this.controller = new AccountController();
                 this.controller.init(this.navView);
                 break;
             case "#register":
+                this.container.innerHTML = template.template;
                 this.controller = new RegisterController();
                 this.controller.init(this.navView);
                 break;
+            case "#/share/:id":
+                    shareData = await this.computeShareScreen(); 
+                if (shareData !== false) {
+                    this.container.innerHTML = template.template;
+                    this.controller = new ShareController();
+                    this.controller.init(this.navView, shareData.answer);  
+                }
+                break;
             default:
+                this.container.innerHTML = template.template;
                 this.controller = new ErrorController();
                 this.controller.init(this.navView);
         }
@@ -129,6 +151,24 @@ class AppController {
         }
         // TO HERE
         this.router.onHashChanged(event);
+    }
+
+    // We have to check if the ID is actually valid
+    // In order to be valid, an ID has to be Linked to a Cast in the DB
+    async computeShareScreen(){
+        let id = window.location.hash.substring(Config.URL_SUBSTRING_START),
+        // If there is a document with the id of the url -> the cast will be displayed
+        castExists = await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
+            let data = {
+                state: true,
+                answer: res,
+            };
+            return data;
+        }, () => {
+            this.setHash("error/404");
+            return false;
+        });
+        return castExists;
     }
 
 }
