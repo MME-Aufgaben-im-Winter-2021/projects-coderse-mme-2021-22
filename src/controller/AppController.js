@@ -2,7 +2,7 @@
 import Router from "../utils/Router.js";
 
 // Controllers
-import CastController from "./CastController.js";
+import CastController from "./castController.js";
 import LoginController from "./LoginController.js";
 import HomeController from "./HomeController.js";
 import AccountController from "./AccountController.js";
