@@ -172,6 +172,11 @@ Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
 
 TODO: Muss getestet werden + createFile.js muss angepasst werden -> gibt es nicht in appwrite.database (-> appwrite.storage?)
 
+Unsere 20.Sitzung 15.03.2022 ungenau
+- Share Feature durch dynamische Route
+- Router fixes bezüglich des sharens
+- Copy to Clipboard feature
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

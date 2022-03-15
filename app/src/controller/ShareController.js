@@ -13,7 +13,6 @@ var castManager;
 class ShareController {
 
     init(navView, payload) {
-        console.log(payload);
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
         castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
@@ -43,6 +42,9 @@ class ShareController {
         // Navbar View
         this.navView = navView;
         this.navView.hideLinks();
+
+        let text = "CODERSE USER " + payload.$id+ " created this Cast, which is called " + payload.title;
+        document.querySelector("#shared-title").innerText = text;
 
     }
 

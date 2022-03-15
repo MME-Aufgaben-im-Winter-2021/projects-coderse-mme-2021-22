@@ -692,6 +692,7 @@ mark {
     transform: translateY(-100%);
     transition: all 100ms ease;
     opacity: 0;
+    color: white;
 }
 
 /* ------ LOGIN ----------- */

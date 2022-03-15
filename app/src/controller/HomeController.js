@@ -17,6 +17,7 @@ class HomeController {
 
         // Home general View
         this.homeView = new HomeView();
+        this.homeView.addEventListener("link-copy", this.onCopyLink.bind(this));
 
         // Data Manager of this Controller
         this.homeManager = new HomeManager();
@@ -38,9 +39,17 @@ class HomeController {
         data.documents.forEach(document => {
             // Hand document 
             console.log(document);
-            let title = document.title;
-            this.homeView.addElement(title);
+            let title = document.title,
+                id = document.$id;
+            this.homeView.addElement(title, id);
         });
+    }
+
+    onCopyLink(event){
+        console.log(event);
+        let id = event.data,
+            url = "http://localhost:8080/#/share/" + id;
+        navigator.clipboard.writeText(url);
     }
 
 }

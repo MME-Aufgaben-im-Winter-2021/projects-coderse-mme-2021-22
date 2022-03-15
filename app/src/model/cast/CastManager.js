@@ -23,9 +23,7 @@ class CastManager extends Observable {
         this.file = null;
         this.title = "";
         this.castID = undefined; //TODO: if cast is loaded into CastManager -> replace castID with existing ID!
-        this.codeFileID =
-            undefined; //TODO: if cast is loaded into CastManager -> replace codeFileID with existing ID!
-
+        this.codeFileID = undefined; //TODO: if cast is loaded into CastManager -> replace codeFileID with existing ID!
 
         // The last Record (Just a help variable for Record Creation)
         this.currentRecord = null;
@@ -123,31 +121,37 @@ async function saveCast(title, codeHTML, self) {
     let user = await getUser(),
         allCasts = await listDocuments(Config.CAST_COLLECTION_ID),
         castServerID,
-        castDocumentJSON, recordIDs;
-    console.log(self);
+        castDocumentJSON,
+        recordIDs,
+        userID = user.$id;
+    console.log(userID);
     if (self.castID) {
         allCasts.forEach(castDoc => {
             if (castDoc.castID === self.castID) {
                 castServerID = castDoc.$id;
             }
         });
-    } else {
-        self.castID = crypto.randomUUID() + "_cast";
     }
+    //  else {
+    //     self.castID = crypto.randomUUID() + "_cast";
+    // }
 
     if (self.codeFileID) {
         //delete -> to "update"
-        await deleteFile(self.codeFileID);
-    } else {
-        self.codeFileID = crypto.randomUUID() + "_code";
+        // await deleteFile(self.codeFileID);
     }
-    await saveCodeAsFileToServer(codeHTML, self);
+    // else {
+    //     self.codeFileID = crypto.randomUUID() + "_code";
+    // }
+    // await saveCodeAsFileToServer(codeHTML, self);
+    self.codeFileID = "idReturnedFrom the creation of the file";
+    self.castID = "die ist doch unnötig - erstellt doch eh eine";
 
     recordIDs = await recordManager.createDBRecord();
     castDocumentJSON = {
         castID: self.castID,
         title: title,
-        userID: user,
+        userID: userID,
         codeFileID: self.codeFileID,
         audioFileIDs: recordIDs,
     };
