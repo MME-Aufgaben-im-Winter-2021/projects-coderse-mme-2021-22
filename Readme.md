@@ -165,7 +165,12 @@ Unsere 18. Sitzung: 14.03.2022 17:00 - 19:00
 - Navigation Account dropdown
 - Registration beendet
 
-    
+Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
+- erstellen von .ogg Audio Daten möglich
+- erstellen von txt Datei für Code möglich
+- Start Datensicherung in der Cloud
+
+TODO: Muss getestet werden + createFile.js muss angepasst werden -> gibt es nicht in appwrite.database (-> appwrite.storage?)
 
 ### Verwendete Ressourcen
 https://feathericons.com/
