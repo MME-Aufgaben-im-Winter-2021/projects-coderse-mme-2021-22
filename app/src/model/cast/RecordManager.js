@@ -1,8 +1,8 @@
 /* eslint-env browser */
 
 import { Event, Observable } from "../../utils/Observable.js";
-import { deleteFile } from "../../api/Storage/deleteFile.js";
-import { createFile } from "../../api/Storage/createFile.js";
+// import { deleteFile } from "../../api/Storage/deleteFile.js";
+// import { createFile } from "../../api/Storage/createFile.js";
 
 // Manages the list of records of a code cast
 class RecordManager extends Observable {
@@ -20,14 +20,14 @@ class RecordManager extends Observable {
     }
 
     async createDBRecord() {
-        let files = this.getRecords(),
-            results = [];
-        files.forEach(async (file) => {
-            // console.log("Name of file to store", file.name);
-            await deleteFile(file.name);
-            await createFile(file.name, file);
-            results.push(file.name);
-        });
+        // let files = this.getRecords(),
+        let results = [];
+        // files.forEach(async (file) => {
+        //     console.log("Name of file to store", file.name);
+        //     await deleteFile(file.name);
+        //     await createFile(file.name, file);
+        //     results.push(file.name);
+        // });
         return results;
     }
 
