@@ -143,7 +143,7 @@ class AppController {
             if (currentHash === "#login" || currentHash === "#register") {
                 this.setHash("home");
             }
-        } else {
+        } else if(!this.router.isDynamicRoute(currentHash)) {
             if (currentHash !== "#login" && currentHash !== "#register") {
                 this.setHash("login");
             }
