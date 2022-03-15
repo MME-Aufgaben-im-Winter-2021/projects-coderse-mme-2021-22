@@ -162,12 +162,16 @@ class CastController {
 
     // Skip to the next record
     onNextRecord() {
-        castManager.onNextRecord();
+        if (!this.playerList.hasNoEntries()) {
+            castManager.onNextRecord();
+        }
     }
 
     // Get to the previous record
     onPreviousRecord() {
-        castManager.onPreviousRecord();
+        if (!this.playerList.hasNoEntries()) {
+            castManager.onPreviousRecord();
+        }
     }
 
     /* ---------------------------------------------------recorder--------------------------------------------------------------- */
