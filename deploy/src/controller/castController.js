@@ -3,9 +3,8 @@
 import PlayerListView from "../view/cast/AudioPlayer/PlayerListView.js";
 import PlayerControlsView from "../view/cast/AudioPlayer/PlayerControlsView.js";
 import RecorderView from "../view/cast/AudioRecorder/RecorderView.js";
-import NavView from "../view/cast/Navbar/NavView.js";
 import CodeView from "../view/cast/CodeField/CodeView.js";
-import CastManager from "../model/CastManager.js";
+import CastManager from "../model/cast/CastManager.js";
 import FileTypeValidator from "../utils/FileTypeValidator.js";
 import DropView from "../view/cast/CodeField/DropView.js";
 
@@ -20,7 +19,7 @@ class CastController {
     //     this.init();
     // }
 
-    init() {
+    init(navView) {
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
@@ -65,8 +64,12 @@ class CastController {
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
         // Navbar View
-        this.navView = new NavView();
+        this.navView = navView;
         this.navView.addEventListener("cast-safe", this.safeCast.bind(this));
+        this.navView.showLinks();
+        this.navView.showSafeBtn();
+        this.navView.showTitleInput();
+        this.navView.setCreateActive();
     }
 
     /* ---------------------------------------------------castManager--------------------------------------------------------------- */
@@ -159,12 +162,16 @@ class CastController {
 
     // Skip to the next record
     onNextRecord() {
-        castManager.onNextRecord();
+        if (!this.playerList.hasNoEntries()) {
+            castManager.onNextRecord();
+        }
     }
 
     // Get to the previous record
     onPreviousRecord() {
-        castManager.onPreviousRecord();
+        if (!this.playerList.hasNoEntries()) {
+            castManager.onPreviousRecord();
+        }
     }
 
     /* ---------------------------------------------------recorder--------------------------------------------------------------- */
@@ -221,10 +228,12 @@ class CastController {
 
     /* ---------------------------------------------------navView--------------------------------------------------------------- */
 
-    // Safes Cast in DB
-    safeCast(event) {
-        castManager.setTitle(event.data);
+    // Safes Cast to Cloud
+    async safeCast(event) {
+        //event.data = title des Casts
+        await castManager.saveCast(event.data); //TODO: hand over code html
     }
+
 }
 
 export default CastController;

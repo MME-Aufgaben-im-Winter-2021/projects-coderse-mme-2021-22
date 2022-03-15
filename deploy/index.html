@@ -14,80 +14,48 @@
     <div class="main">
         <div class="nav-bar">
             <div class="nav-align-left">
-                <div class="logo">
+                <a href="#home" class="logo nav-link">
                     <img src="./resources/custom-icons/MME-Codeverse-Logo2.svg">
-                </div>
-                <input class="code-cast-title" type="text" value="Code-Cast Title">
+                </a>
+                <input class="code-cast-title hidden" type="text" value="Code-Cast Title">
             </div>
 
             <div class="nav-align-right">
-                <div class="button-save">
+                <div class="button-save hidden">
                     Save
                 </div>
-                <div class="home">
+                <a id="home-link" href="#home" class="home nav-link hidden">
                     Home
-                </div>
+                </a>
+                <a id="create-link" href="#create" class="home nav-link hidden">
+                    Create Cast
+                </a>
 
-                <div class="user">
-                    <div class="user-name">Username</div>
+                <div id="user-dropdown"  class="home user nav-link">
+                    <div id="user-name">Username</div>
+                    <ul id="nav-dropdown"  class="nav-dropdown hidden">
+                        <li class="nav-dropdown-item">
+                            <a id="user-link" href="#account">
+                                Account
+                            </a>
+                        </li>
+                        <li class="nav-dropdown-item">
+                            <button class=" button-save" id="user-logout">LOGOUT</button>
+                        </li>
+    
+                    </ul>
                 </div>
+                
+                
             </div>
 
         </div>
-
-        <div class="main-content">
-            <div class="main-left">
-                <ul class="player-list">
+        <div class="content-container">
 
 
-                </ul>
-            </div>
-            <div class="main-right">
-                <div class="main-right-drag-drop-container">
-                    Drag and Drop your file here!
-                    <div id="drop_zone" class="main-right-drag-drop-field">
-                    </div>
-                    <div class="main-right-drag-drop-container-btn-select-file">Select file from disc</div>
-                    <div class="main-right-drag-drop-container-btn hidden">Start the Cast</div>
-                </div>
-                <div class="main-right-code-container">
-                    <!-- <img src ="./resources/icons/plus-circle.svg" class="code-icon-add"> -->
-                </div>
-
-            </div>
         </div>
-
-        <div class="bottom-bar">
-            <div class="bottom-left">
-                <div class="player">
-                    <img src="./resources/icons/skip-back.svg" class="player-icon-backward">
-                    <img src="./resources/icons/play-circle.svg" class="player-icon-play">
-                    <img src="./resources/icons/stop-circle.svg" class="player-icon-stop hidden">
-                    <img src="./resources/icons/skip-forward.svg" class="player-icon-forward">
-                </div>
-            </div>
-            <div class="bottom-right">
-                <div class="recorder">
-                    <div class="recorder-left">
-                        <img src="./resources/icons/circle.svg" class="recorder-icon-light">
-                        <input class="recorder-title" type="text" value="Cast Title">
-                    </div>
-                    <div class="recorder-right">
-                        <div class="recorder-time">00:00</div>
-                        <img src="./resources/icons/mic.svg" class="recorder-icon-start">
-                        <img src="./resources/icons/trash-2.svg" class="recorder-icon-trash hidden">
-                        <img src="./resources/icons/stop-circle.svg" class="recorder-icon-stop hidden">
-                        <img src="./resources/icons/save.svg" class="recorder-icon-save hidden">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
     </div>
-    <!-- Template for single player frame, shown in timeline-->
+    <!-- Template for single player frame, shown in timeline of creation page-->
     <template id="player-template">
         <li class="player-list-entry" data-id="">
             <div class="player-list-entry-title"></div>
@@ -101,7 +69,24 @@
             <img src="./resources/icons/trash.svg" class="player-list-entry-icon-delete">
         </li>
     </template>
+
+    <!-- Template for cast list, shown on home screen -->
+    <template id="home-cast-template">
+        <li class="cast-element">
+            <div class="cast-title"> Thats a Cast!</div>
+            <div class="cast-id">Cast ID</div>
+            
+            <button class="tooltip-container"" id="copy-link">
+                Copy Link
+                <span class="tooltip"> Click to copy the Link to the Clipboard</span>
+            </button>
+            
+            <button> View </button>
+        </li>
+    </template>
     <script type="module" src="./src/index.js"></script>
+    <!-- Install Appwrite via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.1"></script>
 </body>
 
 </html>

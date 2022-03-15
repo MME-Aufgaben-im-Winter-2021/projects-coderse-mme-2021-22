@@ -121,6 +121,62 @@ Unsere 11. Sitzung: 09.03.22 10:00 - 11:00
 - Eslint Fehler behoben
 
 
+Unsere 12. Sitzung: 10.03.22 10:00 - 14:30
+
+- Hash Router zur Navigation in der SPA
+- Tooltip feature über Css Klassen und HTMl Elemente
+
+
+Unsere 13. Sitzung: 11.03.22 10:30 - 14:00 , 15:00 - 16:00
+
+- Appwrite Test und Überarbeitung
+- User Authentication gestartet
+- Login Page gestartet (kein css)
+
+
+Unsere 14. Sitzung: 12.03.22 13:00 - 14:00 , 15:00 - 17:30
+
+- Navbar Veränderung während dem routing
+- User Authentication 
+- Login Page 
+
+
+Unsere 15. Sitzung: 13.03.22 11:00 - 12:30
+
+- Home screen cast liste mit Cast Collection verbunden
+- Appwrite Verbesserungen
+- Login Verbesserungen
+
+
+Unsere 16. Sitzung: 13.03.22 17:00 - 19:00
+
+- Register Screen (fast fertig (wieder nur JS))
+
+
+Unsere 17. Sitzung: 14.03.2022 10:51
+
+Löst folgende Probleme:
+- Zu viele Serveranfragen wenn nicht authorisiert
+- wenn nicht eingeloggt -> man gibt "home" oder eine andere route einfach oben rein, dann läd die Seite trotzdem 
+
+Unsere 18. Sitzung: 14.03.2022 17:00 - 19:00
+
+- major bugfixes
+- Navigation Account dropdown
+- Registration beendet
+
+Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
+- erstellen von .ogg Audio Daten möglich
+- erstellen von txt Datei für Code möglich
+- Start Datensicherung in der Cloud
+
+TODO: Muss getestet werden + createFile.js muss angepasst werden -> gibt es nicht in appwrite.database (-> appwrite.storage?)
+
+Unsere 20.Sitzung 15.03.2022 ungenau
+- Share Feature durch dynamische Route
+- Router fixes bezüglich des sharens
+- Copy to Clipboard feature
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather
