@@ -9,6 +9,7 @@ const ROUTES = {
     "#login": "./src/pages/login.html",
     "#account": "./src/pages/account.html",
     "#register": "./src/pages/register.html",
+    "#/share/:id": "./src/pages/share.html",
 };
 
 // Router Class to navigate between pages with templates
@@ -30,8 +31,14 @@ class Router extends Observable {
     // When the URL hash changes the linked html template is retrieved
     // When the route is not available a 404 Error page will be shown
     onHashChanged(){
-        const hash = window.location.hash, 
+        let hash = window.location.hash, 
               route = ROUTES[hash] || ROUTES[404];
+        if(this.isDynamicRoute(window.location.hash)){
+            console.log("IT IS A DYNAMIC ROUTE!");
+            hash = "#/share/:id";
+            route = ROUTES[hash];
+        }
+        
         fetch(route).then(res => {
             let data = res.text();
             data.then(res => {
@@ -45,6 +52,14 @@ class Router extends Observable {
         });
         console.trace();
         console.log("Fetching ", route);    
+    }
+
+    // Checks for a dynamic route like /#/share/[ID with length 20]
+    // ID uses [a-z] && [0-9]
+    isDynamicRoute(hash){
+        let route = hash,
+            regex = /^#\/share\/[0-9a-z]{20}$/;
+        return regex.test(route);
     }
 }
 
