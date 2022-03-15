@@ -224,10 +224,12 @@ class CastController {
 
     /* ---------------------------------------------------navView--------------------------------------------------------------- */
 
-    // Safes Cast in DB
-    safeCast(event) {
-        castManager.setTitle(event.data);
+    // Safes Cast to Cloud
+    async safeCast(event) {
+        //event.data = title des Casts
+        await castManager.saveCast(event.data); //TODO: hand over code html
     }
+
 }
 
 export default CastController;

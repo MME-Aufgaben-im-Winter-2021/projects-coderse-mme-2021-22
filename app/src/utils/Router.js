@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import {Observable, Event} from "./Observable.js";
+import { Observable, Event } from "./Observable.js";
 
 const ROUTES = {
     404: "./src/pages/404.html",
@@ -14,37 +14,37 @@ const ROUTES = {
 // Router Class to navigate between pages with templates
 class Router extends Observable {
 
-    constructor(){
+    constructor() {
         super();
     }
 
     // Pushes a route on the "stack" -> enables navigation via browser arrow keys
-    pushRoute(event){
+    pushRoute(event) {
         event.preventDefault();
         let url = event.target.href;
-        history.pushState(null,null,url);
+        history.pushState(null, null, url);
         // Push state does not fire hashchange -> dispatch the event on the window
         window.dispatchEvent(new HashChangeEvent("hashchange"));
     }
 
     // When the URL hash changes the linked html template is retrieved
     // When the route is not available a 404 Error page will be shown
-    onHashChanged(){
-        const hash = window.location.hash, 
-              route = ROUTES[hash] || ROUTES[404];
+    onHashChanged() {
+        const hash = window.location.hash,
+            route = ROUTES[hash] || ROUTES[404];
         fetch(route).then(res => {
             let data = res.text();
             data.then(res => {
                 let template = {
-                    route: hash,
-                    template: res,
-                },
+                        route: hash,
+                        template: res,
+                    },
                     event = new Event("template-ready", template);
                 this.notifyAll(event);
             });
         });
         console.trace();
-        console.log("Fetching ", route);    
+        console.log("Fetching ", route);
     }
 }
 

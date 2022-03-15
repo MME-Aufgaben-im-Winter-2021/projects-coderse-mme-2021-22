@@ -41,7 +41,7 @@ class Player extends Observable {
     getEntryById(id) {
         let res;
         this.entryViews.forEach(entry => {
-            if (parseInt(entry.getId()) === id) {
+            if (entry.getId() === id) {
                 res = entry;
             }
         });
@@ -50,6 +50,7 @@ class Player extends Observable {
 
     // Marks a entry as played and starts the timer
     startPlayedEntry(event) {
+        console.log(event.data);
         let entry = this.getEntryById(event.data.id);
         entry.showPlay();
     }

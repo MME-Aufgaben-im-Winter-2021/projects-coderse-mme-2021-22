@@ -3,6 +3,14 @@ import AudioManager from "./AudioManager.js";
 import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
 import { Event, Observable } from "../utils/Observable.js";
+import { getUser } from "../../../app/src/api/User/getUser.js";
+import { getFile } from "../../src/api/Storage/getFile.js";
+import { deleteFile } from "../../src/api/Storage/deleteFile.js";
+import { createFile } from "../../src/api/Storage/createFile.js";
+import { listDocuments } from "../../../app/src/api/Collections/listDocuments.js";
+import { updateDocument } from "../../../app/src/api/Collections/updateDocument.js";
+import { createDocument } from "../../../app/src/api/Collections/createDocument.js";
+import Config from "../utils/Config.js";
 
 var audioManager,
     recordManager;
@@ -14,6 +22,11 @@ class CastManager extends Observable {
         super();
         this.file = null;
         this.title = "";
+        this.castID = undefined; //TODO: if cast is loaded into CastManager -> replace castID with existing ID!
+        this.codeFileID =
+            undefined; //TODO: if cast is loaded into CastManager -> replace codeFileID with existing ID!
+
+
         // The last Record (Just a help variable for Record Creation)
         this.currentRecord = null;
         // The Audio manager creates audio files
@@ -79,13 +92,8 @@ class CastManager extends Observable {
         recordManager.playCast();
     }
 
-    stopCast(){
+    stopCast() {
         recordManager.stopCast();
-    }
-
-    // Returns all the data from the current cast -> So it can be stored
-    getCast() {
-        return createCast(this);
     }
 
     onNextRecord() {
@@ -96,21 +104,65 @@ class CastManager extends Observable {
         recordManager.onPreviousRecord();
     }
 
-    onEntryTitleChanged(data){
+    onEntryTitleChanged(data) {
         recordManager.onEntryTitleChanged(data);
     }
-        
+
+    // Returns all the data from the current cast -> So it can be stored
+    saveCast(title, codeHTML) {
+        return saveCast(title, codeHTML);
+    }
+
 }
 
 // Creates JSON with data from the current cast
-function createCast(self) {
-    let data = {
-        id: Date.now(),
-        title: self.title,
-        file: self.file,
-        records: recordManager.getAllRecords(),
+//TODO: needs UserID (serverID)
+//TODO: needs AudioIDs (serverIDs)
+//TODO: needs CodeFileID (serverID)
+async function saveCast(title, codeHTML, audioFileIDs) {
+    let user = await getUser(),
+        allCasts = await listDocuments(),
+        castServerID,
+        castDocumentJSON;
+    if (this.castID) {
+        allCasts.forEach(castDoc => {
+            if (castDoc.castID === this.castID) {
+                castServerID = castDoc.$id;
+            }
+        });
+    } else {
+        this.castID = crypto.randomUUID() + "_cast";
+    }
+
+    if (this.codeFileID) {
+        //delete -> to "update"
+        await deleteFile(this.codeFileID);
+    } else {
+        this.codeFileID = crypto.randomUUID() + "_code";
+    }
+    await saveCodeAsFileToServer(codeHTML);
+
+    castDocumentJSON = {
+        castID: this.castID,
+        title: title,
+        userID: user,
+        codeFileID: this.codeFileID,
+        audioFileIDs: audioFileIDs,
     };
-    return data;
+
+    if (castServerID) { //if the cast was already once saved in the cloud then update and don't create a new one
+        await updateDocument(Config.CAST_COLLECTION_ID, castServerID, castDocumentJSON); //TODO: fehlt
+    } else { //create a new castDocument on the server
+        await createDocument(Config.CAST_COLLECTION_ID, castDocumentJSON);
+    }
+    //TODO: send to cloud -> update or create
+}
+
+//https://redstapler.co/generate-text-file-javascript/ Abgerufen am 15.03.22
+async function saveCodeAsFileToServer(codeHTML) {
+    let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
+        file = new File([blob], this.codeFileID, { type: "text/plain;charset=utf-8" });
+    await createFile(this.codeFileID, file);
 }
 
 export default CastManager;

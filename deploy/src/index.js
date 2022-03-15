@@ -1,4 +1,4 @@
-import CastController from "./controller/castController.js";
+import CastController from "./controller/CastController.js";
 
 function init() {
     initController();

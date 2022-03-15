@@ -1,6 +1,5 @@
 /* eslint-env browser */
 
-
 import HomeView from "../view/home/HomeView.js";
 
 import HomeManager from "../model/home/HomeManager.js";

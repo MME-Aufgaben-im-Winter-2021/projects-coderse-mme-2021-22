@@ -36,8 +36,7 @@ async function computePromise(promise){
             answer: error,
         };
     });
-    return res;
-        
+    return res;    
 }
 
 export default LoginManager;
