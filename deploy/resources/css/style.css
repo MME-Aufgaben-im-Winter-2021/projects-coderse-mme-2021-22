@@ -683,7 +683,7 @@ mark {
 .tooltip {
     visibility: hidden;
     position: absolute;
-    top: -170%;
+    top: -160%;
     padding: 5px;
     border-radius: 5px;
     background-color: var(--eerie-black-2);
