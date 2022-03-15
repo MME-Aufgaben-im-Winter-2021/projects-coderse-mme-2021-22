@@ -1,11 +1,14 @@
 /* eslint-env browser */
+import Observable from "../../utils/Observable.js";
 import CastListView from "./CastListView.js";
 
-class HomeView{
+class HomeView extends Observable{
 
     constructor(){
+        super();
         this.answerView = document.getElementById("server-answer");
         this.castListView = new CastListView();
+        this.castListView.addEventListener("link-copy", (event) => this.notifyAll(event));
     }
 
     setServerAnswer(string){
@@ -13,8 +16,8 @@ class HomeView{
         console.log(string);
     }
 
-    addElement(title){
-        this.castListView.addElement(title);
+    addElement(title, id){
+        this.castListView.addElement(title, id);
     }
 
 }

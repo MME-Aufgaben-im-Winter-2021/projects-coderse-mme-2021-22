@@ -25,7 +25,6 @@ import Config from "../utils/Config.js";
 // Session deletion
 import { deleteSession } from "../api/Session/deleteSession.js";
 
-
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
 // To create a new page: - Create a html template in pages folder
@@ -36,7 +35,7 @@ import { deleteSession } from "../api/Session/deleteSession.js";
 
 class AppController {
 
-    constructor() {
+    init() {
         this.router = new Router();
         window.addEventListener("hashchange", this.onHashChanged.bind(this));
         window.addEventListener("load", this.onHashChanged.bind(this));
@@ -140,7 +139,15 @@ class AppController {
         let currentHash = window.location.hash;
         // If a user is logged in, he should not be able to view login and register page
         // FROM HERE
-        if (loggedIn) {
+        // If a user starts the app
+        if(currentHash === ""){
+            this.setHash("login");
+        }
+        // If a shared page is opened
+        if(this.router.isDynamicRoute(currentHash)){
+            console.log("Is a shared page");
+        }
+        else if (loggedIn) {
             if (currentHash === "#login" || currentHash === "#register") {
                 this.setHash("home");
             }
