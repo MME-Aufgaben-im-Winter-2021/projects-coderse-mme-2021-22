@@ -50,7 +50,6 @@ class Player extends Observable {
 
     // Marks a entry as played and starts the timer
     startPlayedEntry(event) {
-        console.log(event.data);
         let entry = this.getEntryById(event.data.id);
         entry.showPlay();
     }

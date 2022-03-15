@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-import { Observable, Event } from "../utils/Observable.js";
+import { Observable, Event } from "../../utils/Observable.js";
 
 var mediaRecorder,
     inputStream;
@@ -30,15 +30,23 @@ class AudioManager extends Observable {
 // Starts an input stream for an audio 
 // Creates a file, when the audio is complete by listening to the media recorder 'ondataavailable' event
 function startInputStream(self) {
+    var chunks = [];
     navigator.mediaDevices.getUserMedia({
         video: false,
         audio: true,
     }).then(stream => {
         inputStream = stream;
         mediaRecorder = new MediaRecorder(inputStream);
+        mediaRecorder.onstop = () => {
+            var blob = new Blob(chunks, { "type": "audio/ogg; codecs=opus" }),
+                audioURL = window.URL.createObjectURL(blob);
+            // console.log(blob, audioURL);
+            onAudioFileRecorded(audioURL, self);
+        };
         mediaRecorder.ondataavailable = event => {
-            let file = URL.createObjectURL(event.data);
-            onAudioFileRecorded(file, self);
+            // let file = URL.createObjectURL(event.data);
+            chunks.push(event.data);
+            // onAudioFileRecorded(event.data, self);
         };
         mediaRecorder.start();
     });
