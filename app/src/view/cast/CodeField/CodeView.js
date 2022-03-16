@@ -12,7 +12,13 @@ class CodeView extends Observable {
 
     // Shows File 
     showFile(codeInput) {
+        console.log(codeInput);
         this.container.innerText = codeInput;
+    }
+
+    showLoadedFile(codeInput) {
+        console.log(codeInput);
+        this.container.innerHTML = codeInput;
     }
 
     // Marks a text selection

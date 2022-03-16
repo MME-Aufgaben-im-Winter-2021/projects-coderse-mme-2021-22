@@ -75,16 +75,19 @@ class CastController {
 
     /* ---------------------------------------------------castManager--------------------------------------------------------------- */
 
+    // When the Cast is fetched from the DB, we want to setup the Audio Entries and the Code file
     onCastDownloaded(event) {
         let castJSON = event.data;
-        console.log(castJSON);
         this.navView.showTitle(castJSON.title);
         castManager.getAudios(castJSON.records);
         castManager.getCodeText(castJSON.codeFileID);
         castManager.castServerID = castJSON.$id;
         castManager.codeFileID = castJSON.codeFileID;
+        this.dropView.hide();
     }
 
+    // When all Audio Files (Records) are turned to actual Record.js Objects this method will be invoked
+    // Now all the Audio Player Entries show and are playable
     onAudioDownloaded(event) {
         let recordData = event.data;
         console.log("Records with audio", recordData);
@@ -93,10 +96,10 @@ class CastController {
         }
     }
 
+    // When the Code file is fetched, this Method will be invoked to set the code container
     onCodeHTMLDownloaded(event) {
         let codeHTML = event.data;
-        console.log(codeHTML);
-        this.codeView.showFile(codeHTML);
+        this.codeView.showLoadedFile(codeHTML);
     }
 
     // When an audio file is recorded, it is transferred from the model to the view
@@ -236,14 +239,12 @@ class CastController {
         let file;
         FileTypeValidator.check(event.data);
         file = FileTypeValidator.getFile();
-        castManager.setFile(file);
         this.dropView.onFileDropped(file);
     }
 
     onFileSelected(event) {
         let file = event.data;
         if (FileTypeValidator.checkValidFileType(file)) {
-            castManager.setFile(file);
             this.dropView.onFileDropped(file);
             this.dropView.showButton();
         } else {
@@ -255,8 +256,8 @@ class CastController {
     /* ---------------------------------------------------navView--------------------------------------------------------------- */
 
     // Safes Cast to Cloud
-    async safeCast(event) {
-        await castManager.saveCast(event.data, this.codeView.getHTML());
+    safeCast(event) {
+        castManager.saveCast(event.data, this.codeView.getHTML());
     }
 
 }

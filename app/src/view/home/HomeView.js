@@ -8,7 +8,6 @@ class HomeView extends Observable {
         super();
         this.answerView = document.getElementById("server-answer");
         this.castListView = new CastListView();
-        this.castListView.addEventListener("link-copy", (event) => this.notifyAll(event));
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
     }
 
@@ -16,8 +15,8 @@ class HomeView extends Observable {
         this.answerView.innerText = string;
     }
 
-    addElement(title, id) {
-        this.castListView.addElement(title, id);
+    addElement(title, id, link) {
+        this.castListView.addElement(title, id, link);
     }
 
 }

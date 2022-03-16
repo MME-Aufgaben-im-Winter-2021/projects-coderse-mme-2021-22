@@ -108,13 +108,16 @@ class CastManager extends Observable {
         return await saveCast(title, codeHTML, this);
     }
 
+    // If the user wants to edit a cast, the id is not undefined
     async getCast(id) {
         if (id) {
+            // So we fetch the cast from the DB
             let cast = await downloadCast(id);
             this.notifyAll(new Event("cast-downloaded", cast));
         }
     }
 
+    // Retrieves audio files from the Database, and creates playable Records
     async getAudios(records) {
         let audioData = [],
             recordData = [];
@@ -122,25 +125,32 @@ class CastManager extends Observable {
             audioData.push(JSON.parse(record));
         }
         for (let audio of audioData) {
-            console.log(audio);
-            let record = new Record(audio.title, audio.time);
-            record.setAudio(await downloadFile(audio.id));
-            console.log(record);
+            let record = new Record(audio.title, audio.time),
+                fileURL = await downloadFile(audio.id),
+                blob;
+            blob = await fetch(fileURL.href).then(r => r.blob());
+            record.id = audio.id;
+            record.setAudio(URL.createObjectURL(blob));
             recordData.push(record);
         }
         this.notifyAll(new Event("audio-downloaded", recordData));
     }
 
+    // Retrieves a code file from the DataBase
     async getCodeText(codeFileID) {
         let codeFile = await downloadFile(codeFileID),
             reader = new FileReader();
-        reader.onload = (ev) => {
-            this.notifyAll(new Event("codeHTML-downloaded", ev.target.result));
-        };
         if (codeFile !== null) {
-            console.log(codeFile); //TODO: problem is not a file or blob
-            reader.readAsText(codeFile);
+            fetch(codeFile.href).then(res => res.blob()).then(blob =>{
+                let file = new File([blob], "CodeFile");
+                reader.readAsText(file);
+            }); 
         }
+
+        reader.onload = (res) => {
+            let text = res.target.result;
+            this.notifyAll(new Event("codeHTML-downloaded", text));
+        };
     }
 
 }
@@ -165,7 +175,7 @@ async function saveCast(title, codeHTML, self) {
         userID = user.$id,
         doesCastExistInCloud;
     if (self.castServerID) {
-        allCasts.forEach(castDoc => {
+        allCasts.documents.forEach(castDoc => {
             if (castDoc.$id === self.castServerID) {
                 doesCastExistInCloud = true;
             }
@@ -173,7 +183,6 @@ async function saveCast(title, codeHTML, self) {
     } else {
         doesCastExistInCloud = false;
     }
-
     if (self.codeFileID) {
         //delete -> to "update"
         await deleteFile(self.codeFileID);

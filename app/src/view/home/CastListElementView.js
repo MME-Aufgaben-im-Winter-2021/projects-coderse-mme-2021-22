@@ -5,19 +5,23 @@ const TEMPLATE = document.getElementById("home-cast-template").innerHTML.trim();
 
 class CastListElementView extends Observable {
 
-    constructor(title, id) {
+    constructor(title, id, link) {
         super();
         this.view = this.createView();
         this.setTitle(title);
         this.copyLink = this.view.querySelector("#copy-link");
-        this.copyLink.addEventListener("click", this.onLinkCopy.bind(this));
         this.viewCast = this.view.querySelector("#view-btn");
         this.viewCast.addEventListener("click", this.onViewCast.bind(this));
         this.setID(id);
+        this.setLink(link);
     }
 
     setTitle(title) {
         this.view.querySelector(".cast-title").innerText = title;
+    }
+
+    setLink(link){
+        this.copyLink.value = link;
     }
 
     setID(id) {
@@ -26,11 +30,6 @@ class CastListElementView extends Observable {
 
     getID() {
         return this.viewCast.getAttribute("data-id");
-    }
-
-    onLinkCopy() {
-        let event = new Event("link-copy", this.getID());
-        this.notifyAll(event);
     }
 
     onViewCast() {

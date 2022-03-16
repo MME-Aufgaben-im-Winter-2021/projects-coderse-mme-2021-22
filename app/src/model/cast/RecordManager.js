@@ -17,6 +17,7 @@ class RecordManager extends Observable {
     addRecord(record) {
         this.data.push(record);
         record.addEventListener("audio-end", event => { this.onRecordEnd(event); });
+        console.log(this.data);
     }
 
     //stores the audio files with its IDs in the database and returns an array of the IDs
