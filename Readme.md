@@ -159,11 +159,13 @@ Löst folgende Probleme:
 - Zu viele Serveranfragen wenn nicht authorisiert
 - wenn nicht eingeloggt -> man gibt "home" oder eine andere route einfach oben rein, dann läd die Seite trotzdem 
 
+
 Unsere 18. Sitzung: 14.03.2022 17:00 - 19:00
 
 - major bugfixes
 - Navigation Account dropdown
 - Registration beendet
+
 
 Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
 - erstellen von .ogg Audio Daten möglich
@@ -172,11 +174,24 @@ Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
 
 TODO: Muss getestet werden + createFile.js muss angepasst werden -> gibt es nicht in appwrite.database (-> appwrite.storage?)
 
-Unsere 20.Sitzung 15.03.2022 ungenau
+
+Unsere 20. Sitzung 15.03.2022
 - Share Feature durch dynamische Route
 - Router fixes bezüglich des sharens
 - Copy to Clipboard feature
 
+
+Unsere 21. Sitzung 16.03.2022 
+- View-Button auf Cast auf Home-Screen: Per Klick wird auf create Cast gewechselt (Audio in View angezeigt (in Bearbeitung))
+- Cast wird als JSON in Appwrite gesichert
+- Der markierte Code wird als Text File auf Appwrite gespeichert
+- Die AudioFiles werden als .ogg auf Appwrite gespeichert
+
+TODO:
+    - getCodeText benötigt einen Blob oder ein File (CastManager)
+    - Vorschlag: Statt separater ShareController/ShareManager/ShareView einfach den CastController, der dann eine Methode anbietet die UI Elemente zum Bearbeiten auszublenden
+    - Heruntergeladene Audios können noch nicht abgespielt werden
+    
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

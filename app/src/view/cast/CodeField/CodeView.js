@@ -3,15 +3,15 @@ import Config from "../../../utils/Config.js";
 import { Event, Observable } from "../../../utils/Observable.js";
 
 class CodeView extends Observable {
+
     constructor() {
         super();
         this.container = document.querySelector(".main-right-code-container");
         this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
     }
 
-    // Shows File
-    handleFile(event) {
-        let codeInput = event.data;
+    // Shows File 
+    showFile(codeInput) {
         this.container.innerText = codeInput;
     }
 
@@ -202,6 +202,10 @@ class CodeView extends Observable {
                 prevEl = elements[i];
             }
         }
+    }
+
+    getHTML() {
+        return this.container.innerHTML;
     }
 }
 
