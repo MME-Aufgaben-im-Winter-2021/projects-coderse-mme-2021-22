@@ -26,6 +26,15 @@ class Player extends Observable {
         this.entryViews.push(entry);
     }
 
+    //adds all records to the view
+    showEntries(records) {
+        if (!records.length === 0) {
+            records.forEach(record => {
+                this.addEntry(record);
+            });
+        }
+    }
+
     // Delete a certain entry from the list with the event target
     // (Possible point which can be used with an Event on a Player Entry)
     deleteEntry(event) {

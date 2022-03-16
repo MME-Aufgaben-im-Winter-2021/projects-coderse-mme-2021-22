@@ -21,6 +21,11 @@ class NavView extends Observable {
         this.userLogout.addEventListener("click", this.onUserLogOutClicked.bind(this));
     }
 
+    //shows current Title in the view
+    showTitle(title) {
+        this.castTitle.value = title;
+    }
+
     onUserLogOutClicked() {
         let event = new Event("user-logout", "user wants to log out"); //TODO: needs more data?
         this.notifyAll(event);
