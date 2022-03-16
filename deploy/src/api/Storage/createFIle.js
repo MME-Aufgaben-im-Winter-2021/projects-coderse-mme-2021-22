@@ -6,4 +6,4 @@ function createFile(id, data) {
     return promise;
 }
 
-export {createFile};
+export { createFile };

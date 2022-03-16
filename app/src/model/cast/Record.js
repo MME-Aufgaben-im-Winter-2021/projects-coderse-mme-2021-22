@@ -7,20 +7,25 @@ class Record extends Observable {
 
     constructor(title, time) {
         super();
-        this.id = crypto.randomUUID().substring(15) + "_audio.ogg"; //Date.now();
+        this.id = crypto.randomUUID(); //Date.now();
         this.title = title;
         this.time = time;
         this.audioFile = null;
         this.currentAudio = null;
     }
 
-    // returns the audioFile as a .ogg file
     async getOggFile() {
-        return await fetch(this.audioFile)
+        return new Promise(function(resolve, reject){
+            let file = fetch(this.audioFile)
             .then(result => result.blob())
             .then(blob => {
-                return new File([blob], this.id, { type: "audio/ogg; codecs=opus" });
+                file = new File([blob], this.id, { type: "audio/ogg; codecs=opus" });
+            })
+            .catch(() => {
+                reject();
             });
+            resolve(file);
+        });
     }
 
     // Plays the audio file linked to this record
@@ -59,14 +64,6 @@ class Record extends Observable {
 
     setTitle(title) {
         this.title = title;
-    }
-
-    getTitle() {
-        return this.title;
-    }
-
-    getTime() {
-        return this.time;
     }
 }
 

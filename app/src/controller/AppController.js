@@ -74,7 +74,7 @@ class AppController {
             // The case we have a good result
             // Now we have to test if a user is logged in or not
             let logged = res.login;
-            // user = res.user;
+                // user = res.user;
 
             this.computeCurrentPage(event, logged);
 
@@ -93,7 +93,6 @@ class AppController {
                 this.container.innerHTML = template.template;
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
-                this.controller.addEventListener("on-view", this.onViewCastClicked.bind(this));
                 break;
             case "#login":
                 this.container.innerHTML = template.template;
@@ -103,7 +102,7 @@ class AppController {
             case "#create":
                 this.container.innerHTML = template.template;
                 this.controller = new CastController();
-                this.controller.init(this.navView, this.computeCreateID());
+                this.controller.init(this.navView);
                 break;
             case "#account":
                 this.container.innerHTML = template.template;
@@ -116,11 +115,11 @@ class AppController {
                 this.controller.init(this.navView);
                 break;
             case "#/share/:id":
-                shareData = await this.computeShareScreen();
+                    shareData = await this.computeShareScreen(); 
                 if (shareData !== false) {
                     this.container.innerHTML = template.template;
                     this.controller = new ShareController();
-                    this.controller.init(this.navView, shareData.answer);
+                    this.controller.init(this.navView, shareData.answer);  
                 }
                 break;
             default:
@@ -137,18 +136,16 @@ class AppController {
         // If a user is logged in, he should not be able to view login and register page
         // FROM HERE
         // If a user starts the app
-        if (currentHash === "") {
+        if(currentHash === ""){
             this.setHash("login");
         }
-        if (!this.router.isDynamicShareRoute(currentHash)) {
-            if (loggedIn) {
-                if (currentHash === "#login" || currentHash === "#register") {
-                    this.setHash("home");
-                }
-            } else {
-                if (currentHash !== "#login" && currentHash !== "#register") {
-                    this.setHash("login");
-                }
+        if (loggedIn && !this.router.isDynamicRoute(currentHash)) {
+            if (currentHash === "#login" || currentHash === "#register") {
+                this.setHash("home");
+            }
+        } else {
+            if (currentHash !== "#login" && currentHash !== "#register") {
+                this.setHash("login");
             }
         }
         // TO HERE
@@ -157,29 +154,21 @@ class AppController {
 
     // We have to check if the ID is actually valid
     // In order to be valid, an ID has to be Linked to a Cast in the DB
-    async computeShareScreen() {
+    async computeShareScreen(){
         let id = window.location.hash.substring(Config.URL_SUBSTRING_START),
-            // If there is a document with the id of the url -> the cast will be displayed
-            castExists = await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
-                let data = {
-                    state: true,
-                    answer: res,
-                };
-                return data;
-            }, () => {
-                this.setHash("error/404");
-                return false;
-            });
+        // If there is a document with the id of the url -> the cast will be displayed
+        castExists = await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
+            let data = {
+                state: true,
+                answer: res,
+            };
+            return data;
+        }, () => {
+            this.setHash("error/404");
+            return false;
+        });
         return castExists;
     }
 
-    computeCreateID() {
-        let id = window.location.hash.substring(8);
-        return id.length === 0 ? undefined : id;
-    }
-
-    onViewCastClicked(event) {
-        this.setHash("#create/" + event.data);
-    }
 }
 export default AppController;

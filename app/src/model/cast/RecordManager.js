@@ -19,27 +19,16 @@ class RecordManager extends Observable {
         record.addEventListener("audio-end", event => { this.onRecordEnd(event); });
     }
 
-    //stores the audio files with its IDs in the database and returns an array of the IDs
     async createDBRecord() {
-        let files = await this.getRecords(),
-            results = [],
-            records = [];
-        console.log(files);
+        let files = this.getRecords(),
+            results = [];
         files.forEach(async (file) => {
-            console.log("Name of file to store", file.name);
-            deleteFile(file.name)
-                .then(async () => await createFile(file.name, file))
-                .catch(async () => await createFile(file.name, file));
+            // console.log("Name of file to store", file.name);
+            await deleteFile(file.name);
+            await createFile(file.name, file);
             results.push(file.name);
         });
-        for (let result of results) {
-            records.push(JSON.stringify({
-                id: result,
-                title: this.data.filter(entry => entry.getID() === result)[0].getTitle(),
-                time: this.data.filter(entry => entry.getID() === result)[0].getTime(),
-            }));
-        }
-        return records;
+        return results;
     }
 
     // Stops the audio if it is playing and filters a element with certain id out of the record list
@@ -169,7 +158,7 @@ class RecordManager extends Observable {
         let event = new Event("audio-end", record);
         this.notifyAll(event);
     }
-    // changes name of record
+
     onEntryTitleChanged(data) {
         let id = data.id,
             record = this.data.filter(entry => entry.getID() === id)[0],
@@ -178,24 +167,15 @@ class RecordManager extends Observable {
         this.data[index] = record;
     }
 
-    // returns an array of the .ogg files in the cast
-    async getRecords() {
-        let //promises = [],
+    getRecords() {
+        let promises = [],
             files = [];
-        console.log(this.data);
-        for (let record of this.data) {
-            let file = await record.getOggFile();
-            files.push(file);
-            console.log(file);
-        }
-
-        // console.log(promises);
-        // await Promise.all(promises)
-        //     .then(function(file) {
-        //         files.push(file);
-        //         console.log(file);
-        //     })
-        //     .catch(function() { return undefined; });
+        this.data.forEach(record => {
+            promises.push(record.getOggFile());
+        });
+        Promise.all(promises)
+            .then(function(file) { files.push(file); })
+            .catch(function() { return undefined; });
         return files;
     }
 }

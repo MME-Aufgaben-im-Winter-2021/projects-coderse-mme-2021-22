@@ -15,7 +15,11 @@ var castManager;
 
 class CastController {
 
-    init(navView, id) {
+    // constructor() {
+    //     this.init();
+    // }
+
+    init(navView) {
         // General model for a cast. Combines multiple models
         castManager = new CastManager();
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
@@ -23,9 +27,6 @@ class CastController {
         castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
         castManager.addEventListener("audio-end", this.endPlayedEntry.bind(this));
         castManager.addEventListener("cast-end", this.onCastEnded.bind(this));
-        castManager.addEventListener("cast-downloaded", this.onCastDownloaded.bind(this));
-        castManager.addEventListener("audio-downloaded", this.onAudioDownloaded.bind(this));
-        castManager.addEventListener("codeHTML-downloaded", this.onCodeHTMLDownloaded.bind(this));
 
         // Audio Player - Timeline for the Cast
         this.playerList = new PlayerListView();
@@ -58,7 +59,7 @@ class CastController {
 
         // Drop View
         this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", (e) => this.codeView.showFile(e.data));
+        this.dropView.addEventListener("file-ready", (e) => this.codeView.handleFile(e));
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
@@ -69,40 +70,14 @@ class CastController {
         this.navView.showSafeBtn();
         this.navView.showTitleInput();
         this.navView.setCreateActive();
-
-        castManager.getCast(id);
     }
 
     /* ---------------------------------------------------castManager--------------------------------------------------------------- */
 
-    onCastDownloaded(event) {
-        let castJSON = event.data;
-        console.log(castJSON);
-        this.navView.showTitle(castJSON.title);
-        castManager.getAudios(castJSON.records);
-        castManager.getCodeText(castJSON.codeFileID);
-        castManager.castServerID = castJSON.$id;
-        castManager.codeFileID = castJSON.codeFileID;
-    }
-
-    onAudioDownloaded(event) {
-        let recordData = event.data;
-        console.log("Records with audio", recordData);
-        for (let record of recordData) {
-            castManager.addRecord(record);
-        }
-    }
-
-    onCodeHTMLDownloaded(event) {
-        let codeHTML = event.data;
-        console.log(codeHTML);
-        this.codeView.showFile(codeHTML);
-    }
-
     // When an audio file is recorded, it is transferred from the model to the view
     // to display a timeline entry
-    onAudioSaved(event) {
-        let currRecord = event.data,
+    onAudioSaved() {
+        let currRecord = castManager.currentRecord,
             id = currRecord.id;
         this.playerList.addEntry(currRecord);
         this.codeView.assignNewMarkings(id);
@@ -164,7 +139,6 @@ class CastController {
         this.codeView.resetMarking(id);
     }
 
-    // sends new title-input to castmanager
     onEntryTitleChanged(event) {
         let data = event.data;
         castManager.onEntryTitleChanged(data);
@@ -256,7 +230,8 @@ class CastController {
 
     // Safes Cast to Cloud
     async safeCast(event) {
-        await castManager.saveCast(event.data, this.codeView.getHTML());
+        //event.data = title des Casts
+        await castManager.saveCast(event.data); //TODO: hand over code html
     }
 
 }

@@ -31,9 +31,9 @@
                     Create Cast
                 </a>
 
-                <div id="user-dropdown" class="home user nav-link hidden">
+                <div id="user-dropdown"  class="home user nav-link">
                     <div id="user-name">Username</div>
-                    <ul id="nav-dropdown" class="nav-dropdown hidden">
+                    <ul id="nav-dropdown"  class="nav-dropdown hidden">
                         <li class="nav-dropdown-item">
                             <a id="user-link" href="#account">
                                 Account
@@ -42,11 +42,11 @@
                         <li class="nav-dropdown-item">
                             <button class=" button-save" id="user-logout">LOGOUT</button>
                         </li>
-
+    
                     </ul>
                 </div>
-
-
+                
+                
             </div>
 
         </div>
@@ -74,13 +74,14 @@
     <template id="home-cast-template">
         <li class="cast-element">
             <div class="cast-title"> Thats a Cast!</div>
-
-            <button class="tooltip-container" id="copy-link">
+            <div class="cast-id">Cast ID</div>
+            
+            <button class="tooltip-container"" id="copy-link">
                 Copy Link
                 <span class="tooltip"> Click to copy the Link to the Clipboard</span>
             </button>
-
-            <button id="view-btn"> View </button>
+            
+            <button> View </button>
         </li>
     </template>
     <script type="module" src="./src/index.js"></script>
