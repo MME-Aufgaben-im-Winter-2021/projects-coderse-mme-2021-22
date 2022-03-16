@@ -188,9 +188,15 @@ Unsere 21. Sitzung 16.03.2022
 - Die AudioFiles werden als .ogg auf Appwrite gespeichert
 
 TODO:
-    - getCodeText benötigt einen Blob oder ein File (CastManager)
     - Vorschlag: Statt separater ShareController/ShareManager/ShareView einfach den CastController, der dann eine Methode anbietet die UI Elemente zum Bearbeiten auszublenden
-    - Heruntergeladene Audios können noch nicht abgespielt werden
+    - Code File wird überschrieben, aber neue markings werden nicht gezeigt??
+    
+
+Unsere 22. Sitzung 16.03.2022 
+- Heruntergeladene Audios können abgespielt werden
+- Code Cast kann editiert werden
+- Major bug fixes
+
     
 ### Verwendete Ressourcen
 https://feathericons.com/
