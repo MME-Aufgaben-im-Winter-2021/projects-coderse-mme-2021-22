@@ -4,7 +4,6 @@ import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
 import { Event, Observable } from "../../utils/Observable.js";
 import { getUser } from "../../api/User/getUser.js";
-// 
 import { listDocuments } from "../../api/Collections/listDocuments.js";
 import { updateDocument } from "../../api/Collections/updateDocument.js";
 import { createDocument } from "../../api/Collections/createDocument.js";

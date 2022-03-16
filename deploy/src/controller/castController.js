@@ -59,7 +59,7 @@ class CastController {
 
         // Drop View
         this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", (e) => this.codeView.handleFile(e));
+        this.dropView.addEventListener("file-ready", (e) => this.codeView.showFile(e.data));
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 

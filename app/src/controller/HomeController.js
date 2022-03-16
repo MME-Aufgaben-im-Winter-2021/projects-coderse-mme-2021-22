@@ -3,11 +3,12 @@
 import HomeView from "../view/home/HomeView.js";
 
 import HomeManager from "../model/home/HomeManager.js";
+import Observable from "../utils/Observable.js";
 
-class HomeController {
+class HomeController extends Observable {
 
-    init(navView){
-        
+    init(navView) {
+
         // Navbar View
         this.navView = navView;
         this.navView.showLinks();
@@ -18,6 +19,7 @@ class HomeController {
         // Home general View
         this.homeView = new HomeView();
         this.homeView.addEventListener("link-copy", this.onCopyLink.bind(this));
+        this.homeView.addEventListener("on-view", (event) => this.notifyAll(event));
 
         // Data Manager of this Controller
         this.homeManager = new HomeManager();
@@ -27,12 +29,12 @@ class HomeController {
     }
 
     // Tells the data manager to get the users casts from the DB
-    getCasts(){
+    getCasts() {
         this.homeManager.getCasts();
     }
-    
+
     // When the casts for this user are retrieved, the data is passed to the views
-    onCastsRetrieved(event){
+    onCastsRetrieved(event) {
         let data = event.data;
         this.homeView.setServerAnswer(data);
         data.documents.forEach(document => {
@@ -43,7 +45,7 @@ class HomeController {
         });
     }
 
-    onCopyLink(event){
+    onCopyLink(event) {
         let id = event.data,
             url = "http://localhost:8080/#/share/" + id;
         navigator.clipboard.writeText(url);
