@@ -87,6 +87,14 @@ class Player extends Observable {
         entry.deleteEntryHighlight();
     }
 
+    hideEditable() {
+        for (const entry of this.entryViews) {
+            console.log(entry);
+            entry.hideDeleteIcon();
+            entry.hideTitleEdit();
+        }
+    }
+
 }
 
 export default Player;

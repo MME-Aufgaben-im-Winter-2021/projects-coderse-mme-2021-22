@@ -8,7 +8,6 @@ import HomeController from "./HomeController.js";
 import AccountController from "./AccountController.js";
 import ErrorController from "./ErrorController.js";
 import RegisterController from "./RegisterController.js";
-import ShareController from "./ShareController.js";
 
 import NavView from "../view/Navbar/NavView.js";
 
@@ -55,6 +54,11 @@ class AppController {
         // We only need one NavView, if we would do one in each controller it would cause problems
         this.navView = new NavView();
         this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
+        this.navView.addEventListener("cast-safe", this.onSaveCastClicked.bind(this));
+    }
+
+    onSaveCastClicked(event) {
+        this.controller.safeCast(event);
     }
 
     onUserLogOutClicked() {
@@ -87,6 +91,7 @@ class AppController {
     async onTemplateReady(event) {
         let template = event.data,
             shareData;
+
         // After a template is set, we init a controller which takes care of the functionality
         switch (template.route) {
             case "#home":
@@ -119,8 +124,10 @@ class AppController {
                 shareData = await this.computeShareScreen();
                 if (shareData !== false) {
                     this.container.innerHTML = template.template;
-                    this.controller = new ShareController();
-                    this.controller.init(this.navView, shareData.answer);
+                    this.controller = new CastController();
+                    this.controller.init(this.navView, shareData.answer.$id);
+                    this.controller.addEventListener("content-load", this.controller.setShareScreen.bind(this
+                        .controller, shareData.answer.userName));
                 }
                 break;
             default:

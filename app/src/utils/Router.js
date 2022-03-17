@@ -9,7 +9,7 @@ const ROUTES = {
     "#login": "./src/pages/login.html",
     "#account": "./src/pages/account.html",
     "#register": "./src/pages/register.html",
-    "#/share/:id": "./src/pages/share.html",
+    "#/share/:id": "./src/pages/createCast.html",
 };
 
 // Router Class to navigate between pages with templates

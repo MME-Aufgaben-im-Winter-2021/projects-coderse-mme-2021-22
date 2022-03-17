@@ -25,7 +25,6 @@ class RecordManager extends Observable {
         let files = await this.getRecords(),
             results = [],
             records = [];
-        console.log(files);
         files.forEach(async (file) => {
             console.log("Name of file to store", file.name);
             deleteFile(file.name)

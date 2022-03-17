@@ -10,6 +10,10 @@ class CodeView extends Observable {
         this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
     }
 
+    startShareViewMode() {
+        this.container.style.userSelect = "none";
+    }
+
     // Shows File 
     showFile(codeInput) {
         console.log(codeInput);

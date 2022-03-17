@@ -27,7 +27,7 @@ class NavView extends Observable {
     }
 
     onUserLogOutClicked() {
-        let event = new Event("user-logout", "user wants to log out"); //TODO: needs more data?
+        let event = new Event("user-logout", "user wants to log out");
         this.notifyAll(event);
     }
 
@@ -74,6 +74,21 @@ class NavView extends Observable {
 
     hideTitleInput() {
         this.castTitle.classList.add("hidden");
+    }
+
+    disableTitleInput() {
+        let newTitle = document.createElement("div");
+        newTitle.classList.add("code-cast-title-share-view");
+        newTitle.innerHTML = this.castTitle.value;
+        this.castTitle.parentNode.insertBefore(newTitle, this.castTitle);
+        this.castTitle.parentNode.removeChild(this.castTitle);
+    }
+
+    showCreatorName(name) {
+        let nameEl = document.createElement("div");
+        nameEl.classList.add("code-cast-title-share-view");
+        nameEl.innerHTML = name;
+        document.querySelector(".nav-align-left").appendChild(nameEl);
     }
 
     setHomeActive() {

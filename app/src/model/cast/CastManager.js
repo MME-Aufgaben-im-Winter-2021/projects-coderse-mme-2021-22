@@ -103,9 +103,8 @@ class CastManager extends Observable {
         recordManager.onEntryTitleChanged(data);
     }
 
-    // Returns all the data from the current cast -> So it can be stored
-    async saveCast(title, codeHTML) {
-        return await saveCast(title, codeHTML, this);
+    saveCast(title, codeHTML) {
+        saveCast(title, codeHTML, this);
     }
 
     // If the user wants to edit a cast, the id is not undefined
@@ -141,10 +140,10 @@ class CastManager extends Observable {
         let codeFile = await downloadFile(codeFileID),
             reader = new FileReader();
         if (codeFile !== null) {
-            fetch(codeFile.href).then(res => res.blob()).then(blob =>{
+            fetch(codeFile.href).then(res => res.blob()).then(blob => {
                 let file = new File([blob], "CodeFile");
                 reader.readAsText(file);
-            }); 
+            });
         }
 
         reader.onload = (res) => {
@@ -183,17 +182,23 @@ async function saveCast(title, codeHTML, self) {
     } else {
         doesCastExistInCloud = false;
     }
+
     if (self.codeFileID) {
         //delete -> to "update"
-        await deleteFile(self.codeFileID);
+        // await deleteFile(self.codeFileID).then(res => console.log("File deleted", res));
     } else {
+        console.log("new ID created for File");
         self.codeFileID = crypto.randomUUID().substring(14) + "_code.txt";
     }
-    await saveCodeAsFileToServer(codeHTML, self);
+
+    deleteFile(self.codeFileID)
+        .then(() => saveCodeAsFileToServer(codeHTML, self))
+        .catch(() => saveCodeAsFileToServer(codeHTML, self));
 
     records = await recordManager.createDBRecord();
     castDocumentJSON = {
         title: title,
+        userName: user.name,
         userID: userID,
         codeFileID: self.codeFileID,
         records: records,
@@ -210,7 +215,11 @@ async function saveCast(title, codeHTML, self) {
 async function saveCodeAsFileToServer(codeHTML, self) {
     let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
         file = new File([blob], self.codeFileID, { type: "text/plain;charset=utf-8" });
-    await createFile(self.codeFileID, file);
+    await createFile(self.codeFileID, file).then(res => {
+        console.log("File created", res);
+    }).catch(error =>
+        console.log("error create File:", error));
+
 }
 
 export default CastManager;

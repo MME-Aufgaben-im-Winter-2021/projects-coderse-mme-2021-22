@@ -197,6 +197,15 @@ Unsere 22. Sitzung 16.03.2022
 - Code Cast kann editiert werden
 - Major bug fixes
 
+
+Unsere 23. Sitzung 17.03.2022 
+- Share View funktioniert
+- Creator wird angezeigt
+
+TODO:
+    - Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
+    - Code Casts deleten im Homescreen
+    - Share ID separat von der Cast ID -> neues Feld in Cast JSON / oder Permissions
     
 ### Verwendete Ressourcen
 https://feathericons.com/
