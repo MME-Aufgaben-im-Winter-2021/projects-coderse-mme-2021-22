@@ -20,6 +20,7 @@ class HomeController extends Observable {
         // Home general View
         this.homeView = new HomeView();
         this.homeView.addEventListener("on-view", (event) => this.notifyAll(event));
+        this.homeView.addEventListener("on-delete", this.onDeleteCast.bind(this));
 
         // Data Manager of this Controller
         this.homeManager = new HomeManager();
@@ -30,6 +31,7 @@ class HomeController extends Observable {
 
     // Tells the data manager to get the users casts from the DB
     getCasts() {
+        this.homeView.clearList();
         this.homeManager.getCasts();
     }
 
@@ -50,7 +52,14 @@ class HomeController extends Observable {
                 
             });
         });
-        
+    }
+
+    // If a cast should be deleted, the home manager will take care, by handing the id
+    // Afterwards the current List Element is updated
+    async onDeleteCast(event){
+        let castID = event.data;
+        await this.homeManager.deleteCast(castID);
+        this.getCasts();
     }
 
 }

@@ -9,6 +9,7 @@ class HomeView extends Observable {
         this.answerView = document.getElementById("server-answer");
         this.castListView = new CastListView();
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
+        this.castListView.addEventListener("on-delete", (event) => this.notifyAll(event));
     }
 
     setServerAnswer(string) {
@@ -17,6 +18,10 @@ class HomeView extends Observable {
 
     addElement(title, id, link) {
         this.castListView.addElement(title, id, link);
+    }
+
+    clearList(){
+        this.castListView.clear();
     }
 
 }

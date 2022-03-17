@@ -22,6 +22,7 @@ import Config from "../utils/Config.js";
 
 // Session deletion
 import { deleteSession } from "../api/Session/deleteSession.js";
+import { getUser } from "../api/User/getUser.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -108,7 +109,7 @@ class AppController {
             case "#create":
                 this.container.innerHTML = template.template;
                 this.controller = new CastController();
-                this.controller.init(this.navView, this.computeCreateID());
+                this.controller.init(this.navView, await this.computeCreateID());
                 break;
             case "#account":
                 this.container.innerHTML = template.template;
@@ -180,8 +181,17 @@ class AppController {
         return castExists;
     }
 
-    computeCreateID() {
-        let id = window.location.hash.substring(8);
+    async computeCreateID() {
+        let id = window.location.hash.substring(8),
+            currentUser = await getUser(),
+            currentUserID = currentUser.$id;
+        // If the Cast is not from the current User -> redirect to home
+        // Could be the case if a user tries to type in the id in the URl on his own
+        await getDocument(Config.CAST_COLLECTION_ID ,id).then(res => {
+            if(res.userID !== currentUserID){
+                this.setHash("home");
+            }
+        });
         return id.length === 0 ? undefined : id;
     }
 

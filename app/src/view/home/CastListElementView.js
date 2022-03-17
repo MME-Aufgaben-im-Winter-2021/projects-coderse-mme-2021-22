@@ -11,6 +11,8 @@ class CastListElementView extends Observable {
         this.setTitle(title);
         this.copyLink = this.view.querySelector("#copy-link");
         this.viewCast = this.view.querySelector("#view-btn");
+        this.deleteCast = this.view.querySelector("#delete-cast-btn");
+        this.deleteCast.addEventListener("click", this.onDeleteCast.bind(this));
         this.viewCast.addEventListener("click", this.onViewCast.bind(this));
         this.setID(id);
         this.setLink(link);
@@ -25,11 +27,16 @@ class CastListElementView extends Observable {
     }
 
     setID(id) {
-        this.viewCast.setAttribute("data-id", id);
+        this.view.setAttribute("data-id", id);
     }
 
     getID() {
-        return this.viewCast.getAttribute("data-id");
+        return this.view.getAttribute("data-id");
+    }
+
+    onDeleteCast(){
+        let event = new Event("on-delete", this.getID());
+        this.notifyAll(event);
     }
 
     onViewCast() {

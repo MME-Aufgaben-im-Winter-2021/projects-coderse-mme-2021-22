@@ -12,7 +12,12 @@ class CastListView extends Observable {
     addElement(title, id, link) {
         let element = new CastListElementView(title, id, link);
         element.addEventListener("on-view", (event) => this.notifyAll(event));
+        element.addEventListener("on-delete", (event) => this.notifyAll(event));
         this.view.appendChild(element.getView());
+    }
+
+    clear(){
+        this.view.innerHTML = "";
     }
 
 }

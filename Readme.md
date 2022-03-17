@@ -204,8 +204,10 @@ Unsere 23. Sitzung 17.03.2022
 
 TODO:
     - Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
-    - Code Casts deleten im Homescreen
-    - Share ID separat von der Cast ID -> neues Feld in Cast JSON / oder Permissions
+
+Unsere 24. Sitzung 17.03.2022 
+- Permissions für Cast editen gelöst -> Bevor dem Edit wird überprüft ob der User, welcher den Cast erstellt hat der derzeitige User ist
+- Code Cast delete im Home Screen
     
 ### Verwendete Ressourcen
 https://feathericons.com/
