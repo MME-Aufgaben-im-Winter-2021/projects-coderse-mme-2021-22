@@ -172,8 +172,6 @@ Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
 - erstellen von txt Datei für Code möglich
 - Start Datensicherung in der Cloud
 
-TODO: Muss getestet werden + createFile.js muss angepasst werden -> gibt es nicht in appwrite.database (-> appwrite.storage?)
-
 
 Unsere 20. Sitzung 15.03.2022
 - Share Feature durch dynamische Route
@@ -186,10 +184,6 @@ Unsere 21. Sitzung 16.03.2022
 - Cast wird als JSON in Appwrite gesichert
 - Der markierte Code wird als Text File auf Appwrite gespeichert
 - Die AudioFiles werden als .ogg auf Appwrite gespeichert
-
-TODO:
-    - Vorschlag: Statt separater ShareController/ShareManager/ShareView einfach den CastController, der dann eine Methode anbietet die UI Elemente zum Bearbeiten auszublenden
-    - Code File wird überschrieben, aber neue markings werden nicht gezeigt??
     
 
 Unsere 22. Sitzung 16.03.2022 
@@ -208,6 +202,7 @@ TODO:
 Unsere 24. Sitzung 17.03.2022 
 - Permissions für Cast editen gelöst -> Bevor dem Edit wird überprüft ob der User, welcher den Cast erstellt hat der derzeitige User ist
 - Code Cast delete im Home Screen
+- Files aus Storage werden gelöscht, wenn diese aus dem Cast entfernt werden (erst beim speichern der Änderungen)
     
 ### Verwendete Ressourcen
 https://feathericons.com/

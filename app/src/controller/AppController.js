@@ -91,7 +91,8 @@ class AppController {
     // Diminishes between certain cases, then inits the relevant parts
     async onTemplateReady(event) {
         let template = event.data,
-            shareData;
+            shareData,
+            computedID;
 
         // After a template is set, we init a controller which takes care of the functionality
         switch (template.route) {
@@ -109,7 +110,8 @@ class AppController {
             case "#create":
                 this.container.innerHTML = template.template;
                 this.controller = new CastController();
-                this.controller.init(this.navView, await this.computeCreateID());
+                computedID = await this.computeCreateID();
+                this.controller.init(this.navView, computedID);
                 break;
             case "#account":
                 this.container.innerHTML = template.template;
@@ -182,16 +184,20 @@ class AppController {
     }
 
     async computeCreateID() {
-        let id = window.location.hash.substring(8),
+        let idSubstring = 8,
+            id = window.location.hash.substring(idSubstring),
             currentUser = await getUser(),
             currentUserID = currentUser.$id;
         // If the Cast is not from the current User -> redirect to home
         // Could be the case if a user tries to type in the id in the URl on his own
-        await getDocument(Config.CAST_COLLECTION_ID ,id).then(res => {
-            if(res.userID !== currentUserID){
-                this.setHash("home");
-            }
-        });
+        if(id !== ""){
+            await getDocument(Config.CAST_COLLECTION_ID ,id).then(res => {
+                if(res.userID !== currentUserID){
+                    this.setHash("home");
+                }
+            }, () => this.setHash("home")); 
+        }
+        
         return id.length === 0 ? undefined : id;
     }
 

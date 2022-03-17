@@ -12,12 +12,12 @@ class RecordManager extends Observable {
         this.data = [];
         this.playAllActive = false;
         this.index = 0;
+        this.deletedFiles = [];
     }
 
     addRecord(record) {
         this.data.push(record);
         record.addEventListener("audio-end", event => { this.onRecordEnd(event); });
-        console.log(this.data);
     }
 
     //stores the audio files with its IDs in the database and returns an array of the IDs
@@ -25,8 +25,11 @@ class RecordManager extends Observable {
         let files = await this.getRecords(),
             results = [],
             records = [];
+        // Deleting all the files from records that did get deleted from the Cast, but still have files on the server
+        for(let fileID of this.deletedFiles){
+            await deleteFile(fileID);
+        }
         files.forEach(async (file) => {
-            console.log("Name of file to store", file.name);
             deleteFile(file.name)
                 .then(async () => await createFile(file.name, file))
                 .catch(async () => await createFile(file.name, file));
@@ -58,6 +61,9 @@ class RecordManager extends Observable {
         if (this.index > deletedIndex) {
             this.index--;
         }
+        // We keep track of the deleted file IDs so when the cast is safed (from an edit point of view)
+        // we have to delete these files, because they would be staying on the DB Storage otherwise
+        this.deletedFiles.push(id);
     }
 
     getIndexFromRecord(record) {
