@@ -201,20 +201,20 @@ Unsere 24. Sitzung 17.03.2022
 - Permissions für Cast editen gelöst -> Bevor dem Edit wird überprüft ob der User, welcher den Cast erstellt hat der derzeitige User ist
 - Code Cast delete im Home Screen
 - Files aus Storage werden gelöscht, wenn diese aus dem Cast entfernt werden (erst beim speichern der Änderungen)
-
-TODO:
-    - User Account Edit Screen Funktionalität
-    - CSS ungefähr überall
-    - Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
-    - Fixes für den Deploy (castController und createFIle) -> Namen ändern
     
 
 Unsere 25. Sitzung 18.03.2022 
 - CSS/HTML Verbesserungen
 
+
+Unsere 26. Sitzung 18.03.2022 
+- Update Account feature
+
 TODO:
-    - TODO: Todos der 24.Sitzung +
+    - Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
     - HomeScreen fehlt nur noch
+    - Tooltips + Deaktivierung (Vielleicht im Account dropdown)
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

@@ -1,6 +1,9 @@
 /* eslint-env browser */
+import AccountManager from "../model/account/AccountManager.js";
+import { Observable, Event } from "../utils/Observable.js";
+import AccountView from "../view/account/AccountView.js";
 
-class AccountController {
+class AccountController extends Observable {
 
     init(navView) {
 
@@ -11,16 +14,38 @@ class AccountController {
         this.navView.hideTitleInput();
         this.navView.setUserActive();
 
-        this.viewUsername = document.getElementById("input-username");
-        this.viewEmail = document.getElementById("input-email");
-        this.viewPassword = document.getElementById("input-password");
-        this.viewBtn = document.getElementById("input-btn");
+        this.accountView = new AccountView();
+        this.accountView.addEventListener("account-submit", this.onAccountSubmit.bind(this));
+
+        this.accountManager = new AccountManager();
+        this.accountManager.addEventListener("update-error", this.onUpdateError.bind(this));
+        this.accountManager.addEventListener("update-success", this.onUpdateSuccess.bind(this));
     }
 
-    //dont fill password -> check old password again with new field? TODO: 
     fillUserData(accountData) {
-        this.viewUsername.value = accountData.user.name;
-        this.viewEmail.value = accountData.user.email;
+        let username = accountData.user.name,
+            email = accountData.user.email;
+        this.accountManager.currentUsername = username;
+        this.accountManager.currentEmail = email;
+        this.accountView.setUsername(username);
+        this.accountView.setEmail(email);
+    }
+
+    onAccountSubmit(event){
+        let username = event.data.username,
+            email = event.data.email,
+            password = event.data.password;
+        this.accountManager.onAccountSubmit(username, email, password);
+    }
+
+    onUpdateSuccess(event){
+        this.notifyAll(new Event("account-update", event));
+    }
+
+    onUpdateError(){
+        this.accountView.setUsername(this.accountManager.currentUsername);
+        this.accountView.setEmail(this.accountManager.currentEmail);
+        this.accountView.clearPassword();
     }
 
 }

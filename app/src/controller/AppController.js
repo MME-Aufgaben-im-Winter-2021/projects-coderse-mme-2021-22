@@ -120,6 +120,7 @@ class AppController {
                 this.container.innerHTML = template.template;
                 this.controller = new AccountController();
                 this.controller.init(this.navView);
+                this.controller.addEventListener("account-update", this.onAccountUpdate.bind(this));
                 accountData = await getAuth();
                 this.controller.fillUserData(accountData);
                 break;
@@ -208,6 +209,10 @@ class AppController {
 
     onViewCastClicked(event) {
         this.setHash("#create/" + event.data);
+    }
+
+    onAccountUpdate(){
+        this.setHash("home");
     }
 }
 export default AppController;
