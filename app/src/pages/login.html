@@ -1,21 +1,33 @@
 <div class="login-template">
-    <strong>LOGIN SCREEN</strong> - log into your account 
-    <div>
-        <input id="input-email" type="email" placeholder="Email">
+    <div class="login-template-container">
+        <img id="coderse-logo-big" src="../../resources/custom-icons/MME-Codeverse-Logo.svg" width="200px" height="200px">
+        <div class="login-container">
+            <div class="login-title">Sign in to coderse</div>
+            <div>
+                <div class="input-desc">Email</div>
+                <input id="input-email" type="email" placeholder="Email adress">
+            </div>
+            <div>
+                <div class="input-desc">Password</div>
+                <input id="input-password" type="password" placeholder="Password">
+            </div>
+            <div id="input-btn">Sign in</div>
+        </div>
+        <div class="register-login-container">
+            New to coderse?
+            <div id="register-btn">
+                Create a new account.
+            </div>
+        </div>
+        <div class="response-login-container">
+            <div id="server-answer"></div>
+        </div>
+        <div class="test-account-login-container">
+            <div id="login-test">
+                Test-User: <br>
+                Email: <strong>codero12@test.com</strong> <br>
+                Password: <strong>codero12</strong>
+            </div>
+        </div>
     </div>
-    <div>
-        <input id="input-password" type="password" placeholder="Password">
-    </div>
-    <div id="register-btn">
-        Register new account ...
-    </div>
-    <div>
-        <button id="input-btn">LOGIN</button>
-    </div>
-    <div id="login-test">
-        Test-User: <br>
-        Email: <strong>codero12@test.com</strong> <br>
-        Password: <strong>codero12</strong>
-    </div>
-    <strong > <div id="server-answer"> </div></strong>
 </div>

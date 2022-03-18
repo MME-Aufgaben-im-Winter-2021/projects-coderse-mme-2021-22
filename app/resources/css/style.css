@@ -214,11 +214,12 @@ div[class^="button"] {
     transform: translateY(-50%);
     transform: translateY(0);
     transition: all 2000ms ease-in-out;
+    width: 100%;
 }
 
 .nav-dropdown-item {
     margin: auto;
-    padding: 10px;
+    padding: 1.1vh 0 1.1vh 0;
     width: 100%;
     text-align: center;
 }
@@ -230,8 +231,34 @@ div[class^="button"] {
     margin: auto;
 }
 
+#user-link {
+    text-align: center;
+}
+
+#user-link:hover {
+    color: var(--mauve);
+    text-decoration: underline;
+}
+
 .active-link {
     text-decoration: underline;
+}
+
+.logout-button {
+    margin: 4px;
+    border-radius: 4px;
+    background-color: var(--eerie-black);
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    color: white;
+    text-align: center;
+    padding-bottom: 0.5px;
+}
+
+.logout-button:hover {
+    background-color: var(--eerie-black-2);
+    border: 2px solid white;
+    cursor: pointer;
+    color: var(--mauve);
 }
 
 
@@ -714,22 +741,191 @@ mark {
 /* ------ LOGIN ----------- */
 
 .login-template {
-    margin: auto;
-    width: 50%;
-    background-color: var(--onyx);
-    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
 
-/* ------ LOGIN ----------- */
+.login-template-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 2vw;
+    align-items: center;
+    background-color: black;
+    border-radius: 0.5vw;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+}
 
-.register-template {
+.login-template-container>* {
+    padding: 1vh 0;
+}
+
+#coderse-logo-big {
+    padding-bottom: 2vh;
+}
+
+.login-container {
     margin: auto;
-    width: 50%;
-    background-color: var(--onyx);
+    background-color: var(--eerie-black-2);
     padding: 25px;
+    border-radius: 0.5vw;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    justify-content: center;
+}
+
+.login-title {
+    font-size: large;
+    text-align: center;
+    padding-bottom: 1.5vh;
+}
+
+.login-container input {
+    font-size: large;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    background-color: black;
+    color: white;
+    padding-left: 0.6vw;
+    padding-bottom: 8px;
+    overflow: scroll;
+    margin-bottom: 1vh;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.login-container input:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: white;
+}
+
+.login-container input:hover {
+    background-color: var(--onyx);
+    color: white;
+    border-color: white;
+    cursor: pointer;
+}
+
+#input-btn {
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    background-color: var(--granny-smith-apple);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+}
+
+#input-btn:hover {
+    background-color: hsl(126, 89%, 95%);
+    border: 2px solid var(--granny-smith-apple);
+    cursor: pointer;
+}
+
+.register-login-container {
+    text-align: center;
+    padding-top: 2vh;
+    width: 100%;
+}
+
+#register-btn {
+    color: rgb(66, 154, 255);
 }
 
 #register-btn:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.test-account-login-container {
+    width: 100%;
+}
+
+#login-test {}
+
+.response-login-container {
+    margin-top: 1vh;
+    width: 30vw;
+}
+
+#server-answer {
+    text-align: center;
+    color: var(--lemon-chiffon);
+}
+
+.input-desc {
+    padding-bottom: 2px;
+    padding-left: 0.6vw;
+}
+
+/* ------ REGISTER ----------- */
+
+.register-template {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.register-template-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 2vw;
+    align-items: center;
+    background-color: black;
+    border-radius: 0.5vw;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+}
+
+.register-template-container>* {
+    padding: 1vh 0;
+}
+
+.register-container {
+    margin: auto;
+    background-color: var(--eerie-black-2);
+    padding: 25px;
+    border-radius: 0.5vw;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    justify-content: center;
+}
+
+.register-title {
+    font-size: large;
+    text-align: center;
+    padding-bottom: 1.5vh;
+}
+
+.register-container input {
+    font-size: large;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    background-color: black;
+    color: white;
+    padding-left: 0.6vw;
+    padding-bottom: 8px;
+    overflow: scroll;
+    margin-bottom: 1vh;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.register-container input:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: white;
+}
+
+.register-container input:hover {
+    background-color: var(--onyx);
+    color: white;
+    border-color: white;
     cursor: pointer;
 }
 
@@ -755,4 +951,72 @@ mark {
 
 #copy-link {
     width: 95%;
+}
+
+/* ------------------------------------------------------------- Account settings ----------- */
+
+.user-template {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.user-template-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 2vw;
+    align-items: center;
+    background-color: black;
+    border-radius: 0.5vw;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+}
+
+.user-template-container>* {
+    padding: 1vh 0;
+}
+
+.user-container {
+    margin: auto;
+    background-color: var(--eerie-black-2);
+    padding: 25px;
+    border-radius: 0.5vw;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    justify-content: center;
+}
+
+.user-title {
+    font-size: large;
+    text-align: center;
+    padding-bottom: 1.5vh;
+}
+
+.user-container input {
+    font-size: large;
+    padding: 5px;
+    border-radius: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.30);
+    background-color: black;
+    color: white;
+    padding-left: 0.6vw;
+    padding-bottom: 8px;
+    overflow: scroll;
+    margin-bottom: 1vh;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.user-container input:focus {
+    background-color: var(--onyx) !important;
+    border-color: white;
+    outline: none;
+    color: white;
+}
+
+.user-container input:hover {
+    background-color: var(--onyx);
+    color: white;
+    border-color: white;
+    cursor: pointer;
 }

@@ -208,6 +208,13 @@ TODO:
     - Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
     - Fixes für den Deploy (castController und createFIle) -> Namen ändern
     
+
+Unsere 25. Sitzung 18.03.2022 
+- CSS/HTML Verbesserungen
+
+TODO:
+    - TODO: Todos der 24.Sitzung +
+    - HomeScreen fehlt nur noch
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

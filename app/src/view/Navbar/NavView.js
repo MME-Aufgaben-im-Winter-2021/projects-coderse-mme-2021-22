@@ -14,11 +14,20 @@ class NavView extends Observable {
         this.userBtn = this.view.querySelector("#user-dropdown");
         this.castTitle = this.view.querySelector(".code-cast-title");
         this.userLogout = this.view.querySelector("#user-logout");
+        this.loggedUserName = this.view.querySelector("#user-name");
 
         // Eventlistener
         this.safeBtn.addEventListener("click", this.castSafe.bind(this));
         this.userBtn.addEventListener("click", this.toggleDropdown.bind(this));
         this.userLogout.addEventListener("click", this.onUserLogOutClicked.bind(this));
+    }
+
+    hideNavView() {
+        this.view.classList.add("invisible");
+    }
+
+    showNavView() {
+        this.view.classList.remove("invisible");
     }
 
     //shows current Title in the view
@@ -104,6 +113,10 @@ class NavView extends Observable {
     setUserActive() {
         this.removeActive();
         this.userBtn.classList.add("active-link");
+    }
+
+    setCurrentlyLoggedInUser(userName) {
+        this.loggedUserName.innerHTML = userName;
     }
 
     removeActive() {

@@ -80,7 +80,9 @@ class AppController {
             // Now we have to test if a user is logged in or not
             let logged = res.login;
             // user = res.user;
-
+            if (logged) {
+                this.navView.setCurrentlyLoggedInUser(res.user.name);
+            }
             this.computeCurrentPage(event, logged);
 
         });
@@ -92,7 +94,8 @@ class AppController {
     async onTemplateReady(event) {
         let template = event.data,
             shareData,
-            computedID;
+            computedID,
+            accountData;
 
         // After a template is set, we init a controller which takes care of the functionality
         switch (template.route) {
@@ -117,6 +120,8 @@ class AppController {
                 this.container.innerHTML = template.template;
                 this.controller = new AccountController();
                 this.controller.init(this.navView);
+                accountData = await getAuth();
+                this.controller.fillUserData(accountData);
                 break;
             case "#register":
                 this.container.innerHTML = template.template;
@@ -190,14 +195,14 @@ class AppController {
             currentUserID = currentUser.$id;
         // If the Cast is not from the current User -> redirect to home
         // Could be the case if a user tries to type in the id in the URl on his own
-        if(id !== ""){
-            await getDocument(Config.CAST_COLLECTION_ID ,id).then(res => {
-                if(res.userID !== currentUserID){
+        if (id !== "") {
+            await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
+                if (res.userID !== currentUserID) {
                     this.setHash("home");
                 }
-            }, () => this.setHash("home")); 
+            }, () => this.setHash("home"));
         }
-        
+
         return id.length === 0 ? undefined : id;
     }
 
