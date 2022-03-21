@@ -74,14 +74,19 @@
     <template id="home-cast-template">
         <li class="cast-element">
             <div class="cast-title"> Thats a Cast!</div>
-
-            <input class="tooltip-container" id="copy-link">
-
             <span class="tooltip"> Click to copy the Link to the Clipboard</span>
-            </input>
-
-            <button id="view-btn"> View </button>
-            <button id="delete-cast-btn">Delete Cast</button>
+            <input class="tooltip-container" id="copy-link"></input>
+            <div class="cast-element-buttons-container">
+                <div class="link-icon">
+                    <img src="./resources/icons/copy.svg">
+                </div>
+                <div class="link-icon">
+                    <img id="view-btn" src="./resources/icons/eye.svg">
+                </div>
+                <div class="link-icon delete-cast-btn">
+                    <img id="delete-cast-btn" src="./resources/icons/trash-2.svg">
+                </div>
+            </div>
         </li>
     </template>
     <script type="module" src="./src/index.js"></script>
