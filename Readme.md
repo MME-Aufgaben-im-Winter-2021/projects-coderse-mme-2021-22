@@ -217,10 +217,11 @@ Unsere 27. Sitzung 18.03.2022
 
 Unsere 28. Sitzung 18.03.2022 
 - Gelöst: Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
+- Copy to Clipboard hinzugefügt
+- Share-Link kann nicht bearbeitet werden
 
 TODO:
     - Tooltips + Deaktivierung (Vielleicht im Account dropdown)
-    - Link in die Zwischenablage kopieren
     - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf
 
 
