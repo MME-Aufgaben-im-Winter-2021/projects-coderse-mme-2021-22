@@ -24,12 +24,16 @@ class RegisterController {
     }
 
     // On submit button click the data from the inputs is used create an account in the database
-    // TODO: username is not required from the DB side -> manually validation
-    //       Maybe if the value is empty just use the email as the username -> would be unique
     onSubmit(event){
         let email = event.data.email,
             password = event.data.password,
             username = event.data.username;
+
+        if(username.trim() === ""){
+            username = email;
+        }
+
+        // TODO: Maybe validation for username - at least with length
 
         this.registerManager.createUser(email, password, username);
     }

@@ -22,6 +22,10 @@ class NavView extends Observable {
         this.userLogout.addEventListener("click", this.onUserLogOutClicked.bind(this));
     }
 
+    getCastTitle(){
+        return this.castTitle.value;
+    }
+
     hideNavView() {
         this.view.classList.add("invisible");
     }
@@ -69,6 +73,19 @@ class NavView extends Observable {
 
     showTitleInput() {
         this.castTitle.classList.remove("hidden");
+
+        this.castTitle.focus();
+        this.castTitle.addEventListener("blur", this.onChangeCastTitle.bind(this));
+        this.castTitle.addEventListener("keypress", event => {
+            if (event.key === "Enter") {
+                this.onChangeCastTitle();
+            }
+        });
+    }
+
+    onChangeCastTitle() {
+        let event = new Event("onCastTitleChanged", this.getCastTitle());
+        this.notifyAll(event);
     }
 
     hideLinks() {

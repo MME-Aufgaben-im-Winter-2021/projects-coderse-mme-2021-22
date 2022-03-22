@@ -74,6 +74,7 @@ class CodeView extends Observable {
             }
         }
     }
+    
     // Sends id from hover over markings to CastController
     onMouseOverMarking(id) {
         let event = new Event("marking-mouse-over", id);
@@ -215,6 +216,7 @@ class CodeView extends Observable {
     }
 
     getHTML() {
+        this.removeUnconnectedMarkings();
         return this.container.innerHTML;
     }
 }

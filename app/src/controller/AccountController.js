@@ -35,6 +35,11 @@ class AccountController extends Observable {
         let username = event.data.username,
             email = event.data.email,
             password = event.data.password;
+
+        if(username.trim() === ""){
+            username = email;
+        }
+
         this.accountManager.onAccountSubmit(username, email, password);
     }
 

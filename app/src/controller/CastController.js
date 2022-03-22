@@ -8,6 +8,7 @@ import CastManager from "../model/cast/CastManager.js";
 import FileTypeValidator from "../utils/FileTypeValidator.js";
 import DropView from "../view/cast/CodeField/DropView.js";
 import { Observable, Event } from "../utils/Observable.js";
+import Cast from "../model/cast/Cast.js";
 
 var castManager;
 
@@ -18,7 +19,7 @@ class CastController extends Observable {
 
     init(navView, id) {
         // General model for a cast. Combines multiple models
-        castManager = new CastManager();
+        castManager = new CastManager(navView.getCastTitle());
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
         castManager.addEventListener("audio-recorded", this.onAudioRecorded.bind(this));
         castManager.addEventListener("audio-start", this.startPlayedEntry.bind(this));
@@ -69,6 +70,7 @@ class CastController extends Observable {
         this.navView.showSafeBtn();
         this.navView.showTitleInput();
         this.navView.setCreateActive();
+        this.navView.addEventListener("onCastTitleChanged", this.onCastTitleChanged.bind(this));
 
         castManager.getCast(id);
     }
@@ -77,12 +79,14 @@ class CastController extends Observable {
 
     // When the Cast is fetched from the DB, we want to setup the Audio Entries and the Code file
     onCastDownloaded(event) {
-        let castJSON = event.data;
-        castManager.castServerID = castJSON.$id;
-        castManager.codeFileID = castJSON.codeFileID;
+        let castJSON = event.data,
+            cast = new Cast(castJSON.title);
+        cast.codeFileID = castJSON.codeFileID;
+        cast.castServerID = castJSON.$id;
+        cast.records = castJSON.records;
+
+        castManager.onCastDownloaded(cast);
         this.navView.showTitle(castJSON.title);
-        castManager.getAudios(castJSON.records);
-        castManager.getCodeText(castJSON.codeFileID);
         this.dropView.hide();
     }
 
@@ -256,8 +260,12 @@ class CastController extends Observable {
     /* ---------------------------------------------------navView--------------------------------------------------------------- */
 
     // Safes Cast to Cloud
-    safeCast(event) {
-        castManager.saveCast(event.data, this.codeView.getHTML());
+    safeCast() {
+        castManager.saveCast(this.codeView.getHTML());
+    }
+
+    onCastTitleChanged(event) {
+        castManager.setTitle(event.data);
     }
 
     /* --------------------------------------------------- Hide Edit Options for a Share View --------------------------------------------------------------- */
