@@ -31,26 +31,28 @@ class AccountController extends Observable {
         this.accountView.setEmail(email);
     }
 
-    onAccountSubmit(event){
+    onAccountSubmit(event) {
         let username = event.data.username,
             email = event.data.email,
             password = event.data.password;
 
-        if(username.trim() === ""){
+        if (username.trim() === "") {
             username = email;
         }
 
         this.accountManager.onAccountSubmit(username, email, password);
     }
 
-    onUpdateSuccess(event){
+    onUpdateSuccess(event) {
         this.notifyAll(new Event("account-update", event));
     }
 
-    onUpdateError(){
+    onUpdateError(event) {
         this.accountView.setUsername(this.accountManager.currentUsername);
         this.accountView.setEmail(this.accountManager.currentEmail);
         this.accountView.clearPassword();
+        console.log(event);
+        this.accountView.setError(event.data);
     }
 
 }

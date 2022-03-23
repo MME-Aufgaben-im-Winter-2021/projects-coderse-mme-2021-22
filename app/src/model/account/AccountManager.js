@@ -7,29 +7,28 @@ import Config from "../../utils/Config.js";
 
 class AccountManager extends Observable {
 
-    constructor(){
+    constructor() {
         super();
     }
 
-    async onAccountSubmit(username, email, password){
+    async onAccountSubmit(username, email, password) {
         let currentUser = await this.getUser(),
             currentEmail = currentUser.email;
 
         // For the case only the username should be changed
         if (currentEmail === email) {
-            let errorCode;
+            let error;
             // We still have to check for the password to be correct
-            await updateEmail(email, password).catch(error => errorCode = error.code);
-            if(!Config.PW_ERRORCODES.includes(errorCode.toString())){
+            await updateEmail(email, password).catch(e => error = e);
+            if (!Config.PW_ERRORCODES.includes(error.code.toString())) {
                 updateUsername(username).then((res) => {
                     this.notifyAll(new Event("update-success", res));
                 }, error => {
-                    this.notifyAll(new Event("update-error", error));
-                });  
+                    this.notifyAll(new Event("update-error", error.message));
+                });
+            } else {
+                this.notifyAll(new Event("update-error", error.message));
             }
-            else{
-                this.notifyAll(new Event("update-error", "error"));
-            }   
             return;
         }
 
@@ -40,14 +39,14 @@ class AccountManager extends Observable {
             updateUsername(username).then((res) => {
                 this.notifyAll(new Event("update-success", res));
             }, error => {
-                this.notifyAll(new Event("update-error", error));
+                this.notifyAll(new Event("update-error", error.message));
             });
         }, error => {
-            this.notifyAll(new Event("update-error", error));
+            this.notifyAll(new Event("update-error", error.message));
         });
     }
 
-    async getUser(){
+    async getUser() {
         return await getUser();
     }
 }

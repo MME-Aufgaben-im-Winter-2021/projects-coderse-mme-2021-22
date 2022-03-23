@@ -10,22 +10,31 @@ class AccountView extends Observable {
         this.viewEmail = document.getElementById("input-email");
         this.viewPassword = document.getElementById("input-password");
         this.viewBtn = document.getElementById("input-btn");
-        this.viewBtn.addEventListener("click" , this.onSubmit.bind(this));
+        this.viewBtn.addEventListener("click", this.onSubmit.bind(this));
+        this.errorText = document.querySelector("#server-answer");
     }
 
-    setUsername(username){
+    setUsername(username) {
         this.viewUsername.value = username;
     }
 
-    setEmail(email){
+    setEmail(email) {
         this.viewEmail.value = email;
     }
 
-    clearPassword(){
+    clearError() {
+        this.errorText.innerHTML = "";
+    }
+
+    setError(errorMessage) {
+        this.errorText.innerHTML = errorMessage;
+    }
+
+    clearPassword() {
         this.viewPassword.value = "";
     }
 
-    onSubmit(){
+    onSubmit() {
         let data = {
             username: this.viewUsername.value,
             email: this.viewEmail.value,

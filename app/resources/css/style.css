@@ -30,6 +30,7 @@
     --jet: #333333ff;
     --onyx: #404040ff;
 
+    --baby-pink-strong: #ff858d;
     --strong-red: #ff0000;
 
 }
@@ -853,13 +854,18 @@ mark {
 #login-test {}
 
 .response-login-container {
-    margin-top: 1vh;
-    width: 30vw;
+    /* margin-top: 1vh; */
+    margin-bottom: 1vh;
+    /* width: 20vw; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #server-answer {
+    width: 20vw;
     text-align: center;
-    color: var(--lemon-chiffon);
+    color: var(--baby-pink-strong);
 }
 
 .input-desc {

@@ -9,7 +9,7 @@ import RegisterManager from "../model/register/RegisterManager.js";
 // The Register View is there to show proceedings to the user. 
 class RegisterController {
 
-    init(navView){
+    init(navView) {
         this.registerView = new RegisterView();
         this.registerView.addEventListener("account-submit", this.onSubmit.bind(this));
 
@@ -18,18 +18,19 @@ class RegisterController {
         this.navView.hideLinks();
         this.navView.hideSafeBtn();
         this.navView.hideTitleInput();
+        this.navView.hideNavView();
 
         this.registerManager = new RegisterManager();
         this.registerManager.addEventListener("account-result", this.onAccountResult.bind(this));
     }
 
     // On submit button click the data from the inputs is used create an account in the database
-    onSubmit(event){
+    onSubmit(event) {
         let email = event.data.email,
             password = event.data.password,
             username = event.data.username;
 
-        if(username.trim() === ""){
+        if (username.trim() === "") {
             username = email;
         }
 
@@ -39,16 +40,14 @@ class RegisterController {
     }
 
     // If the result from the register try is ready, the user will be taken to the home page (if login was successful)
-    onAccountResult(event){
+    onAccountResult(event) {
         let bool = event.data.register;
-        if(bool){
+        if (bool) {
             // Instead of creating a session for the new user, we redirect to the login page
             // where he can login
             window.location.hash = "login";
-    
         }
-        this.registerView.setServerAnswer(event.data.answer);
-
+        this.registerView.setServerAnswer(event.data.answer.message);
     }
 
 }

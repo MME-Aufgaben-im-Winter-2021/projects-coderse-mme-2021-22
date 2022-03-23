@@ -28,7 +28,6 @@ class LoginController {
 
     onRegisterClicked() {
         window.location.hash = "register";
-        this.navView.hideNavView();
     }
 
     // On submit button click the data from the inputs is used to search for a account in the database
@@ -46,7 +45,7 @@ class LoginController {
             this.navView.showNavView();
         } else {
             this.loginView.clearInputs();
-            this.loginView.setServerAnswer(event.data.answer);
+            this.loginView.setServerAnswer(event.data.answer.message);
         }
     }
 
