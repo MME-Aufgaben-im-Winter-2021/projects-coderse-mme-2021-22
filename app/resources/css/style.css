@@ -71,6 +71,16 @@ body {
     font-family: 'Space Grotesk', sans-serif;
 }
 
+/* -------------- Onboarding ----------- */
+
+.custom-tooltip * {
+    color: black;
+}
+
+.custom-tooltip .introjs-tooltip-title {
+    color: var(--mauve-dark);
+  }
+
 /* ------------- NAVIGATION ------------- */
 .nav-bar {
     display: flex;

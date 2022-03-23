@@ -10,7 +10,10 @@ import DropView from "../view/cast/CodeField/DropView.js";
 import { Observable, Event } from "../utils/Observable.js";
 import Cast from "../model/cast/Cast.js";
 
-var castManager;
+import LocalStorageProvider from "../utils/LocalStorageProvider.js";
+
+var castManager,
+    introJs = window.introJs;
 
 // Controller to link data and views on the Cast Creation page
 // Connects Views and Models with events -> Communication
@@ -18,6 +21,8 @@ var castManager;
 class CastController extends Observable {
 
     init(navView, id) {
+        this.computeOnboarding();
+        
         // General model for a cast. Combines multiple models
         castManager = new CastManager(navView.getCastTitle());
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
@@ -60,7 +65,7 @@ class CastController extends Observable {
 
         // Drop View
         this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", (e) => this.codeView.showFile(e.data));
+        this.dropView.addEventListener("file-ready", this.onFileReady.bind(this) );
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
@@ -73,6 +78,49 @@ class CastController extends Observable {
         this.navView.addEventListener("onCastTitleChanged", this.onCastTitleChanged.bind(this));
 
         castManager.getCast(id);
+    }
+
+    // If the LocalStorage value is undefined = users first time using the app -> Onboarding starts
+    computeOnboarding(){
+        let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
+        if(onBoardingDone === null){
+            introJs().setOptions({
+                steps: [{
+                    title: "Load your Code!",
+                    intro: "<strong>Drag and Drop</strong> or <strong> Load </strong> your code file from explorer.",
+                    element: document.querySelector(".main-right-drag-drop-container"),
+                }],
+                tooltipClass: "custom-tooltip",
+            }).start();
+            LocalStorageProvider.setCreateCastOnBoarding("drag-done");
+        }
+        else if(onBoardingDone === "drag-done"){
+            LocalStorageProvider.setCreateCastOnBoarding("done");
+            introJs().setOptions({
+                steps: [{
+                    title: "Mark important Code!",
+                    intro: "<strong>Mark by selecting Code </strong>",
+                    element: document.querySelector(".main-right"),
+                }, {
+                    title: "Record Audio-Messages!",
+                    intro: "<strong>Record messages</strong> which explain your currently marked code. </br> You can give them a name, too!",
+                    element: document.querySelector(".bottom-right"),
+                }, {
+                    title: "Edit your recordings!",
+                    intro: "Listen to your records, change their title or delete them.",
+                    element: document.querySelector(".main-left"),
+                }, {
+                    title: "Listen to your Cast!",
+                    intro: "Listen through all your records, and navigate between them.",
+                    element: document.querySelector(".bottom-left"),
+                }, {
+                    title: "Safe your first Cast!",
+                    intro: "<strong>Click here </strong> to safe your cast. </br> You are able to edit it afterwards!",
+                    element: document.querySelector(".button-save"),
+                }],
+                tooltipClass: "custom-tooltip",
+              }).start();
+        }
     }
 
     /* ---------------------------------------------------castManager--------------------------------------------------------------- */
@@ -235,6 +283,11 @@ class CastController extends Observable {
     }
 
     /* ---------------------------------------------------dropView--------------------------------------------------------------- */
+
+    onFileReady(event){
+        this.codeView.showFile(event.data);
+        this.computeOnboarding();
+    }
 
     // Validator checks dropped file
     // File is stored in Cast Manager model
