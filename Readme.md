@@ -220,10 +220,13 @@ Unsere 28. Sitzung 18.03.2022
 - Copy to Clipboard hinzugefügt
 - Share-Link kann nicht bearbeitet werden
 
+
+Unsere 29. Sitzung 18.03.2022 
+- Es wird eine Errormessage nun angezeigt, wenn beim Login / Registrierung / Accountänderung etwas falsch läuft
+
 TODO:
     - Tooltips + Deaktivierung (Vielleicht im Account dropdown)
     - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf
-
 
 ### Verwendete Ressourcen
 https://feathericons.com/
