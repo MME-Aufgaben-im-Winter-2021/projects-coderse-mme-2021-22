@@ -186,22 +186,11 @@ class RecordManager extends Observable {
 
     // returns an array of the .ogg files in the cast
     async getRecords() {
-        let //promises = [],
-            files = [];
-        console.log(this.data);
+        let files = [];
         for (let record of this.data) {
             let file = await record.getOggFile();
             files.push(file);
-            console.log(file);
         }
-
-        // console.log(promises);
-        // await Promise.all(promises)
-        //     .then(function(file) {
-        //         files.push(file);
-        //         console.log(file);
-        //     })
-        //     .catch(function() { return undefined; });
         return files;
     }
 }

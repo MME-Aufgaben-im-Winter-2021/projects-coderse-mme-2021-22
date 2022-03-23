@@ -2,12 +2,14 @@
 
 import { Observable, Event } from "../../utils/Observable.js";
 
+var substring = 15;
+
 //Structure for one record in the file
 class Record extends Observable {
 
     constructor(title, time) {
         super();
-        this.id = crypto.randomUUID().substring(15) + "_audio.ogg"; //Date.now();
+        this.id = crypto.randomUUID().substring(substring) + "_audio.ogg"; //Date.now();
         this.title = title;
         this.time = time;
         this.audioFile = null;

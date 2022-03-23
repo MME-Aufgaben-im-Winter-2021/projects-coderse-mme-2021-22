@@ -28,11 +28,8 @@ class CastListElementView extends Observable {
                     /* clipboard successfully set */
                   }, function() {
                     /* clipboard write failed */
-                    console.log("error");
+
                   });
-            }else{
-                console.log("Couldn't save to clipboard -> permission denied or not on a chromium browser");
-                //Print error
             }
           });
     }

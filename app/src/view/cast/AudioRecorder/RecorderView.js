@@ -38,7 +38,6 @@ class Recorder extends Observable {
     }
 
     hideRecorder() {
-        console.log("hi");
         this.bottomBar.style.justifyContent = "center";
         this.containerControls.classList.remove("bottom-left");
         this.containerControls.classList.add("bottom-bar");

@@ -207,25 +207,30 @@ Unsere 25. Sitzung 18.03.2022
 - CSS/HTML Verbesserungen
 
 
-Unsere 26. Sitzung 18.03.2022 
+Unsere 26. Sitzung 19.03.2022 
 - Update Account feature
 
 
-Unsere 27. Sitzung 18.03.2022 
+Unsere 27. Sitzung 20.03.2022 
 - Update CSS/HTML für Homescreen
 
 
-Unsere 28. Sitzung 18.03.2022 
+Unsere 28. Sitzung 21.03.2022 
 - Gelöst: Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
 - Copy to Clipboard hinzugefügt
 - Share-Link kann nicht bearbeitet werden
 
 
-Unsere 29. Sitzung 18.03.2022 
+Unsere 29. Sitzung 22.03.2022 
 - Es wird eine Errormessage nun angezeigt, wenn beim Login / Registrierung / Accountänderung etwas falsch läuft
 
+Unsere 30. Sitzung 23.03.2022 
+- Einfaches (noch verbesserbares) Onboarding bei Cast Creation mit Verbindung zum LocalStorage
+- Tooltips am Home Screen
+- Fixes for build
+
 TODO:
-    - Tooltips + Deaktivierung (Vielleicht im Account dropdown)
+    - Tooltips Deaktivierung (Vielleicht im Account dropdown)
     - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf
 
 ### Verwendete Ressourcen

@@ -5,7 +5,6 @@ import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
 import { Event, Observable } from "../../utils/Observable.js";
 import { getUser } from "../../api/User/getUser.js";
-import { listDocuments } from "../../api/Collections/listDocuments.js";
 import { updateDocument } from "../../api/Collections/updateDocument.js";
 import { createDocument } from "../../api/Collections/createDocument.js";
 import { getDocument } from "../../api/Collections/getDocument.js";
@@ -183,7 +182,8 @@ async function downloadCast(id) {
 }
 
 function setNewCodeFileID(){
-    self.cast.setCodeFileID(crypto.randomUUID().substring(14) + "_code.txt");
+    let substring = 14;
+    self.cast.setCodeFileID(crypto.randomUUID().substring(substring) + "_code.txt");
 }
 
 // Creates JSON with data from the current cast

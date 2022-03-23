@@ -89,7 +89,6 @@ class Player extends Observable {
 
     hideEditable() {
         for (const entry of this.entryViews) {
-            console.log(entry);
             entry.hideDeleteIcon();
             entry.hideTitleEdit();
         }

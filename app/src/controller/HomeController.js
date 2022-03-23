@@ -46,7 +46,7 @@ class HomeController extends Observable {
                 if(document.userID === user.$id){
                     let title = document.title,
                         id = document.$id,
-                        link = "http://localhost:8080/#/share/" + id;
+                        link = "http://coderse.software-engineering.education/#/share/" + id;
                     this.homeView.addElement(title, id, link);
                 }
                 

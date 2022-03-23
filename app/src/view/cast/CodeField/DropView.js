@@ -35,7 +35,6 @@ class DropView extends Observable {
         // If a file is available it is parsed to text
         if (this.currentFile !== null) {
             reader.readAsText(this.currentFile);
-            console.log(this.currentFile);
         }
     }
 

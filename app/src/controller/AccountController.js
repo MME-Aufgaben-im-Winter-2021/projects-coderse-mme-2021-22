@@ -51,7 +51,6 @@ class AccountController extends Observable {
         this.accountView.setUsername(this.accountManager.currentUsername);
         this.accountView.setEmail(this.accountManager.currentEmail);
         this.accountView.clearPassword();
-        console.log(event);
         this.accountView.setError(event.data);
     }
 

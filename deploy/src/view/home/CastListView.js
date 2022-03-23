@@ -4,15 +4,20 @@ import CastListElementView from "./CastListElementView.js";
 
 class CastListView extends Observable {
 
-    constructor(){
+    constructor() {
         super();
         this.view = document.querySelector("#cast-list");
     }
 
-    addElement(title, id){
-        let element = new CastListElementView(title, id);
-        element.addEventListener("link-copy", (event) => this.notifyAll(event));
+    addElement(title, id, link) {
+        let element = new CastListElementView(title, id, link);
+        element.addEventListener("on-view", (event) => this.notifyAll(event));
+        element.addEventListener("on-delete", (event) => this.notifyAll(event));
         this.view.appendChild(element.getView());
+    }
+
+    clear(){
+        this.view.innerHTML = "";
     }
 
 }
