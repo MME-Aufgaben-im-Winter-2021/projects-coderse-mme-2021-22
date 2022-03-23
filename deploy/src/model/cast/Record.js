@@ -2,7 +2,8 @@
 
 import { Observable, Event } from "../../utils/Observable.js";
 
-var substring = 15;
+var substring = 15,
+    crypto = window.crypto;
 
 //Structure for one record in the file
 class Record extends Observable {
