@@ -3,11 +3,13 @@
 import HomeView from "../view/home/HomeView.js";
 
 import HomeManager from "../model/home/HomeManager.js";
+import Observable from "../utils/Observable.js";
+import { getUser } from "../api/User/getUser.js";
 
-class HomeController {
+class HomeController extends Observable {
 
-    init(navView){
-        
+    init(navView) {
+
         // Navbar View
         this.navView = navView;
         this.navView.showLinks();
@@ -17,7 +19,8 @@ class HomeController {
 
         // Home general View
         this.homeView = new HomeView();
-        this.homeView.addEventListener("link-copy", this.onCopyLink.bind(this));
+        this.homeView.addEventListener("on-view", (event) => this.notifyAll(event));
+        this.homeView.addEventListener("on-delete", this.onDeleteCast.bind(this));
 
         // Data Manager of this Controller
         this.homeManager = new HomeManager();
@@ -27,26 +30,36 @@ class HomeController {
     }
 
     // Tells the data manager to get the users casts from the DB
-    getCasts(){
+    getCasts() {
+        this.homeView.clearList();
         this.homeManager.getCasts();
     }
-    
+
     // When the casts for this user are retrieved, the data is passed to the views
-    onCastsRetrieved(event){
+    // Looks for the currently logged user, and only retrieves his casts
+    onCastsRetrieved(event) {
         let data = event.data;
-        this.homeView.setServerAnswer(data);
-        data.documents.forEach(document => {
-            // Hand document 
-            let title = document.title,
-                id = document.$id;
-            this.homeView.addElement(title, id);
+        getUser().then(res => {
+            let user = res;
+            data.documents.forEach(document => {
+                // Hand document 
+                if(document.userID === user.$id){
+                    let title = document.title,
+                        id = document.$id,
+                        link = "http://coderse.software-engineering.education/#/share/" + id;
+                    this.homeView.addElement(title, id, link);
+                }
+                
+            });
         });
     }
 
-    onCopyLink(event){
-        let id = event.data,
-            url = "http://localhost:8080/#/share/" + id;
-        navigator.clipboard.writeText(url);
+    // If a cast should be deleted, the home manager will take care, by handing the id
+    // Afterwards the current List Element is updated
+    async onDeleteCast(event){
+        let castID = event.data;
+        await this.homeManager.deleteCast(castID);
+        this.getCasts();
     }
 
 }

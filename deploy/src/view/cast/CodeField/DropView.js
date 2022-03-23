@@ -18,6 +18,10 @@ class DropView extends Observable {
         this.currentFile = null;
     }
 
+    hide(){
+        this.view.classList.add("hidden");
+    }
+
     // Reads a file with FileReader
     // Source: https://riptutorial.com/javascript/example/7081/read-file-as-string
     onFileReady() {
@@ -26,7 +30,7 @@ class DropView extends Observable {
         reader.onload = (ev) => {
             let event = new Event("file-ready", ev.target.result);
             this.notifyAll(event);
-            this.view.classList.add("hidden");
+            this.hide();
         };
         // If a file is available it is parsed to text
         if (this.currentFile !== null) {

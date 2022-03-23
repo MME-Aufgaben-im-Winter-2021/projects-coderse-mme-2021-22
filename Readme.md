@@ -159,23 +159,79 @@ Löst folgende Probleme:
 - Zu viele Serveranfragen wenn nicht authorisiert
 - wenn nicht eingeloggt -> man gibt "home" oder eine andere route einfach oben rein, dann läd die Seite trotzdem 
 
+
 Unsere 18. Sitzung: 14.03.2022 17:00 - 19:00
 
 - major bugfixes
 - Navigation Account dropdown
 - Registration beendet
 
+
 Unsere 19. Sitzung: 15.03.2022 09:00 - 13:00
 - erstellen von .ogg Audio Daten möglich
 - erstellen von txt Datei für Code möglich
 - Start Datensicherung in der Cloud
 
-TODO: Muss getestet werden + createFile.js muss angepasst werden -> gibt es nicht in appwrite.database (-> appwrite.storage?)
 
-Unsere 20.Sitzung 15.03.2022 ungenau
+Unsere 20. Sitzung 15.03.2022
 - Share Feature durch dynamische Route
 - Router fixes bezüglich des sharens
 - Copy to Clipboard feature
+
+
+Unsere 21. Sitzung 16.03.2022 
+- View-Button auf Cast auf Home-Screen: Per Klick wird auf create Cast gewechselt (Audio in View angezeigt (in Bearbeitung))
+- Cast wird als JSON in Appwrite gesichert
+- Der markierte Code wird als Text File auf Appwrite gespeichert
+- Die AudioFiles werden als .ogg auf Appwrite gespeichert
+    
+
+Unsere 22. Sitzung 16.03.2022 
+- Heruntergeladene Audios können abgespielt werden
+- Code Cast kann editiert werden
+- Major bug fixes
+
+
+Unsere 23. Sitzung 17.03.2022 
+- Share View funktioniert
+- Creator wird angezeigt
+    
+
+Unsere 24. Sitzung 17.03.2022 
+- Permissions für Cast editen gelöst -> Bevor dem Edit wird überprüft ob der User, welcher den Cast erstellt hat der derzeitige User ist
+- Code Cast delete im Home Screen
+- Files aus Storage werden gelöscht, wenn diese aus dem Cast entfernt werden (erst beim speichern der Änderungen)
+    
+
+Unsere 25. Sitzung 18.03.2022 
+- CSS/HTML Verbesserungen
+
+
+Unsere 26. Sitzung 19.03.2022 
+- Update Account feature
+
+
+Unsere 27. Sitzung 20.03.2022 
+- Update CSS/HTML für Homescreen
+
+
+Unsere 28. Sitzung 21.03.2022 
+- Gelöst: Appwrite Bug: Hochgeladenes TXT wird nicht geupdated -> code kann nicht gesichert werden
+- Copy to Clipboard hinzugefügt
+- Share-Link kann nicht bearbeitet werden
+
+
+Unsere 29. Sitzung 22.03.2022 
+- Es wird eine Errormessage nun angezeigt, wenn beim Login / Registrierung / Accountänderung etwas falsch läuft
+
+Unsere 30. Sitzung 23.03.2022 
+- Einfaches (noch verbesserbares) Onboarding bei Cast Creation mit Verbindung zum LocalStorage
+- Tooltips am Home Screen
+- Fixes for build
+
+TODO:
+    - Tooltips Deaktivierung (Vielleicht im Account dropdown)
+    - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf
 
 ### Verwendete Ressourcen
 https://feathericons.com/

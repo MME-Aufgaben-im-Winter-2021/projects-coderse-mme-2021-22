@@ -11,8 +11,8 @@ function updatePassword(password) {
     return promise;
 }
 // Update the email from the currently logged user
-function updateEmail(email) {
-    let promise = appwrite.account.updateEmail(email);
+function updateEmail(email, password) {
+    let promise = appwrite.account.updateEmail(email, password);
     return promise;
 }
 

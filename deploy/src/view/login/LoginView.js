@@ -1,10 +1,10 @@
 /* eslint-env browser */
 
-import {Observable, Event} from "../../utils/Observable.js";
+import { Observable, Event } from "../../utils/Observable.js";
 
 class LoginView extends Observable {
 
-    constructor(){
+    constructor() {
         super();
         this.viewEmail = document.getElementById("input-email");
         this.viewPassword = document.getElementById("input-password");
@@ -18,24 +18,29 @@ class LoginView extends Observable {
     }
 
     // User wants to login
-    onSubmit(){
+    onSubmit() {
         // Data as JSON Object stores email and password
         let data = {
                 email: this.viewEmail.value,
                 password: this.viewPassword.value,
-        },
-        // Data is send with an new login-submit event
-        event = new Event("login-submit",data);
+            },
+            // Data is send with an new login-submit event
+            event = new Event("login-submit", data);
         this.notifyAll(event);
     }
 
     // Switches to register page
-    onRegister(){
-        window.location.hash = "register";
+    onRegister() {
+        this.notifyAll(new Event("onRegisterClicked", ""));
     }
 
-    setServerAnswer(string){
-        this.answerView.innerText = string; 
+    setServerAnswer(string) {
+        this.answerView.innerText = string;
+    }
+
+    clearInputs() {
+        this.viewEmail.value = "";
+        this.viewPassword.value = "";
     }
 
 }

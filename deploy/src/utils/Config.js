@@ -13,6 +13,8 @@ const Config = {
     NODE_TYPE_TEXT: 3,
     CAST_COLLECTION_ID: "622de1da30d840a4c304",
     URL_SUBSTRING_START: 8,
+    PW_ERRORCODES: [ "400" , "401"],
+    LS_KEY_CAST_ONBOARDING: "create-onboarding-done",
 };
 
 Object.freeze(Config);

@@ -144,6 +144,18 @@
             this.view.classList.remove("player-list-entry-highlight");
         }
 
+        hideDeleteIcon() {
+            this.deleteIcon.classList.add("hidden");
+        }
+
+        hideTitleEdit() {
+            let newTitle = document.createElement("div");
+            newTitle.classList.add("player-list-entry-title-no-hover");
+            newTitle.innerHTML = this.title.innerHTML;
+            this.title.parentNode.insertBefore(newTitle, this.title);
+            this.title.parentNode.removeChild(this.title);
+        }
+
     }
 
     export default PlayerEntry;

@@ -1,12 +1,16 @@
 /* eslint-env browser */
+import Cast from "./Cast.js";
 import AudioManager from "./AudioManager.js";
 import RecordManager from "./RecordManager.js";
 import Record from "./Record.js";
 import { Event, Observable } from "../../utils/Observable.js";
 import { getUser } from "../../api/User/getUser.js";
-import { listDocuments } from "../../api/Collections/listDocuments.js";
 import { updateDocument } from "../../api/Collections/updateDocument.js";
 import { createDocument } from "../../api/Collections/createDocument.js";
+import { getDocument } from "../../api/Collections/getDocument.js";
+import { deleteFile } from "../../api/Storage/deleteFile.js";
+import { createFile } from "../../api/Storage/createFile.js";
+import { getFile } from "../../api/Storage/getFile.js";
 import Config from "../../utils/Config.js";
 
 var audioManager,
@@ -15,12 +19,10 @@ var audioManager,
 // Cast Model managing the data
 class CastManager extends Observable {
 
-    constructor() {
+    constructor(title) {
         super();
-        this.file = null;
-        this.title = "";
-        this.castID = undefined; //TODO: if cast is loaded into CastManager -> replace castID with existing ID!
-        this.codeFileID = undefined; //TODO: if cast is loaded into CastManager -> replace codeFileID with existing ID!
+        // this.castServerID = undefined;
+        // this.codeFileID = undefined;
 
         // The last Record (Just a help variable for Record Creation)
         this.currentRecord = null;
@@ -32,16 +34,20 @@ class CastManager extends Observable {
         recordManager.addEventListener("audio-end", event => this.notifyAll(event));
         recordManager.addEventListener("audio-start", event => { this.notifyAll(event); });
         recordManager.addEventListener("cast-end", event => { this.notifyAll(event); });
+
+        this.cast = new Cast(title);
     }
 
-    //the current file for the codecast
-    setFile(file) {
-        this.file = file;
+    setTitle(title) {
+        this.cast.setTitle(title);
     }
 
-    // Sets current cast title
-    setTitle(string) {
-        this.title = string;
+    setCastServerID(id){
+        this.cast.castServerID = id;
+    }
+
+    setCodeFileID(id){
+        this.cast.codeFileID = id;
     }
 
     //starts the record in the audioManager
@@ -53,6 +59,12 @@ class CastManager extends Observable {
     stopRecord(event) {
         this.currentRecord = new Record(event.data.title, event.data.time);
         audioManager.stopRecord();
+    }
+
+    addRecord(record) {
+        recordManager.addRecord(record);
+        let ev = new Event("audio-saved", record);
+        this.notifyAll(ev);
     }
 
     saveRecord(event) {
@@ -103,68 +115,118 @@ class CastManager extends Observable {
         recordManager.onEntryTitleChanged(data);
     }
 
-    // Returns all the data from the current cast -> So it can be stored
-    async saveCast(title, codeHTML) {
-        return await saveCast(title, codeHTML, this);
+    saveCast(codeHTML) {
+        saveCast(this.cast.getTitle(), codeHTML, this);
     }
 
+    onCastDownloaded(cast) {
+        this.cast = cast;
+        this.getAudios(this.cast.records);
+        this.getCodeText(this.cast.codeFileID);
+    }
+
+    // If the user wants to edit a cast, the id is not undefined
+    async getCast(id) {
+        if (id) {
+            // So we fetch the cast from the DB
+            let cast = await downloadCast(id);
+            this.notifyAll(new Event("cast-downloaded", cast));
+        }
+    }
+
+    // Retrieves audio files from the Database, and creates playable Records
+    async getAudios(records) {
+        let audioData = [],
+            recordData = [];
+        for (let record of records) {
+            audioData.push(JSON.parse(record));
+        }
+        for (let audio of audioData) {
+            let record = new Record(audio.title, audio.time),
+                fileURL = await downloadFile(audio.id),
+                blob;
+            blob = await fetch(fileURL.href).then(r => r.blob());
+            record.id = audio.id;
+            record.setAudio(URL.createObjectURL(blob));
+            recordData.push(record);
+        }
+        this.notifyAll(new Event("audio-downloaded", recordData));
+    }
+
+    // Retrieves a code file from the DataBase
+    async getCodeText(codeFileID) {
+        let codeFile = await downloadFile(codeFileID),
+            reader = new FileReader();
+        if (codeFile !== null) {
+            fetch(codeFile.href).then(res => res.blob()).then(blob => {
+                let file = new File([blob], "CodeFile");
+                reader.readAsText(file);
+            });
+        }
+
+        reader.onload = (res) => {
+            let text = res.target.result;
+            this.notifyAll(new Event("codeHTML-downloaded", text));
+        };
+    }
+
+}
+
+async function downloadFile(id) {
+    return await getFile(id);
+}
+
+async function downloadCast(id) {
+    let cast = await getDocument(Config.CAST_COLLECTION_ID, id);
+    return cast;
+}
+
+function setNewCodeFileID(){
+    let substring = 14;
+    self.cast.setCodeFileID(crypto.randomUUID().substring(substring) + "_code.txt");
 }
 
 // Creates JSON with data from the current cast
-//TODO: needs UserID (serverID)
-//TODO: needs AudioIDs (serverIDs)
-//TODO: needs CodeFileID (serverID)
 async function saveCast(title, codeHTML, self) {
     let user = await getUser(),
-        allCasts = await listDocuments(Config.CAST_COLLECTION_ID),
-        castServerID,
         castDocumentJSON,
-        recordIDs,
-        userID = user.$id;
-    if (self.castID) {
-        allCasts.forEach(castDoc => {
-            if (castDoc.castID === self.castID) {
-                castServerID = castDoc.$id;
-            }
-        });
+        records,
+        doesCastExistInCloud;
+
+    if (self.cast.castServerID) {
+        doesCastExistInCloud = true;
+    } else {
+        doesCastExistInCloud = false;
     }
-    //  else {
-    //     self.castID = crypto.randomUUID() + "_cast";
-    // }
 
-    if (self.codeFileID) {
-        //delete -> to "update"
-        // await deleteFile(self.codeFileID);
+    if(!self.cast.codeFileID){
+        setNewCodeFileID();
     }
-    // else {
-    //     self.codeFileID = crypto.randomUUID() + "_code";
-    // }
-    // await saveCodeAsFileToServer(codeHTML, self);
-    self.codeFileID = "idReturnedFrom the creation of the file";
-    self.castID = "die ist doch unnötig - erstellt doch eh eine";
 
-    recordIDs = await recordManager.createDBRecord();
-    castDocumentJSON = {
-        castID: self.castID,
-        title: title,
-        userID: userID,
-        codeFileID: self.codeFileID,
-        audioFileIDs: recordIDs,
-    };
+    deleteFile(self.cast.codeFileID).then();
+    setNewCodeFileID();
+    saveCodeAsFileToServer(codeHTML, self).then();
 
-    if (castServerID) { //if the cast was already once saved in the cloud then update and don't create a new one
-        await updateDocument(Config.CAST_COLLECTION_ID, castServerID, castDocumentJSON); //TODO: fehlt
+    records = await recordManager.createDBRecord();
+    self.cast.setRecords(records);
+
+    castDocumentJSON = self.cast.getJSON(user);
+    if (doesCastExistInCloud) { //if the cast was already once saved in the cloud then update and don't create a new one
+        await updateDocument(Config.CAST_COLLECTION_ID, self.cast.castServerID, castDocumentJSON);
     } else { //create a new castDocument on the server
         await createDocument(Config.CAST_COLLECTION_ID, castDocumentJSON);
     }
-    //TODO: send to cloud -> update or create
 }
 
 //https://redstapler.co/generate-text-file-javascript/ Abgerufen am 15.03.22
-// async function saveCodeAsFileToServer(codeHTML, self) {
-//     let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
-//         file = new File([blob], self.codeFileID, { type: "text/plain;charset=utf-8" });
-//     await createFile(self.codeFileID, file);
-// }
+async function saveCodeAsFileToServer(codeHTML, self) {
+    let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
+        file = new File([blob], self.cast.codeFileID, { type: "text/plain;charset=utf-8" });
+    await createFile(self.cast.codeFileID, file);
+    // .then(res => {
+    //     console.log("File created", res);
+    // }).catch(error =>
+    //     console.log("error create File:", error));
+}
 
 export default CastManager;
