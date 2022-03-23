@@ -14,7 +14,8 @@ import { getFile } from "../../api/Storage/getFile.js";
 import Config from "../../utils/Config.js";
 
 var audioManager,
-    recordManager;
+    recordManager,
+    crypto = window.crypto;
 
 // Cast Model managing the data
 class CastManager extends Observable {
@@ -181,7 +182,7 @@ async function downloadCast(id) {
     return cast;
 }
 
-function setNewCodeFileID(){
+function setNewCodeFileID(self){
     let substring = 14;
     self.cast.setCodeFileID(crypto.randomUUID().substring(substring) + "_code.txt");
 }
@@ -200,11 +201,11 @@ async function saveCast(title, codeHTML, self) {
     }
 
     if(!self.cast.codeFileID){
-        setNewCodeFileID();
+        setNewCodeFileID(self);
     }
 
     deleteFile(self.cast.codeFileID).then();
-    setNewCodeFileID();
+    setNewCodeFileID(self);
     saveCodeAsFileToServer(codeHTML, self).then();
 
     records = await recordManager.createDBRecord();
@@ -223,10 +224,6 @@ async function saveCodeAsFileToServer(codeHTML, self) {
     let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
         file = new File([blob], self.cast.codeFileID, { type: "text/plain;charset=utf-8" });
     await createFile(self.cast.codeFileID, file);
-    // .then(res => {
-    //     console.log("File created", res);
-    // }).catch(error =>
-    //     console.log("error create File:", error));
 }
 
 export default CastManager;

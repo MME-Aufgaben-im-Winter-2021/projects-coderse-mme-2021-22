@@ -21,7 +21,6 @@ var castManager,
 class CastController extends Observable {
 
     init(navView, id) {
-        this.computeOnboarding();
         
         // General model for a cast. Combines multiple models
         castManager = new CastManager(navView.getCastTitle());
@@ -78,10 +77,16 @@ class CastController extends Observable {
         this.navView.addEventListener("onCastTitleChanged", this.onCastTitleChanged.bind(this));
 
         castManager.getCast(id);
+
+        this.computeOnboarding(id);
     }
 
     // If the LocalStorage value is undefined = users first time using the app -> Onboarding starts
-    computeOnboarding(){
+    computeOnboarding(id){
+        // If it is a share screen, onboarding is not needed
+        if(id){
+            LocalStorageProvider.setCreateCastOnBoarding("done");
+        }
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
         if(onBoardingDone === null){
             introJs().setOptions({
