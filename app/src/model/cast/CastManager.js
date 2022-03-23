@@ -14,8 +14,7 @@ import { getFile } from "../../api/Storage/getFile.js";
 import Config from "../../utils/Config.js";
 
 var audioManager,
-    recordManager,
-    crypto = window.crypto;
+    recordManager;
 
 // Cast Model managing the data
 class CastManager extends Observable {
@@ -184,7 +183,7 @@ async function downloadCast(id) {
 
 function setNewCodeFileID(self){
     let substring = 14;
-    self.cast.setCodeFileID(crypto.randomUUID().substring(substring) + "_code.txt");
+    self.cast.setCodeFileID(window.crypto.randomUUID().substring(substring) + "_code.txt");
 }
 
 // Creates JSON with data from the current cast
