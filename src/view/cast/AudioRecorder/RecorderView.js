@@ -32,6 +32,16 @@ class Recorder extends Observable {
         iconStop.addEventListener("click", this.onStopRecordingClicked.bind(this));
         this.iconTrash = document.querySelector(".recorder-icon-trash");
         this.iconTrash.addEventListener("click", this.onTrashClicked.bind(this));
+        this.container = document.querySelector(".bottom-right");
+        this.bottomBar = document.querySelector(".bottom-bar");
+        this.containerControls = document.querySelector(".bottom-left");
+    }
+
+    hideRecorder() {
+        this.bottomBar.style.justifyContent = "center";
+        this.containerControls.classList.remove("bottom-left");
+        this.containerControls.classList.add("bottom-bar");
+        this.container.classList.add("hidden");
     }
 
     onStopRecordingClicked() {

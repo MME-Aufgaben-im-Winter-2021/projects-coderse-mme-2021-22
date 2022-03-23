@@ -2,13 +2,12 @@
 import Router from "../utils/Router.js";
 
 // Controllers
-import CastController from "./castController.js";
+import CastController from "./CastController.js";
 import LoginController from "./LoginController.js";
 import HomeController from "./HomeController.js";
 import AccountController from "./AccountController.js";
 import ErrorController from "./ErrorController.js";
 import RegisterController from "./RegisterController.js";
-import ShareController from "./ShareController.js";
 
 import NavView from "../view/Navbar/NavView.js";
 
@@ -23,6 +22,7 @@ import Config from "../utils/Config.js";
 
 // Session deletion
 import { deleteSession } from "../api/Session/deleteSession.js";
+import { getUser } from "../api/User/getUser.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -55,6 +55,11 @@ class AppController {
         // We only need one NavView, if we would do one in each controller it would cause problems
         this.navView = new NavView();
         this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
+        this.navView.addEventListener("cast-safe", this.onSaveCastClicked.bind(this));
+    }
+
+    onSaveCastClicked(event) {
+        this.controller.safeCast(event);
     }
 
     onUserLogOutClicked() {
@@ -74,8 +79,10 @@ class AppController {
             // The case we have a good result
             // Now we have to test if a user is logged in or not
             let logged = res.login;
-                // user = res.user;
-
+            // user = res.user;
+            if (logged) {
+                this.navView.setCurrentlyLoggedInUser(res.user.name);
+            }
             this.computeCurrentPage(event, logged);
 
         });
@@ -86,13 +93,17 @@ class AppController {
     // Diminishes between certain cases, then inits the relevant parts
     async onTemplateReady(event) {
         let template = event.data,
-            shareData;
+            shareData,
+            computedID,
+            accountData;
+
         // After a template is set, we init a controller which takes care of the functionality
         switch (template.route) {
             case "#home":
                 this.container.innerHTML = template.template;
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
+                this.controller.addEventListener("on-view", this.onViewCastClicked.bind(this));
                 break;
             case "#login":
                 this.container.innerHTML = template.template;
@@ -102,12 +113,16 @@ class AppController {
             case "#create":
                 this.container.innerHTML = template.template;
                 this.controller = new CastController();
-                this.controller.init(this.navView);
+                computedID = await this.computeCreateID();
+                this.controller.init(this.navView, computedID);
                 break;
             case "#account":
                 this.container.innerHTML = template.template;
                 this.controller = new AccountController();
                 this.controller.init(this.navView);
+                this.controller.addEventListener("account-update", this.onAccountUpdate.bind(this));
+                accountData = await getAuth();
+                this.controller.fillUserData(accountData);
                 break;
             case "#register":
                 this.container.innerHTML = template.template;
@@ -115,11 +130,13 @@ class AppController {
                 this.controller.init(this.navView);
                 break;
             case "#/share/:id":
-                    shareData = await this.computeShareScreen(); 
+                shareData = await this.computeShareScreen();
                 if (shareData !== false) {
                     this.container.innerHTML = template.template;
-                    this.controller = new ShareController();
-                    this.controller.init(this.navView, shareData.answer);  
+                    this.controller = new CastController();
+                    this.controller.init(this.navView, shareData.answer.$id);
+                    this.controller.addEventListener("content-load", this.controller.setShareScreen.bind(this
+                        .controller, shareData.answer.userName));
                 }
                 break;
             default:
@@ -136,16 +153,18 @@ class AppController {
         // If a user is logged in, he should not be able to view login and register page
         // FROM HERE
         // If a user starts the app
-        if(currentHash === ""){
+        if (currentHash === "") {
             this.setHash("login");
         }
-        if (loggedIn && !this.router.isDynamicRoute(currentHash)) {
-            if (currentHash === "#login" || currentHash === "#register") {
-                this.setHash("home");
-            }
-        } else if(!this.router.isDynamicRoute(currentHash)) {
-            if (currentHash !== "#login" && currentHash !== "#register") {
-                this.setHash("login");
+        if (!this.router.isDynamicShareRoute(currentHash)) {
+            if (loggedIn) {
+                if (currentHash === "#login" || currentHash === "#register") {
+                    this.setHash("home");
+                }
+            } else {
+                if (currentHash !== "#login" && currentHash !== "#register") {
+                    this.setHash("login");
+                }
             }
         }
         // TO HERE
@@ -154,21 +173,46 @@ class AppController {
 
     // We have to check if the ID is actually valid
     // In order to be valid, an ID has to be Linked to a Cast in the DB
-    async computeShareScreen(){
+    async computeShareScreen() {
         let id = window.location.hash.substring(Config.URL_SUBSTRING_START),
-        // If there is a document with the id of the url -> the cast will be displayed
-        castExists = await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
-            let data = {
-                state: true,
-                answer: res,
-            };
-            return data;
-        }, () => {
-            this.setHash("error/404");
-            return false;
-        });
+            // If there is a document with the id of the url -> the cast will be displayed
+            castExists = await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
+                let data = {
+                    state: true,
+                    answer: res,
+                };
+                return data;
+            }, () => {
+                this.setHash("error/404");
+                return false;
+            });
         return castExists;
     }
 
+    async computeCreateID() {
+        let idSubstring = 8,
+            id = window.location.hash.substring(idSubstring),
+            currentUser = await getUser(),
+            currentUserID = currentUser.$id;
+        // If the Cast is not from the current User -> redirect to home
+        // Could be the case if a user tries to type in the id in the URl on his own
+        if (id !== "") {
+            await getDocument(Config.CAST_COLLECTION_ID, id).then(res => {
+                if (res.userID !== currentUserID) {
+                    this.setHash("home");
+                }
+            }, () => this.setHash("home"));
+        }
+
+        return id.length === 0 ? undefined : id;
+    }
+
+    onViewCastClicked(event) {
+        this.setHash("#create/" + event.data);
+    }
+
+    onAccountUpdate(){
+        this.setHash("home");
+    }
 }
 export default AppController;

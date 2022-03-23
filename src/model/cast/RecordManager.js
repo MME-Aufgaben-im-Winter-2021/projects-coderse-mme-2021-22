@@ -1,8 +1,8 @@
 /* eslint-env browser */
 
 import { Event, Observable } from "../../utils/Observable.js";
-// import { deleteFile } from "../../api/Storage/deleteFile.js";
-// import { createFile } from "../../api/Storage/createFile.js";
+import { deleteFile } from "../../api/Storage/deleteFile.js";
+import { createFile } from "../../api/Storage/createFile.js";
 
 // Manages the list of records of a code cast
 class RecordManager extends Observable {
@@ -12,6 +12,7 @@ class RecordManager extends Observable {
         this.data = [];
         this.playAllActive = false;
         this.index = 0;
+        this.deletedFiles = [];
     }
 
     addRecord(record) {
@@ -19,16 +20,29 @@ class RecordManager extends Observable {
         record.addEventListener("audio-end", event => { this.onRecordEnd(event); });
     }
 
+    //stores the audio files with its IDs in the database and returns an array of the IDs
     async createDBRecord() {
-        // let files = this.getRecords(),
-        let results = [];
-        // files.forEach(async (file) => {
-        //     console.log("Name of file to store", file.name);
-        //     await deleteFile(file.name);
-        //     await createFile(file.name, file);
-        //     results.push(file.name);
-        // });
-        return results;
+        let files = await this.getRecords(),
+            results = [],
+            records = [];
+        // Deleting all the files from records that did get deleted from the Cast, but still have files on the server
+        for(let fileID of this.deletedFiles){
+            await deleteFile(fileID);
+        }
+        files.forEach(async (file) => {
+            deleteFile(file.name)
+                .then(async () => await createFile(file.name, file))
+                .catch(async () => await createFile(file.name, file));
+            results.push(file.name);
+        });
+        for (let result of results) {
+            records.push(JSON.stringify({
+                id: result,
+                title: this.data.filter(entry => entry.getID() === result)[0].getTitle(),
+                time: this.data.filter(entry => entry.getID() === result)[0].getTime(),
+            }));
+        }
+        return records;
     }
 
     // Stops the audio if it is playing and filters a element with certain id out of the record list
@@ -47,6 +61,9 @@ class RecordManager extends Observable {
         if (this.index > deletedIndex) {
             this.index--;
         }
+        // We keep track of the deleted file IDs so when the cast is safed (from an edit point of view)
+        // we have to delete these files, because they would be staying on the DB Storage otherwise
+        this.deletedFiles.push(id);
     }
 
     getIndexFromRecord(record) {
@@ -158,7 +175,7 @@ class RecordManager extends Observable {
         let event = new Event("audio-end", record);
         this.notifyAll(event);
     }
-
+    // changes name of record
     onEntryTitleChanged(data) {
         let id = data.id,
             record = this.data.filter(entry => entry.getID() === id)[0],
@@ -167,15 +184,13 @@ class RecordManager extends Observable {
         this.data[index] = record;
     }
 
-    getRecords() {
-        let promises = [],
-            files = [];
-        this.data.forEach(record => {
-            promises.push(record.getOggFile());
-        });
-        Promise.all(promises)
-            .then(function(file) { files.push(file); })
-            .catch(function() { return undefined; });
+    // returns an array of the .ogg files in the cast
+    async getRecords() {
+        let files = [];
+        for (let record of this.data) {
+            let file = await record.getOggFile();
+            files.push(file);
+        }
         return files;
     }
 }
