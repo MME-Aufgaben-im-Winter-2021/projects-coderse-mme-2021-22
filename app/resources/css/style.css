@@ -457,7 +457,6 @@ div[class^="button"] {
 /* ------------- CODE ------------- */
 .main-right {
     width: 75vw;
-    padding: 20px;
     overflow: auto;
     border-top: 2px solid black;
     border-bottom: 2px solid black;

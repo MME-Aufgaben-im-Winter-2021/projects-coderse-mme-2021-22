@@ -2,12 +2,15 @@
 import Config from "../../../utils/Config.js";
 import { Event, Observable } from "../../../utils/Observable.js";
 
+const CodeMirror = window.CodeMirror;
+
 class CodeView extends Observable {
 
     constructor() {
         super();
         this.container = document.querySelector(".main-right-code-container");
         this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
+        this.test = document.querySelector(".test-container");
     }
 
     startShareViewMode() {
@@ -17,39 +20,44 @@ class CodeView extends Observable {
     // Shows File 
     showFile(codeInput) {
         console.log(codeInput);
-        this.container.innerText = codeInput;
+        this.container.classList.remove("hidden");
+        // this.container.innerText = codeInput;
+        this.startCodeMirror(codeInput);
     }
 
     showLoadedFile(codeInput) {
-        console.log(codeInput);
-        this.container.innerHTML = codeInput;
+        console.log(typeof codeInput);
+        this.container.classList.remove("hidden");
+        // this.container.value = codeInput;
+        this.startCodeMirror(codeInput);
+    }
+
+    startCodeMirror(input){
+        this.codeMirror = CodeMirror(this.container, {
+            value: input,
+            theme: "monokai",
+            lineNumbers: true,
+            scrollbarStyle: null,
+        });
+        this.codeMirror.on("mouseup beforeSelectionChange", (event) => console.log(event));
     }
 
     // Marks a text selection
     // Influenced by: https://stackoverflow.com/questions/8644428/how-to-highlight-text-using-javascript#8644513
     onTextSelected() {
-        let selection = window.getSelection(),
-            range, selectionContents, mark;
-        if (selection.anchorNode === null) {
-            return;
-        }
-        range = selection.getRangeAt(0);
-        mark = document.createElement("mark");
-        mark.classList.add("marking");
-        if (!selection.anchorNode.parentElement.classList.contains("main-right-code-container") && !(selection
-                .anchorNode.parentElement.tagName === "MARK") && !(selection
-                .anchorNode.parentElement.tagName === "SPAN")) {
-            this.clearSelection();
-            return;
-        }
-
-        selectionContents = range.extractContents();
-        mark.appendChild(selectionContents);
-        range.insertNode(mark);
-
-        this.clearMarkings(mark);
-
-        this.clearSelection();
+        let selections = this.codeMirror.listSelections(),
+            anchor = selections[0].anchor,
+            head = selections[0].head;
+        this.codeMirror.markText({
+            line: anchor.line,
+            ch: anchor.ch,
+        },{
+            line: head.line +1, 
+            ch: 0,
+        },{
+            className: "marking",
+            readOnly: true,
+        });
     }
 
     clearSelection() {
@@ -63,10 +71,11 @@ class CodeView extends Observable {
 
     //assigns a data-property to the new markings
     assignNewMarkings(id) {
-        let newMarkings = document.querySelectorAll("mark");
+        let newMarkings = document.querySelectorAll(".marking");
         if (newMarkings) {
             for (let i = 0; i < newMarkings.length; i++) {
                 if (!newMarkings[i].hasAttribute("data-id")) {
+                    console.log(newMarkings);
                     newMarkings[i].setAttribute("data-id", id);
                     newMarkings[i].addEventListener("mouseover", this.onMouseOverMarking.bind(this, id));
                     newMarkings[i].addEventListener("mouseout", this.onMouseOutMarking.bind(this, id));
@@ -90,7 +99,7 @@ class CodeView extends Observable {
     //remove markings by id
     removeMarkingsById(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `span[data-id="${id}"]`);
         markings.forEach(el => {
             el.replaceWith(el.innerText);
         });
@@ -98,7 +107,7 @@ class CodeView extends Observable {
 
     //removes markings that aren't connected to a voice recording
     removeUnconnectedMarkings() {
-        let markings = document.querySelectorAll("mark");
+        let markings = document.querySelectorAll(".markings");
         markings.forEach(el => {
             if (!el.hasAttribute("data-id")) {
                 el.replaceWith(el.innerText);
@@ -108,7 +117,7 @@ class CodeView extends Observable {
 
     hideMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `span[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking");
         });
@@ -116,7 +125,7 @@ class CodeView extends Observable {
 
     highlightMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `span[data-id="${id}"]`);
         markings.forEach(el => {
             if (!el.classList.contains("marking-highlight-play")) {
                 el.classList.add("marking-highlight");
@@ -127,7 +136,7 @@ class CodeView extends Observable {
 
     resetMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `span[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight");
             if (!el.classList.contains("marking-highlight-play")) {
@@ -137,7 +146,7 @@ class CodeView extends Observable {
     }
 
     highlightPlayMarking(id) {
-        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        let markings = document.querySelectorAll(`span[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.add("marking-highlight-play");
             el.classList.remove("marking");
@@ -145,7 +154,7 @@ class CodeView extends Observable {
     }
 
     resetPlayMarking(id) {
-        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        let markings = document.querySelectorAll(`span[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight-play");
             el.classList.add("marking");
