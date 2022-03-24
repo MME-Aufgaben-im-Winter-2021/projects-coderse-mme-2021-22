@@ -232,6 +232,7 @@ Unsere 30. Sitzung 23.03.2022
 TODO:
     - Tooltips Deaktivierung (Vielleicht im Account dropdown)
     - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf
+    - RecordManager.js 32-37 ist doch eigentlich nicht nötig oder?
 
 ### Verwendete Ressourcen
 https://feathericons.com/
