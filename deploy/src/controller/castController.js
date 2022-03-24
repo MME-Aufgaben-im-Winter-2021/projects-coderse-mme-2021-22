@@ -137,7 +137,6 @@ class CastController extends Observable {
         cast.codeFileID = castJSON.codeFileID;
         cast.castServerID = castJSON.$id;
         cast.records = castJSON.records;
-
         castManager.onCastDownloaded(cast);
         this.navView.showTitle(castJSON.title);
         this.dropView.hide();
