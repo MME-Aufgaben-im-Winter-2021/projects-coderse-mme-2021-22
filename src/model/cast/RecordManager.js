@@ -29,6 +29,7 @@ class RecordManager extends Observable {
         for(let fileID of this.deletedFiles){
             await deleteFile(fileID);
         }
+        // TODO: I do not think we have to delete and create them every time, because we are not changing anything
         files.forEach(async (file) => {
             deleteFile(file.name)
                 .then(async () => await createFile(file.name, file))

@@ -2,19 +2,21 @@
 
 import { Observable, Event } from "../../utils/Observable.js";
 
-var substring = 15,
-    crypto = window.crypto;
+var substring = 15;
+
+const uuid = window.uuidv4;
 
 //Structure for one record in the file
 class Record extends Observable {
 
     constructor(title, time) {
         super();
-        this.id = crypto.randomUUID().substring(substring) + "_audio.ogg"; //Date.now();
+        this.id = uuid().substring(substring) + "_audio.ogg"; //Date.now();
         this.title = title;
         this.time = time;
         this.audioFile = null;
         this.currentAudio = null;
+        
     }
 
     // returns the audioFile as a .ogg file
