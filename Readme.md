@@ -229,6 +229,9 @@ Unsere 30. Sitzung 23.03.2022
 - Tooltips am Home Screen
 - Fixes for build
 
+Unsere 31. Sitzung 26.03.2022 9:00-13:00 Uhr
+- Drag and Drop der einzelnen Entries in der Playerlist + Update in Database
+
 TODO:
     - Tooltips Deaktivierung (Vielleicht im Account dropdown)
     - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf

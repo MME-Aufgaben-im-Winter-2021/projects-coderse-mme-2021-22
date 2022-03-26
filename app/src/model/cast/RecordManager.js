@@ -184,6 +184,15 @@ class RecordManager extends Observable {
         record.setTitle(data.title);
         this.data[index] = record;
     }
+    // Changes order of record-list after drag and drop 
+    onRecordListChanged(recordIDs) {
+        let records = [];
+        recordIDs.forEach(recordID => {
+            let record = this.data.filter(entry => entry.getID() === recordID)[0];
+            records.push(record);
+        });
+        this.data = records;
+    }
 
     // returns an array of the .ogg files in the cast
     async getRecords() {

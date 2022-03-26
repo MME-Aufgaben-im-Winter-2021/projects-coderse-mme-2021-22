@@ -320,6 +320,12 @@ div[class^="button"] {
     user-select: none;
 }
 
+/* https://stackoverflow.com/a/36379727 last viewed 26.03.2022*/
+.hide {
+    transition: 0.01s;
+    transform: translateX(-9999px);
+  }
+
 .player-list-entry-mark {
     /* border: 2px solid var(--mauve); */
     box-shadow: 2px 0px 3px hsl(263, 64%, 74%), 0px 2px 3px hsl(263, 64%, 74%), -2px 0px 3px hsl(263, 64%, 74%), 0px -2px 3px hsl(263, 64%, 74%);
