@@ -117,6 +117,10 @@ class CastManager extends Observable {
         recordManager.onEntryTitleChanged(data);
     }
 
+    onRecordListChanged(recordIDs) {
+        recordManager.onRecordListChanged(recordIDs);
+    }
+
     saveCast(codeHTML) {
         saveCast(this.cast.getTitle(), codeHTML, this);
     }

@@ -104,6 +104,7 @@ class AppController {
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
                 this.controller.addEventListener("on-view", this.onViewCastClicked.bind(this));
+                this.controller.addEventListener("on-fab-clicked", () => this.setHash("#create"));
                 break;
             case "#login":
                 this.container.innerHTML = template.template;
@@ -211,7 +212,7 @@ class AppController {
         this.setHash("#create/" + event.data);
     }
 
-    onAccountUpdate(){
+    onAccountUpdate() {
         this.setHash("home");
     }
 }

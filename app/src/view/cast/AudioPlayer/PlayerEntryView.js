@@ -31,7 +31,7 @@
         }
         // Sets the possibility for Drag and Drop while initializing new entry
         initDragAndDrop() {
-            this.view.setAttribute("draggable",true);
+            this.view.setAttribute("draggable", true);
             this.view.addEventListener("dragstart", this.onDrag.bind(this));
             this.view.addEventListener("dragover", this.onDragOver.bind(this));
             this.view.addEventListener("dragend", this.onDragEnd.bind(this));
@@ -46,7 +46,7 @@
         }
 
         // Sets the drag over another entry
-        onDragOver(event){
+        onDragOver(event) {
             let droppedPlace = event.currentTarget,
                 e = new Event("drag-over", {
                     id: this.view.getAttribute("data-id"),
@@ -56,17 +56,8 @@
             this.notifyAll(e);
         }
         // Ends the drag and sets entry on dropped place
-        onDragEnd(event){
+        onDragEnd() {
             this.view.classList.remove("hide");
-            /*
-            let id = event.dataTransfer.getData("text"),
-                droppedPlace = event.currentTarget,
-                e = new Event("drop", {
-                    id: id,
-                    placeId: droppedPlace.getAttribute("data-id"),
-                });
-            event.preventDefault();
-            this.notifyAll(e);*/
         }
 
         onMouseOverView() {
