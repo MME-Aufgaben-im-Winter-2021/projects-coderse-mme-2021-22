@@ -41,6 +41,7 @@ class CastController extends Observable {
         this.playerList.addEventListener("mouse-over-player-entry", this.onHoverOverPlayerEntry.bind(this));
         this.playerList.addEventListener("mouse-out-player-entry", this.onMouseLeavePlayerEntry.bind(this));
         this.playerList.addEventListener("entry-title-changed", this.onEntryTitleChanged.bind(this));
+        this.playerList.addEventListener("on-record-list-changed", this.onRecordListChanged.bind(this));
 
         // Audio Player - Controls
         this.playerControls = new PlayerControlsView();
@@ -227,6 +228,10 @@ class CastController extends Observable {
     onEntryTitleChanged(event) {
         let data = event.data;
         castManager.onEntryTitleChanged(data);
+    }
+
+    onRecordListChanged(event) {
+        castManager.onRecordListChanged(event.data);
     }
 
     /* ---------------------------------------------------playerControls--------------------------------------------------------------- */

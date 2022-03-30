@@ -229,11 +229,18 @@ Unsere 30. Sitzung 23.03.2022
 - Tooltips am Home Screen
 - Fixes for build
 
-TODO:
-    - Tooltips Deaktivierung (Vielleicht im Account dropdown)
-    - Popup oder so, wenn auf delete Cast geclickt, da das definitv nicht aus Zufall passieren darf
-    - RecordManager.js 32-37 ist doch eigentlich nicht nötig oder?
+Unsere 31. Sitzung 26.03.2022 9:00-13:00 Uhr
+- Drag and Drop der einzelnen Entries in der Playerlist + Update in Database
 
+
+Unsere 32. Sitzung 30.03.2022 
+- Große UI Verbesserungen
+- Popupmöglichkeit
+
+TODO:
+    - Tooltips noch nötig?? Lieber nur gutes Intro?
+
+    
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

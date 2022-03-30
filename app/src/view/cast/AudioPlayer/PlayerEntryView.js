@@ -27,6 +27,37 @@
             this.playIcon.addEventListener("click", this.play.bind(this));
             this.stopIcon.addEventListener("click", this.stop.bind(this));
             this.timerInterval = null;
+            this.initDragAndDrop();
+        }
+        // Sets the possibility for Drag and Drop while initializing new entry
+        initDragAndDrop() {
+            this.view.setAttribute("draggable", true);
+            this.view.addEventListener("dragstart", this.onDrag.bind(this));
+            this.view.addEventListener("dragover", this.onDragOver.bind(this));
+            this.view.addEventListener("dragend", this.onDragEnd.bind(this));
+        }
+
+        // Starts to drag entry
+        onDrag(event) {
+            event.dataTransfer.setData("text", this.view.getAttribute("data-id"));
+            let e = new Event("drag", this.view.getAttribute("data-id"));
+            this.notifyAll(e);
+            this.view.classList.add("hide");
+        }
+
+        // Sets the drag over another entry
+        onDragOver(event) {
+            let droppedPlace = event.currentTarget,
+                e = new Event("drag-over", {
+                    id: this.view.getAttribute("data-id"),
+                    placeId: droppedPlace.getAttribute("data-id"),
+                });
+            event.preventDefault();
+            this.notifyAll(e);
+        }
+        // Ends the drag and sets entry on dropped place
+        onDragEnd() {
+            this.view.classList.remove("hide");
         }
 
         onMouseOverView() {

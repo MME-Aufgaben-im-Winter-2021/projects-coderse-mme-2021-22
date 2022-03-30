@@ -17,13 +17,14 @@
                 <a href="#home" class="logo nav-link">
                     <img src="./resources/custom-icons/MME-Codeverse-Logo2.svg">
                 </a>
-                <input class="code-cast-title hidden" type="text" value="Code-Cast Title">
-            </div>
-
-            <div class="nav-align-right">
+                <input class="code-cast-title hidden" type="text" value="Code-Cast title" placeholder="Code-Cast title" maxlength="30">
                 <div class="button-save hidden">
                     Save
                 </div>
+            </div>
+
+            <div class="nav-align-right">
+
                 <a id="home-link" href="#home" class="home nav-link hidden">
                     Home
                 </a>
@@ -57,7 +58,7 @@
     </div>
     <!-- Template for single player frame, shown in timeline of creation page-->
     <template id="player-template">
-        <li class="player-list-entry" data-id="">
+        <li class="player-list-entry grabbable" data-id="">
             <div class="player-list-entry-title"></div>
             <input class="player-list-entry-title-input hidden" type="text">
             <div class="player-list-entry-time"></div>
@@ -73,25 +74,50 @@
     <!-- Template for cast list, shown on home screen -->
     <template id="home-cast-template">
         <li class="cast-element">
-            <div class="cast-title"> Thats a Cast!</div>
-            <span class="tooltip"> Click to copy the Link to the Clipboard</span>
-            <input class="tooltip-container" id="copy-link" readonly="readonly"></input>
-            <div class="cast-element-buttons-container">
-                <div class="link-icon tooltip-container">
-                    <img id="copy-icon" src="./resources/icons/copy.svg">
-                    <span class="tooltip">Copy link!</span>
-                </div>
-                <div class="link-icon tooltip-container">
-                    <img id="view-btn" src="./resources/icons/eye.svg">
-                    <span class="tooltip">Edit this Cast!</span>
-                </div>
+            <div class="cast-title-container">
+                <div class="cast-title"> Thats a Cast!</div>
                 <div class="link-icon delete-cast-btn tooltip-container">
                     <img id="delete-cast-btn" src="./resources/icons/trash-2.svg">
                     <span class="tooltip">Delete this Cast!</span>
                 </div>
             </div>
+            <div class="copy-link-container">
+                <span class="tooltip"> Click to copy the Link to the Clipboard</span>
+                <input class="tooltip-container" id="copy-link" readonly="readonly"></input>
+                <div class="copy-link-icon tooltip-container">
+                    <img id="copy-icon" src="./resources/icons/copy.svg">
+                    <span class="tooltip">Copy link to clipboard!</span>
+                </div>
+            </div>
+            <div class="cast-element-buttons-container hidden">
+                <div class="link-icon tooltip-container">
+                    <img id="view-btn" src="./resources/icons/eye.svg">
+                    <span class="tooltip">Edit this Cast!</span>
+                </div>
+            </div>
         </li>
     </template>
+
+    <!-- Template for a confirmation dialogue -->
+    <template id="modal">
+        <div class="modal">
+            <div class="modal-background-blur"></div>
+            <div class="modal-container">
+                <div class="modal-title-container">
+                    <div class="modal-warning-img-container">
+                        <img id="modal-warning-img" src="./resources/icons/alert-triangle.svg">
+                    </div>
+                    <div class="modal-title">demo title</div>
+                </div>
+                <div class="modal-content">demo content</div>
+                <div class="modal-btn-container">
+                    <div class="modal-btn-decline">demo decline</div>
+                    <div class="modal-btn-accept">demo accept</div>
+                </div>
+            </div>
+        </div>
+    </template>
+
     <script type="module" src="./src/index.js"></script>
     <!-- Install Appwrite via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.1"></script>

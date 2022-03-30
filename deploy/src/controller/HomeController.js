@@ -21,6 +21,7 @@ class HomeController extends Observable {
         this.homeView = new HomeView();
         this.homeView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.homeView.addEventListener("on-delete", this.onDeleteCast.bind(this));
+        this.homeView.addEventListener("on-fab-clicked", (event) => this.notifyAll(event));
 
         // Data Manager of this Controller
         this.homeManager = new HomeManager();
@@ -43,20 +44,20 @@ class HomeController extends Observable {
             let user = res;
             data.documents.forEach(document => {
                 // Hand document 
-                if(document.userID === user.$id){
+                if (document.userID === user.$id) {
                     let title = document.title,
                         id = document.$id,
-                        link = "http://coderse.software-engineering.education/#/share/" + id;
+                        link = "https://coderse.software-engineering.education/#/share/" + id;
                     this.homeView.addElement(title, id, link);
                 }
-                
+
             });
         });
     }
 
     // If a cast should be deleted, the home manager will take care, by handing the id
     // Afterwards the current List Element is updated
-    async onDeleteCast(event){
+    async onDeleteCast(event) {
         let castID = event.data;
         await this.homeManager.deleteCast(castID);
         this.getCasts();
