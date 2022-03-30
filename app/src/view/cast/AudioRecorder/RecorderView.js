@@ -35,6 +35,7 @@ class Recorder extends Observable {
         this.container = document.querySelector(".bottom-right");
         this.bottomBar = document.querySelector(".bottom-bar");
         this.containerControls = document.querySelector(".bottom-left");
+        this.iconStopPlaceholder = document.querySelector(".recorder-icon-stop-grey-container");
     }
 
     hideRecorder() {
@@ -42,6 +43,14 @@ class Recorder extends Observable {
         this.containerControls.classList.remove("bottom-left");
         this.containerControls.classList.add("bottom-bar");
         this.container.classList.add("hidden");
+    }
+
+    showStopPlaceholder() {
+        this.iconStopPlaceholder.classList.remove("hidden");
+    }
+
+    hideStopPlaceholder() {
+        this.iconStopPlaceholder.classList.add("hidden");
     }
 
     onStopRecordingClicked() {
@@ -92,6 +101,7 @@ class Recorder extends Observable {
         startTimer.call(this);
         let event = new Event("start-recording", "data");
         this.notifyAll(event);
+        this.showStopPlaceholder();
     }
 
     getTitle() {
@@ -156,6 +166,7 @@ function startTimer() {
         time.innerHTML = audioLength;
         if (seconds >= Config.MIN_SEC_OF_AUDIO_REC) { //minimum time
             this.showIconStop();
+            this.hideStopPlaceholder();
         }
     }, Config.INTERVAL_REFRESH_RATE);
 }
@@ -168,12 +179,11 @@ function stopTimer() {
 
 //Turns the Lightbulb on
 function turnLightOn() {
-    iconLight.style.borderRadius = "999px";
-    iconLight.style.background = "grey";
+    iconLight.parentElement.classList.add("light-on");
 }
 //Turns the Lightbulb off
 function turnLightOff() {
-    iconLight.style.background = "transparent";
+    iconLight.parentElement.classList.remove("light-on");
 }
 
 export default Recorder;

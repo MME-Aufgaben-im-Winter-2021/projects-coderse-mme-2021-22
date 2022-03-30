@@ -9,7 +9,7 @@ class Player extends Observable {
         super();
         // The list element from the html-doc
         this.list = document.querySelector(".player-list");
-        this.list.addEventListener("dragover", e => {e.preventDefault();});
+        this.list.addEventListener("dragover", e => { e.preventDefault(); });
         document.addEventListener("drop", this.onDrop.bind(this));
         this.timerInterval = null;
         this.entryViews = [];
@@ -52,38 +52,37 @@ class Player extends Observable {
     }
 
     // Enables Drag and Drop in player-list
-    onDrag(event)
-    {
+    onDrag(event) {
         this.currentDraggedId = event.data;
     }
-    
+
     // Finds out where to put dragged element in player-list (either above or below) and drops it there
     onDragOver(event) {
         let allEntries = document.querySelectorAll(".player-list-entry"),
             droppedElement,
-            fromAbove; 
-        if(event.data.placeId === this.currentDraggedId) {
+            fromAbove;
+        if (event.data.placeId === this.currentDraggedId) {
             return;
         }
         allEntries.forEach(entryView => {
-            if(entryView.getAttribute("data-id") === event.data.placeId) {
+            if (entryView.getAttribute("data-id") === event.data.placeId) {
                 fromAbove = true;
             }
-            if(entryView.getAttribute("data-id") === this.currentDraggedId) {
+            if (entryView.getAttribute("data-id") === this.currentDraggedId) {
                 droppedElement = entryView;
                 fromAbove = false;
             }
         });
-        if(fromAbove) {
+        if (fromAbove) {
             let droppedPlace = this.getEntryById(event.data.placeId).view.nextSibling;
-            if(droppedPlace === null) {
+            if (droppedPlace === null) {
                 this.list.appendChild(droppedElement);
             } else {
                 this.list.insertBefore(droppedElement, droppedPlace);
             }
         } else {
             this.list.insertBefore(droppedElement, this.getEntryById(event.data.placeId).view);
-        } 
+        }
     }
 
     // Updates the order of the entry to be sent to database
