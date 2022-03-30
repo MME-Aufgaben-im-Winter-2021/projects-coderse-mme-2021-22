@@ -26,10 +26,9 @@ class RecordManager extends Observable {
             results = [],
             records = [];
         // Deleting all the files from records that did get deleted from the Cast, but still have files on the server
-        for(let fileID of this.deletedFiles){
+        for (let fileID of this.deletedFiles) {
             await deleteFile(fileID);
         }
-        // TODO: I do not think we have to delete and create them every time, because we are not changing anything
         files.forEach(async (file) => {
             deleteFile(file.name)
                 .then(async () => await createFile(file.name, file))
@@ -183,6 +182,15 @@ class RecordManager extends Observable {
             index = this.getIndexFromRecord(record);
         record.setTitle(data.title);
         this.data[index] = record;
+    }
+    // Changes order of record-list after drag and drop 
+    onRecordListChanged(recordIDs) {
+        let records = [];
+        recordIDs.forEach(recordID => {
+            let record = this.data.filter(entry => entry.getID() === recordID)[0];
+            records.push(record);
+        });
+        this.data = records;
     }
 
     // returns an array of the .ogg files in the cast

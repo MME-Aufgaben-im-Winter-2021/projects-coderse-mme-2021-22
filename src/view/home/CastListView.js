@@ -16,7 +16,7 @@ class CastListView extends Observable {
         this.view.appendChild(element.getView());
     }
 
-    clear(){
+    clear() {
         this.view.innerHTML = "";
     }
 
