@@ -242,6 +242,10 @@ Unsere 33. Sitzung 31.03.2022
 - Audiobug behoben: Wenn Audioaufnahme läuft und von Create Cast weggewechselt wird wird nun gefragt, ob die Audio gespeichert werden soll
 - Intro verbessert
 
+Unsere 34. Sitzung 31.03.2022 
+- Success modal fuer copy to clipboard und browser unabhaengigkeit 
+- Help Button to restart tutorial
+
 TODO:
     - Tooltips noch nötig?? Lieber nur Intro?
 
@@ -250,3 +254,4 @@ TODO:
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather
+Logo-Font: https://www.fontsquirrel.com/fonts/norwester unter der SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007

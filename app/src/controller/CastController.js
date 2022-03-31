@@ -81,7 +81,21 @@ class CastController extends Observable {
 
         castManager.getCast(id);
 
+        this.fabHelp = document.querySelector(".fab-help");
+        this.fabHelp.addEventListener("click", this.onHelpClicked.bind(this));
+
         this.computeOnboarding(id);
+    }
+
+    // User wants to do the on boarding again
+    onHelpClicked(){
+        LocalStorageProvider.setCreateCastOnBoarding("start");
+        if(this.dropView.hidden){
+            LocalStorageProvider.setCreateCastOnBoarding("drag-done");
+            this.showAdvancedIntro();
+        } else {
+            this.computeOnboarding(false);
+        }
     }
 
     // If the LocalStorage value is undefined = users first time using the app -> Onboarding starts
@@ -89,9 +103,10 @@ class CastController extends Observable {
         // If it is a share screen, onboarding is not needed
         if (id) {
             LocalStorageProvider.setCreateCastOnBoarding("done");
+            this.fabHelp.classList.add("hidden");
         }
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
-        if (onBoardingDone === null) {
+        if (onBoardingDone === null || onBoardingDone === "start") {
             introJs().setOptions({
                 steps: [{
                     title: "Load your Code!",

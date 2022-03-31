@@ -1,5 +1,6 @@
 /* eslint-env browser */
 import { Observable, Event } from "../../utils/Observable.js";
+import Modal from "../utilViews/Modal.js";
 
 const TEMPLATE = document.getElementById("home-cast-template").innerHTML.trim();
 
@@ -24,14 +25,31 @@ class CastListElementView extends Observable {
     onCopyLinkClicked() {
         navigator.permissions.query({ name: "clipboard-write" }).then(result => {
             if (result.state === "granted" || result.state === "prompt") {
+                let self = this;
                 navigator.clipboard.writeText(this.linkEl.value).then(function() {
                     /* clipboard successfully set */
+                    self.showSuccess();
                 }, function() {
                     /* clipboard write failed */
-
                 });
-            }
+            } 
+        }, () => {
+            // Fallback version for clipboard copying, for browsers like firefox.
+            // Even though exeCommand ist deprecated, it is important for cross browser functionality
+            this.linkEl.select();
+            document.execCommand("copy");
+            this.showSuccess();
         });
+    }
+
+    showSuccess(){
+        let modal = new Modal("Link successfully copied to clipboard!", "Go share it with someone!","",""),
+                appearanceTime = 1000;
+        modal.hideActionBtn();
+        modal.setSuccessModal();
+        setTimeout(() => {
+            modal.remove();
+        }, appearanceTime);
     }
 
     setTitle(title) {
