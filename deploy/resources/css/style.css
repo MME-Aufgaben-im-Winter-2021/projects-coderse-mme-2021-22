@@ -132,14 +132,8 @@ body {
 }
 
 .logo>img {
-    width: 110px;
-    height: 55px;
-    /* width = 2 * height */
-    overflow: hidden;
-    background-color: black;
-    border-radius: 4px;
-    padding: 0 5px 0 5px;
-    border: 2px solid var(--border-grey);
+    width: 140px;
+    height: 70px;
 }
 
 .code-cast-title {
