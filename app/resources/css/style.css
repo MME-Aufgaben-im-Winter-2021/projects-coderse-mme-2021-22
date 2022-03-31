@@ -1075,6 +1075,7 @@ mark {
 .cast-element:hover {
     background-color: var(--jet);
     box-shadow: 1px 0px 6px var(--mauve), 0px 1px 6px var(--mauve), -1px 0px 6px var(--mauve), 0px -1px 6px var(--mauve);
+    cursor: pointer;
 }
 
 .cast-element:hover .cast-title {
@@ -1352,7 +1353,7 @@ mark {
     filter: invert(130%) sepia(100%) saturate(2176%) hue-rotate(20deg) brightness(100%) contrast(107%);
 }
 
-.modal-success-title{
+.modal-success-title {
     color: rgb(183, 255, 100) !important;
 }
 
