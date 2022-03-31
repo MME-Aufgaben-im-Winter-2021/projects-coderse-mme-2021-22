@@ -141,6 +141,13 @@ class NavView extends Observable {
         this.userBtn.classList.remove("active-link");
         this.createBtn.classList.remove("active-link");
     }
+
+    resetShareData(){
+        let shareTitle = this.view.querySelectorAll(".code-cast-title-share-view");
+        for(let node of shareTitle){
+            this.view.querySelector(".nav-align-left").removeChild(node);
+        }
+    }
 }
 
 export default NavView;

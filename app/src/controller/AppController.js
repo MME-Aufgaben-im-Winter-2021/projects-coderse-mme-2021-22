@@ -53,6 +53,10 @@ class AppController {
         this.controller = undefined;
 
         // We only need one NavView, if we would do one in each controller it would cause problems
+        this.initNavView();
+    }
+
+    initNavView(){
         this.navView = new NavView();
         this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
         this.navView.addEventListener("cast-safe", this.onSaveCastClicked.bind(this));
@@ -105,6 +109,8 @@ class AppController {
             shareData,
             computedID,
             accountData;
+
+        this.navView.resetShareData();
 
         // After a template is set, we init a controller which takes care of the functionality
         switch (template.route) {

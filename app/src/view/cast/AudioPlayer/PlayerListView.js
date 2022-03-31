@@ -40,6 +40,12 @@ class Player extends Observable {
         }
     }
 
+    disableDragAndDrop(){
+        this.entryViews.forEach(entry => {
+            entry.disableDragAndDrop();
+        });
+    }
+
     // Delete a certain entry from the list with the event target
     // (Possible point which can be used with an Event on a Player Entry)
     deleteEntry(event) {

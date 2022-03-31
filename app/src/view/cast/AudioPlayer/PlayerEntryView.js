@@ -37,6 +37,10 @@
             this.view.addEventListener("dragend", this.onDragEnd.bind(this));
         }
 
+        disableDragAndDrop(){
+            this.view.setAttribute("draggable", false);
+        }
+
         // Starts to drag entry
         onDrag(event) {
             event.dataTransfer.setData("text", this.view.getAttribute("data-id"));
