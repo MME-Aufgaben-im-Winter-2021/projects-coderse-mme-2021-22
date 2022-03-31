@@ -253,3 +253,4 @@ TODO:
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather
+Logo-Font: https://www.fontsquirrel.com/fonts/norwester unter der SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
