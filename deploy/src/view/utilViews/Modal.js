@@ -17,6 +17,21 @@ class Modal extends Observable {
         showModal(this.modal);
     }
 
+    hideActionBtn(){
+        this.acceptBtnEl.classList.add("hidden");
+        this.declineBtnEl.classList.add("hidden");
+    }
+
+    setSuccessModal(){
+        this.modal.querySelector("#modal-warning-img").classList.add("hidden");
+        this.modal.querySelector("#modal-success-img").classList.remove("hidden");
+        this.modal.querySelector(".modal-title").classList.add("modal-success-title");
+    }
+
+    remove(){
+        removeModal(this.modal);
+    }
+
 }
 
 function onButtonClicked(isAccept) {
