@@ -103,7 +103,6 @@ class CastController extends Observable {
         // If it is a share screen, onboarding is not needed
         if (id) {
             LocalStorageProvider.setCreateCastOnBoarding("done");
-            this.fabHelp.classList.add("hidden");
         }
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
         if (onBoardingDone === null || onBoardingDone === "start") {
@@ -373,11 +372,13 @@ class CastController extends Observable {
     setShareScreen(name) {
         this.navView.hideLinks();
         this.navView.hideSafeBtn();
-        this.navView.disableTitleInput();
+        this.fabHelp.classList.add("hidden");
         this.navView.showCreatorName(name);
         this.recorder.hideRecorder();
         this.playerList.hideEditable();
+        this.playerList.disableDragAndDrop();
         this.codeView.startShareViewMode();
+        this.navView.disableTitleInput();
     }
 
 }
