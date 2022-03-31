@@ -21,7 +21,7 @@ var castManager,
 class CastController extends Observable {
 
     init(navView, id) {
-        
+
         // General model for a cast. Combines multiple models
         castManager = new CastManager(navView.getCastTitle());
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));
@@ -32,6 +32,8 @@ class CastController extends Observable {
         castManager.addEventListener("cast-downloaded", this.onCastDownloaded.bind(this));
         castManager.addEventListener("audio-downloaded", this.onAudioDownloaded.bind(this));
         castManager.addEventListener("codeHTML-downloaded", this.onCodeHTMLDownloaded.bind(this));
+        castManager.addEventListener("modal-stop", this.onAudioModalStopAudioClicked.bind(this));
+        castManager.addEventListener("modal-delete", this.onAudioModalDeleteClicked.bind(this));
 
         // Audio Player - Timeline for the Cast
         this.playerList = new PlayerListView();
@@ -65,7 +67,7 @@ class CastController extends Observable {
 
         // Drop View
         this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", this.onFileReady.bind(this) );
+        this.dropView.addEventListener("file-ready", this.onFileReady.bind(this));
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
@@ -83,13 +85,13 @@ class CastController extends Observable {
     }
 
     // If the LocalStorage value is undefined = users first time using the app -> Onboarding starts
-    computeOnboarding(id){
+    computeOnboarding(id) {
         // If it is a share screen, onboarding is not needed
-        if(id){
+        if (id) {
             LocalStorageProvider.setCreateCastOnBoarding("done");
         }
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
-        if(onBoardingDone === null){
+        if (onBoardingDone === null) {
             introJs().setOptions({
                 steps: [{
                     title: "Load your Code!",
@@ -100,7 +102,11 @@ class CastController extends Observable {
             }).start();
             LocalStorageProvider.setCreateCastOnBoarding("drag-done");
         }
-        else if(onBoardingDone === "drag-done"){
+    }
+
+    showAdvancedIntro() {
+        let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
+        if (onBoardingDone === "drag-done") {
             LocalStorageProvider.setCreateCastOnBoarding("done");
             introJs().setOptions({
                 steps: [{
@@ -125,7 +131,7 @@ class CastController extends Observable {
                     element: document.querySelector(".button-save"),
                 }],
                 tooltipClass: "custom-tooltip",
-              }).start();
+            }).start();
         }
     }
 
@@ -186,6 +192,18 @@ class CastController extends Observable {
 
     onCastEnded() {
         this.playerControls.resetIcons();
+    }
+
+    onAudioModalStopAudioClicked() {
+        this.recorder.onStopRecordingClicked();
+        this.recorder.onSaveRecordingClicked();
+        this.safeCast();
+    }
+
+    onAudioModalDeleteClicked() {
+        this.recorder.onStopRecordingClicked();
+        this.recorder.onTrashClicked();
+        this.safeCast();
     }
 
     /* ---------------------------------------------------playerList--------------------------------------------------------------- */
@@ -291,9 +309,14 @@ class CastController extends Observable {
         castManager.saveRecord(event);
     }
 
+    checkForRunningAudio() {
+        castManager.checkForModal();
+    }
+
     /* ---------------------------------------------------dropView--------------------------------------------------------------- */
 
-    onFileReady(event){
+    onFileReady(event) {
+        this.showAdvancedIntro();
         this.codeView.showFile(event.data);
         this.computeOnboarding();
     }

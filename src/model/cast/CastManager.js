@@ -12,6 +12,7 @@ import { deleteFile } from "../../api/Storage/deleteFile.js";
 import { createFile } from "../../api/Storage/createFile.js";
 import { getFile } from "../../api/Storage/getFile.js";
 import Config from "../../utils/Config.js";
+import Modal from "../../view/utilViews/Modal.js";
 
 var audioManager,
     recordManager;
@@ -44,11 +45,11 @@ class CastManager extends Observable {
         this.cast.setTitle(title);
     }
 
-    setCastServerID(id){
+    setCastServerID(id) {
         this.cast.castServerID = id;
     }
 
-    setCodeFileID(id){
+    setCodeFileID(id) {
         this.cast.codeFileID = id;
     }
 
@@ -91,9 +92,11 @@ class CastManager extends Observable {
 
     //adds Audio to the current Record object and informs the CastController
     onAudioFileRecorded(event) {
-        this.currentRecord.setAudio(event.data);
-        let ev = new Event("audio-recorded", this.currentRecord);
-        this.notifyAll(ev);
+        if (event.data) {
+            this.currentRecord.setAudio(event.data);
+            let ev = new Event("audio-recorded", this.currentRecord);
+            this.notifyAll(ev);
+        }
     }
 
     // Plays the whole cast
@@ -119,6 +122,17 @@ class CastManager extends Observable {
 
     onRecordListChanged(recordIDs) {
         recordManager.onRecordListChanged(recordIDs);
+    }
+
+    checkForModal() {
+        let modal;
+        if (audioManager.mediaRecorderIsRecording()) {
+            modal = new Modal("Audio still recording",
+                "There is an audio recording running currently. Stop and save recording?",
+                "Yes, save", "No, discard audio");
+            modal.addEventListener("onAcceptClicked", () => this.notifyAll(new Event("modal-stop", "")));
+            modal.addEventListener("onDeclineClicked", () => this.notifyAll(new Event("modal-delete", "")));
+        }
     }
 
     saveCast(codeHTML) {
@@ -187,7 +201,7 @@ async function downloadCast(id) {
     return cast;
 }
 
-function setNewCodeFileID(self){
+function setNewCodeFileID(self) {
     let substring = 14;
     self.cast.setCodeFileID(uuid().substring(substring) + "_code.txt");
 }
@@ -205,7 +219,7 @@ async function saveCast(title, codeHTML, self) {
         doesCastExistInCloud = false;
     }
 
-    if(!self.cast.codeFileID){
+    if (!self.cast.codeFileID) {
         setNewCodeFileID(self);
     }
 
