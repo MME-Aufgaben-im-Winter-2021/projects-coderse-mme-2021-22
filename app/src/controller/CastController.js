@@ -101,7 +101,12 @@ class CastController extends Observable {
                 tooltipClass: "custom-tooltip",
             }).start();
             LocalStorageProvider.setCreateCastOnBoarding("drag-done");
-        } else if (onBoardingDone === "drag-done") {
+        }
+    }
+
+    showAdvancedIntro() {
+        let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
+        if (onBoardingDone === "drag-done") {
             LocalStorageProvider.setCreateCastOnBoarding("done");
             introJs().setOptions({
                 steps: [{
@@ -311,6 +316,7 @@ class CastController extends Observable {
     /* ---------------------------------------------------dropView--------------------------------------------------------------- */
 
     onFileReady(event) {
+        this.showAdvancedIntro();
         this.codeView.showFile(event.data);
         this.computeOnboarding();
     }
