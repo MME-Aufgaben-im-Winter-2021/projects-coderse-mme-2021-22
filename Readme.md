@@ -237,10 +237,16 @@ Unsere 32. Sitzung 30.03.2022
 - Große UI Verbesserungen
 - Popupmöglichkeit
 
-TODO:
-    - Tooltips noch nötig?? Lieber nur gutes Intro?
 
-    
+Unsere 33. Sitzung 31.03.2022 
+- Audiobug behoben: Wenn Audioaufnahme läuft und von Create Cast weggewechselt wird wird nun gefragt, ob die Audio gespeichert werden soll
+- Intro verbessert
+
+TODO:
+    - Tooltips noch nötig?? Lieber nur Intro?
+
+
+
 ### Verwendete Ressourcen
 https://feathericons.com/
 https://github.com/feathericons/feather#feather

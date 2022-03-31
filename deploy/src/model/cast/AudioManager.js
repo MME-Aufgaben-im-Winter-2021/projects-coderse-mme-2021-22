@@ -25,6 +25,9 @@ class AudioManager extends Observable {
         mediaRecorder.stop();
     }
 
+    mediaRecorderIsRecording() {
+        return mediaRecorder.state === "recording";
+    }
 }
 
 // Starts an input stream for an audio 
