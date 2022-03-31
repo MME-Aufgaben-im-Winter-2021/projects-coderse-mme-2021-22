@@ -488,6 +488,40 @@ div[class^="button"] {
     user-select: none;
 }
 
+.fab-help {
+    position: absolute;
+    right: 3vw;
+    top: 10vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 9999px;
+    background-color: var(--jet);
+    border: 2px solid var(--border-grey);
+    padding: 0.5vh;
+    align-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.fab-help>img {
+    filter: invert(100%);
+}
+
+.fab-help:hover {
+    background-color: var(--onyx);
+    cursor: pointer;
+    color: white;
+    box-shadow: 1px 0px 6px var(--granny-smith-apple), 0px 1px 6px var(--granny-smith-apple), -1px 0px 6px var(--granny-smith-apple), 0px -1px 6px var(--granny-smith-apple);
+}
+
+.fab-help:hover>img {
+    filter: invert(85%) sepia(32%) saturate(345%) hue-rotate(70deg) brightness(104%) contrast(97%);
+}
+
+.fab-help>* {
+    user-select: none;
+}
+
 .main-right-code-container {
     font-family: 'Anonymous Pro', sans-serif;
     user-select: text;
@@ -1045,6 +1079,10 @@ mark {
     filter: invert(85%) sepia(32%) saturate(345%) hue-rotate(70deg) brightness(104%) contrast(97%);
 }
 
+.fab-create-cast>* {
+    user-select: none;
+}
+
 .home-title {
     font-size: x-large;
     user-select: none;
@@ -1210,10 +1248,6 @@ mark {
 
 .cast-title-container>.delete-cast-btn {
     justify-self: end;
-}
-
-.fab-create-cast>* {
-    user-select: none;
 }
 
 /* ------------------------------------------------------------- Account settings ----------- */

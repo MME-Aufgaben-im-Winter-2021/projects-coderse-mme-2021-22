@@ -244,6 +244,7 @@ Unsere 33. Sitzung 31.03.2022
 
 Unsere 34. Sitzung 31.03.2022 
 - Success modal fuer copy to clipboard und browser unabhaengigkeit 
+- Help Button to restart tutorial
 
 TODO:
     - Tooltips noch nötig?? Lieber nur Intro?

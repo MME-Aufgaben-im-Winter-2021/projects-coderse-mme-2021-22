@@ -16,10 +16,12 @@ class DropView extends Observable {
         this.startBtn = this.view.querySelector(".main-right-drag-drop-container-btn");
         this.startBtn.addEventListener("click", this.onFileReady.bind(this));
         this.currentFile = null;
+        this.hidden = false;
     }
 
     hide(){
         this.view.classList.add("hidden");
+        this.hidden = true;
     }
 
     // Reads a file with FileReader
