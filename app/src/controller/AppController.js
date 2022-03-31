@@ -41,12 +41,12 @@ class AppController {
         this.router.addEventListener("template-ready", this.onTemplateReady.bind(this));
 
         // Navbar links (This listener is used to push this page onto the stack)
-        this.homeLink = document.querySelector("#home-link").addEventListener("click", this.router.pushRoute.bind(
-            this.router));
-        this.createLink = document.querySelector("#create-link").addEventListener("click", this.router.pushRoute
-            .bind(this.router));
-        this.userLink = document.querySelector("#user-link").addEventListener("click", this.router.pushRoute.bind(
-            this.router));
+        this.homeLink = document.querySelector("#home-link").addEventListener("click", this
+            .checkIfUserLeavesCastCreation.bind(this));
+        this.createLink = document.querySelector("#create-link").addEventListener("click", this
+            .checkIfUserLeavesCastCreation.bind(this));
+        this.userLink = document.querySelector("#user-link").addEventListener("click", this
+            .checkIfUserLeavesCastCreation.bind(this));
 
         // The currently used templates and the controller which takes care of the functionality regarding the template
         this.container = document.querySelector(".content-container");
@@ -56,6 +56,15 @@ class AppController {
         this.navView = new NavView();
         this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
         this.navView.addEventListener("cast-safe", this.onSaveCastClicked.bind(this));
+    }
+
+    checkIfUserLeavesCastCreation() {
+        let hash = window.location.hash;
+        if (hash.indexOf("#create") !== -1) {
+            this.controller.checkForRunningAudio();
+        } else {
+            this.router.pushRoute.bind(this.router);
+        }
     }
 
     onSaveCastClicked(event) {
