@@ -16,6 +16,7 @@ class HomeController extends Observable {
         this.navView.hideSafeBtn();
         this.navView.hideTitleInput();
         this.navView.setHomeActive();
+        this.navView.showNavView();
 
         // Home general View
         this.homeView = new HomeView();

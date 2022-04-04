@@ -45,25 +45,6 @@
     background-color: var(--electric-blue);
 }
 
-/* 
-body {
-    background-color: var(--snow);
-    font-family: 'Space Grotesk', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-.ui {
-    display: flex;
-    flex-direction: column;
-    width: 90vw;
-    margin: 0 auto;
-    padding: 0;
-}
-.ui h1 {
-    text-align: center;
-    color: var(--jet);
-} */
-
 body {
     display: flex;
     flex-direction: column;
@@ -180,10 +161,13 @@ div[class^="button"] {
 }
 
 .button-save {
+    width:80px;
+    height:25px;
     background-color: var(--granny-smith-apple);
     /* color: var(--eerie-black-2); */
     border: 2px solid hsl(126, 89%, 95%);
     color: var(--eerie-black-2);
+    text-align: center;
 }
 
 .button-save:hover {
@@ -274,6 +258,31 @@ div[class^="button"] {
     border: 2px solid white;
     cursor: pointer;
     color: var(--mauve);
+}
+.button-loading{
+    width:80px;
+    height:25px;
+    background-color: var(--granny-smith-apple);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+/* Source for Animation, 04.04.22, URL: https://loading.io/css/ */
+.loader-icon{
+    width: 19px;
+    height:19px;
+    animation: loader-anim 1.2s linear infinite;
+}
+@keyframes loader-anim {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
 }
 
 
@@ -922,6 +931,7 @@ mark {
     text-align: center;
     border-radius: 4px;
     padding: 5px;
+    margin-top: 1.5vh;
     background-color: var(--granny-smith-apple);
     border: 2px solid hsl(126, 89%, 95%);
     color: var(--eerie-black-2);
@@ -1047,7 +1057,7 @@ mark {
     display: flex;
     flex-direction: column;
     justify-content: left;
-    padding: 2vh 5vw;
+    padding: 3vw 5vw;
 }
 
 .fab-create-cast {
@@ -1055,13 +1065,13 @@ mark {
     right: 3vw;
     bottom: 3vw;
     display: flex;
-    flex-direction: column;
-    border-radius: 9999px;
+    flex-direction: row;
+    border-radius: 4px;
     background-color: var(--jet);
     border: 2px solid var(--border-grey);
     padding: 0.5vh;
     align-content: center;
-    width: 50px;
+    width: 150px;
     height: 50px;
 }
 
@@ -1072,7 +1082,7 @@ mark {
 .fab-create-cast:hover {
     background-color: var(--onyx);
     cursor: pointer;
-    color: white;
+    color: var(--granny-smith-apple);
     box-shadow: 1px 0px 6px var(--granny-smith-apple), 0px 1px 6px var(--granny-smith-apple), -1px 0px 6px var(--granny-smith-apple), 0px -1px 6px var(--granny-smith-apple);
 }
 
@@ -1082,6 +1092,15 @@ mark {
 
 .fab-create-cast>* {
     user-select: none;
+}
+
+.fab-title{
+    font-size: medium;
+    align-self:center;
+    margin-left: 0.5vh;
+}
+.fab-title:hover{
+    color:var(--granny-smith-apple);
 }
 
 .home-title {

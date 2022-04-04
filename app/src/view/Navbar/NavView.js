@@ -10,11 +10,12 @@ class NavView extends Observable {
         this.view = document.querySelector(".nav-bar");
         this.safeBtn = this.view.querySelector(".button-save");
         this.homeBtn = this.view.querySelector("#home-link");
-        this.createBtn = this.view.querySelector("#create-link");
+       // this.createBtn = this.view.querySelector("#create-link");
         this.userBtn = this.view.querySelector("#user-dropdown");
         this.castTitle = this.view.querySelector(".code-cast-title");
         this.userLogout = this.view.querySelector("#user-logout");
         this.loggedUserName = this.view.querySelector("#user-name");
+        this.iconLoader = this.view.querySelector(".button-loading");
 
         // Eventlistener
         this.safeBtn.addEventListener("click", this.castSafe.bind(this));
@@ -48,6 +49,7 @@ class NavView extends Observable {
     castSafe() {
         let title = this.castTitle.value,
             event = new Event("cast-safe", title);
+        this.showLoadingAnimation();
         this.notifyAll(event);
     }
 
@@ -63,7 +65,7 @@ class NavView extends Observable {
 
     showLinks() {
         this.homeBtn.classList.remove("hidden");
-        this.createBtn.classList.remove("hidden");
+       // this.createBtn.classList.remove("hidden");
         this.userBtn.classList.remove("hidden");
     }
 
@@ -90,7 +92,7 @@ class NavView extends Observable {
 
     hideLinks() {
         this.homeBtn.classList.add("hidden");
-        this.createBtn.classList.add("hidden");
+        //this.createBtn.classList.add("hidden");
         this.userBtn.classList.add("hidden");
     }
 
@@ -120,16 +122,19 @@ class NavView extends Observable {
     setHomeActive() {
         this.removeActive();
         this.homeBtn.classList.add("active-link");
+        this.homeBtn.classList.add("hidden");
     }
 
     setCreateActive() {
         this.removeActive();
-        this.createBtn.classList.add("active-link");
+        //this.createBtn.classList.add("active-link");
+        this.homeBtn.classList.remove("hidden");
     }
 
     setUserActive() {
         this.removeActive();
         this.userBtn.classList.add("active-link");
+        this.homeBtn.classList.remove("hidden");
     }
 
     setCurrentlyLoggedInUser(userName) {
@@ -139,7 +144,7 @@ class NavView extends Observable {
     removeActive() {
         this.homeBtn.classList.remove("active-link");
         this.userBtn.classList.remove("active-link");
-        this.createBtn.classList.remove("active-link");
+        //this.createBtn.classList.remove("active-link");
     }
 
     resetShareData(){
@@ -147,6 +152,15 @@ class NavView extends Observable {
         for(let node of shareTitle){
             this.view.querySelector(".nav-align-left").removeChild(node);
         }
+    }
+    showLoadingAnimation(){
+        this.iconLoader.classList.remove("hidden");
+        this.safeBtn.classList.add("hidden");
+    }
+
+    removeLoadingAnimation(){
+        this.iconLoader.classList.add("hidden");
+        this.safeBtn.classList.remove("hidden");
     }
 }
 

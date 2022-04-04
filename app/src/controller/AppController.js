@@ -43,8 +43,8 @@ class AppController {
         // Navbar links (This listener is used to push this page onto the stack)
         this.homeLink = document.querySelector("#home-link").addEventListener("click", this
             .checkIfUserLeavesCastCreation.bind(this));
-        this.createLink = document.querySelector("#create-link").addEventListener("click", this
-            .checkIfUserLeavesCastCreation.bind(this));
+        //this.createLink = document.querySelector("#create-link").addEventListener("click", this
+           // .checkIfUserLeavesCastCreation.bind(this));
         this.userLink = document.querySelector("#user-link").addEventListener("click", this
             .checkIfUserLeavesCastCreation.bind(this));
 
@@ -131,6 +131,7 @@ class AppController {
                 this.controller = new CastController();
                 computedID = await this.computeCreateID();
                 this.controller.init(this.navView, computedID);
+                this.controller.addEventListener("switch-to-homescreen", this.setHash.bind(this,"home"));
                 break;
             case "#account":
                 this.container.innerHTML = template.template;

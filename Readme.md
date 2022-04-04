@@ -242,9 +242,14 @@ Unsere 33. Sitzung 31.03.2022
 - Audiobug behoben: Wenn Audioaufnahme läuft und von Create Cast weggewechselt wird wird nun gefragt, ob die Audio gespeichert werden soll
 - Intro verbessert
 
+
 Unsere 34. Sitzung 31.03.2022 
 - Success modal fuer copy to clipboard und browser unabhaengigkeit 
 - Help Button to restart tutorial
+
+
+Unsere 35. Sitzung 04.04.2022
+- UI-Verbesserungen: Loading-Icon bei Save, Abstandsverbesserungen, Save-Button leitet zu Homescreen, Home-Tab ist versteckt auf Home-Account
 
 TODO:
     - Tooltips noch nötig?? Lieber nur Intro?

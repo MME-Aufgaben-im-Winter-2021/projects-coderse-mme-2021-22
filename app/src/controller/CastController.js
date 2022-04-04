@@ -34,6 +34,7 @@ class CastController extends Observable {
         castManager.addEventListener("codeHTML-downloaded", this.onCodeHTMLDownloaded.bind(this));
         castManager.addEventListener("modal-stop", this.onAudioModalStopAudioClicked.bind(this));
         castManager.addEventListener("modal-delete", this.onAudioModalDeleteClicked.bind(this));
+        castManager.addEventListener("cast-reached-cloud", this.castReachedCloud.bind(this));
 
         // Audio Player - Timeline for the Cast
         this.playerList = new PlayerListView();
@@ -218,6 +219,10 @@ class CastController extends Observable {
         this.recorder.onStopRecordingClicked();
         this.recorder.onTrashClicked();
         this.safeCast();
+    }
+    castReachedCloud(){
+        this.navView.removeLoadingAnimation();
+        this.notifyAll(new Event("switch-to-homescreen","switch to homescreen"));
     }
 
     /* ---------------------------------------------------playerList--------------------------------------------------------------- */
