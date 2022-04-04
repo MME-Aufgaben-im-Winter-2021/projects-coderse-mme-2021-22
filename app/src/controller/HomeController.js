@@ -5,6 +5,9 @@ import HomeView from "../view/home/HomeView.js";
 import HomeManager from "../model/home/HomeManager.js";
 import Observable from "../utils/Observable.js";
 import { getUser } from "../api/User/getUser.js";
+import LocalStorageProvider from "../utils/LocalStorageProvider.js";
+
+var introJs = window.introJs;
 
 class HomeController extends Observable {
 
@@ -23,12 +26,14 @@ class HomeController extends Observable {
         this.homeView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.homeView.addEventListener("on-delete", this.onDeleteCast.bind(this));
         this.homeView.addEventListener("on-fab-clicked", (event) => this.notifyAll(event));
+        this.homeView.addEventListener("home-help-clicked", this.showTutorial.bind(this));
 
         // Data Manager of this Controller
         this.homeManager = new HomeManager();
         this.homeManager.addEventListener("casts-retrieved", this.onCastsRetrieved.bind(this));
 
         this.getCasts();
+        this.computeOnboarding();
     }
 
     // Tells the data manager to get the users casts from the DB
@@ -62,6 +67,36 @@ class HomeController extends Observable {
         let castID = event.data;
         await this.homeManager.deleteCast(castID);
         this.getCasts();
+    }
+
+    showTutorial() {
+        introJs().setOptions({
+            steps: [{
+                title: "Welcome to CODERSE!",
+                intro: "Hey you! This is your place to comment your code with audio-records and spread it to the world. ",
+            }, {
+                title: "Home",
+                intro: "This is your <strong>homescreen!</strong> You can see you saved pod ... eh codecasts. You can share or delete every cast.",
+                element: document.querySelector("#cast-list"),
+            }, {
+                title: "Account",
+                intro: "Here you can either change your password in <strong>account</strong> or <strong>logout</strong>.",
+                element: document.querySelector("#user-dropdown"),
+            }, {
+                title: "Create cast",
+                intro: "Let's <strong>create</strong> a new <strong>cast</strong>!",
+                element: document.querySelector(".fab-create-cast"),
+            }, 
+                ],
+            tooltipClass: "custom-tooltip",
+        }).start();
+    }
+
+    computeOnboarding() {
+        let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
+        if (onBoardingDone === null || onBoardingDone === "start") {
+            this.showTutorial();
+        }
     }
 
 }

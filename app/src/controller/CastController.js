@@ -65,6 +65,7 @@ class CastController extends Observable {
         this.codeView = new CodeView();
         this.codeView.addEventListener("marking-mouse-over", (e) => this.playerList.onMouseOverMarking(e));
         this.codeView.addEventListener("marking-mouse-out", (e) => this.playerList.onMouseOutMarking(e));
+        this.codeView.addEventListener("code-help-clicked", this.onHelpClicked.bind(this));
 
         // Drop View
         this.dropView = new DropView();
@@ -81,9 +82,6 @@ class CastController extends Observable {
         this.navView.addEventListener("onCastTitleChanged", this.onCastTitleChanged.bind(this));
 
         castManager.getCast(id);
-
-        this.fabHelp = document.querySelector(".fab-help");
-        this.fabHelp.addEventListener("click", this.onHelpClicked.bind(this));
 
         this.computeOnboarding(id);
     }
@@ -220,6 +218,7 @@ class CastController extends Observable {
         this.recorder.onTrashClicked();
         this.safeCast();
     }
+
     castReachedCloud(){
         this.navView.removeLoadingAnimation();
         this.notifyAll(new Event("switch-to-homescreen","switch to homescreen"));
@@ -365,6 +364,7 @@ class CastController extends Observable {
 
     // Safes Cast to Cloud
     safeCast() {
+        castManager.checkForModal();
         castManager.saveCast(this.codeView.getHTML());
     }
 

@@ -78,7 +78,7 @@ class Recorder extends Observable {
     onSaveRecordingClicked() {
         stopTimer();
         if (title.value === "") {
-            title.value = "Cast Title (" + unnamedCastTitleNumber + ")";
+            title.value = "Audio title (" + unnamedCastTitleNumber + ")";
             unnamedCastTitleNumber++;
         }
         this.hideIconSave();

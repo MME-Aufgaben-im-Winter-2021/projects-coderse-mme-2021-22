@@ -1057,7 +1057,7 @@ mark {
     display: flex;
     flex-direction: column;
     justify-content: left;
-    padding: 3vw 5vw;
+    padding: 4vw 5vw;
 }
 
 .fab-create-cast {
@@ -1099,6 +1099,7 @@ mark {
     align-self:center;
     margin-left: 0.5vh;
 }
+
 .fab-title:hover{
     color:var(--granny-smith-apple);
 }
@@ -1139,6 +1140,7 @@ mark {
 .cast-element:hover .cast-title {
     color: var(--mauve);
     font-weight: bolder;
+    text-decoration: underline;
 }
 
 .cast-element>* {

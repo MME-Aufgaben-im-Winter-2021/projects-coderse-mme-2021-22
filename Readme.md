@@ -244,15 +244,18 @@ Unsere 33. Sitzung 31.03.2022
 
 
 Unsere 34. Sitzung 31.03.2022 
-- Success modal fuer copy to clipboard und browser unabhaengigkeit 
+- Success modal für copy to clipboard und browser unabhaengigkeit 
 - Help Button to restart tutorial
 
 
 Unsere 35. Sitzung 04.04.2022
-- UI-Verbesserungen: Loading-Icon bei Save, Abstandsverbesserungen, Save-Button leitet zu Homescreen, Home-Tab ist versteckt auf Home-Account
+- UI-Verbesserungen: Loading-Icon bei Save, Abstandsverbesserungen, Save-Button leitet zu Homescreen, Home-Tab ist versteckt auf Home-Account, Codeview tiefer
+- Help / Tutorial in home -> Abspielen nach erstem LogIn
+- Fix Audio-Title Bug
 
 TODO:
     - Tooltips noch nötig?? Lieber nur Intro?
+    - Bug: Blindkopie beim Speichern des ersten Casts
 
 
 
