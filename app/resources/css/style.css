@@ -161,8 +161,8 @@ div[class^="button"] {
 }
 
 .button-save {
-    width:80px;
-    height:25px;
+    width: 80px;
+    height: 25px;
     background-color: var(--granny-smith-apple);
     /* color: var(--eerie-black-2); */
     border: 2px solid hsl(126, 89%, 95%);
@@ -259,9 +259,10 @@ div[class^="button"] {
     cursor: pointer;
     color: var(--mauve);
 }
-.button-loading{
-    width:80px;
-    height:25px;
+
+.button-loading {
+    width: 80px;
+    height: 25px;
     background-color: var(--granny-smith-apple);
     border: 2px solid hsl(126, 89%, 95%);
     color: var(--eerie-black-2);
@@ -270,18 +271,21 @@ div[class^="button"] {
     justify-content: center;
 
 }
+
 /* Source for Animation, 04.04.22, URL: https://loading.io/css/ */
-.loader-icon{
+.loader-icon {
     width: 19px;
-    height:19px;
+    height: 19px;
     animation: loader-anim 1.2s linear infinite;
 }
+
 @keyframes loader-anim {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
+
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
 }
 
@@ -348,7 +352,7 @@ div[class^="button"] {
 }
 
 .player-list-entry-highlight {
-    box-shadow: 2px 0px 3px var(--non-photo-blue), 0px 2px 3px var(--non-photo-blue), -2px 0px 3px var(--non-photo-blue), 0px -2px 3px var(--non-photo-blue);
+    box-shadow: 2px 0px 3px var(--pink-lavender), 0px 2px 3px var(--pink-lavender), -2px 0px 3px var(--pink-lavender), 0px -2px 3px var(--pink-lavender);
 }
 
 .player-list-entry-play-group {
@@ -634,13 +638,13 @@ mark {
 }
 
 .marking:hover {
-    transition: text-shadow 1s;
-    transition: background-color 1s;
+    /* transition: text-shadow 1s; */
+    /* transition: background-color 1s; */
     /* text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue); */
     /* https://stackoverflow.com/questions/13426875/text-border-using-css-border-around-text#13427256 Abgerufen am 08.03.22 */
     /* text-shadow: 1px 1px 1px  */
-    color: var(--electric-blue);
-    background-color: rgba(255, 255, 255, 0.164);
+    /* color: var(--electric-blue); */
+    /* background-color: rgba(255, 255, 255, 0.164); */
 }
 
 .marking-highlight {
@@ -723,6 +727,7 @@ mark {
     margin-right: auto;
     overflow: hidden;
     align-items: center;
+    justify-content: center;
 }
 
 .recorder-right {
@@ -766,6 +771,7 @@ mark {
     background-color: var(--eerie-black-2);
     color: white;
     padding-left: 0.6vw;
+    margin-left: 4vw;
 }
 
 .recorder-title:focus {
@@ -815,6 +821,21 @@ mark {
 
 .light-on {
     background-color: red;
+    animation: recorder-anim 1.8s linear infinite;
+}
+
+@keyframes recorder-anim {
+    0% {
+        opacity: 10%;
+    }
+
+    50% {
+        opacity: 100%;
+    }
+
+    100% {
+        opacity: 10%;
+    }
 }
 
 .recorder-icon-stop-grey-container>img {
@@ -1094,14 +1115,14 @@ mark {
     user-select: none;
 }
 
-.fab-title{
+.fab-title {
     font-size: medium;
-    align-self:center;
+    align-self: center;
     margin-left: 0.5vh;
 }
 
-.fab-title:hover{
-    color:var(--granny-smith-apple);
+.fab-title:hover {
+    color: var(--granny-smith-apple);
 }
 
 .home-title {

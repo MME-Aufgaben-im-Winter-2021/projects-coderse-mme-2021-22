@@ -26,6 +26,9 @@ class AudioManager extends Observable {
     }
 
     mediaRecorderIsRecording() {
+        if (!mediaRecorder) {
+            return false;
+        }
         return mediaRecorder.state === "recording";
     }
 }

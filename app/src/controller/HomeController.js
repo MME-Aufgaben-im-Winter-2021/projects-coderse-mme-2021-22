@@ -76,18 +76,17 @@ class HomeController extends Observable {
                 intro: "Hey you! This is your place to comment your code with audio-records and spread it to the world. ",
             }, {
                 title: "Home",
-                intro: "This is your <strong>homescreen!</strong> You can see you saved pod ... eh codecasts. You can share or delete every cast.",
+                intro: "This is your <strong>homescreen</strong>! You can see you saved pod ... eh codecasts. You can share or delete every cast. To edit a cast just click on it.",
                 element: document.querySelector("#cast-list"),
             }, {
                 title: "Account",
-                intro: "Here you can either change your password in <strong>account</strong> or <strong>logout</strong>.",
+                intro: "View your <strong>account settings</strong> or <strong>logout</strong> by clicking on your username.",
                 element: document.querySelector("#user-dropdown"),
             }, {
                 title: "Create cast",
-                intro: "Let's <strong>create</strong> a new <strong>cast</strong>!",
+                intro: "Let's create a new cast!",
                 element: document.querySelector(".fab-create-cast"),
-            }, 
-                ],
+            }],
             tooltipClass: "custom-tooltip",
         }).start();
     }

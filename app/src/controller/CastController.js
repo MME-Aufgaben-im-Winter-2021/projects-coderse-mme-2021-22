@@ -87,9 +87,9 @@ class CastController extends Observable {
     }
 
     // User wants to do the on boarding again
-    onHelpClicked(){
+    onHelpClicked() {
         LocalStorageProvider.setCreateCastOnBoarding("start");
-        if(this.dropView.hidden){
+        if (this.dropView.hidden) {
             LocalStorageProvider.setCreateCastOnBoarding("drag-done");
             this.showAdvancedIntro();
         } else {
@@ -107,8 +107,8 @@ class CastController extends Observable {
         if (onBoardingDone === null || onBoardingDone === "start") {
             introJs().setOptions({
                 steps: [{
-                    title: "Load your Code!",
-                    intro: "<strong>Drag and Drop</strong> or <strong> Load </strong> your code file from explorer.",
+                    title: "Load your code!",
+                    intro: "Start your cast by choosing a file you'd like to describe and share. You can either <strong>drag and drop</strong> or <strong>load</strong> your code-file from your explorer.",
                     element: document.querySelector(".main-right-drag-drop-container"),
                 }],
                 tooltipClass: "custom-tooltip",
@@ -123,24 +123,28 @@ class CastController extends Observable {
             LocalStorageProvider.setCreateCastOnBoarding("done");
             introJs().setOptions({
                 steps: [{
-                    title: "Mark important Code!",
-                    intro: "<strong>Mark by selecting Code </strong>",
+                    title: "Cast title",
+                    intro: "How would you like to name your codecast?",
+                    element: document.querySelector(".code-cast-title"),
+                }, {
+                    title: "Code markings",
+                    intro: "Select ranges of code you want to describe by audio recordings. Selected codeparts are lightblue.",
                     element: document.querySelector(".main-right"),
                 }, {
-                    title: "Record Audio-Messages!",
-                    intro: "<strong>Record messages</strong> which explain your currently marked code. </br> You can give them a name, too!",
+                    title: "Add voice recordings",
+                    intro: "Over here you can make a <strong>voice recording</strong>. If you've marked code, the audio will be connected to it after you saved it. Before saving the audio, you can still make further markings that will be added. Additionally you can customize the audio title.",
                     element: document.querySelector(".bottom-right"),
                 }, {
                     title: "Edit your recordings!",
-                    intro: "Listen to your records, change their title or delete them.",
+                    intro: "Hover over audios to see which marked code snippet belongs to it. Listen to your records, change their title or delete them. Grab one to change the order.",
                     element: document.querySelector(".main-left"),
                 }, {
-                    title: "Listen to your Cast!",
+                    title: "Listen to your cast!",
                     intro: "Listen through all your records, and navigate between them.",
                     element: document.querySelector(".bottom-left"),
                 }, {
-                    title: "Safe your first Cast!",
-                    intro: "<strong>Click here </strong> to safe your cast. </br> You are able to edit it afterwards!",
+                    title: "Save your cast!",
+                    intro: "Click this button to save your cast. </br> You can still come back later to edit this cast.",
                     element: document.querySelector(".button-save"),
                 }],
                 tooltipClass: "custom-tooltip",
@@ -219,9 +223,9 @@ class CastController extends Observable {
         this.safeCast();
     }
 
-    castReachedCloud(){
+    castReachedCloud() {
         this.navView.removeLoadingAnimation();
-        this.notifyAll(new Event("switch-to-homescreen","switch to homescreen"));
+        this.notifyAll(new Event("switch-to-homescreen", "switch to homescreen"));
     }
 
     /* ---------------------------------------------------playerList--------------------------------------------------------------- */
@@ -347,6 +351,7 @@ class CastController extends Observable {
         FileTypeValidator.check(event.data);
         file = FileTypeValidator.getFile();
         this.dropView.onFileDropped(file);
+        this.navView.showTitle(file.name);
     }
 
     onFileSelected(event) {

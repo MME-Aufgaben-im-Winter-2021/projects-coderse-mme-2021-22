@@ -32,7 +32,7 @@ class CastListElementView extends Observable {
                 }, function() {
                     /* clipboard write failed */
                 });
-            } 
+            }
         }, () => {
             // Fallback version for clipboard copying, for browsers like firefox.
             // Even though exeCommand ist deprecated, it is important for cross browser functionality
@@ -42,9 +42,9 @@ class CastListElementView extends Observable {
         });
     }
 
-    showSuccess(){
-        let modal = new Modal("Link successfully copied to clipboard!", "Go share it with someone!","",""),
-                appearanceTime = 1000;
+    showSuccess() {
+        let modal = new Modal("Link successfully copied to clipboard!", "Go share it with someone!", "", ""),
+            appearanceTime = 2000;
         modal.hideActionBtn();
         modal.setSuccessModal();
         setTimeout(() => {

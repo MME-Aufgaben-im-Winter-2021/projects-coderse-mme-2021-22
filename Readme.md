@@ -253,10 +253,13 @@ Unsere 35. Sitzung 04.04.2022
 - Help / Tutorial in home -> Abspielen nach erstem LogIn
 - Fix Audio-Title Bug
 
-TODO:
-    - Tooltips noch nötig?? Lieber nur Intro?
-    - Bug: Blindkopie beim Speichern des ersten Casts
 
+Unsere 36. Sitzung 05.04.22
+- Login möglich nun durch drücken der Entertaste im Passwortfeld
+- Copy to clipboard popup wurde verlängert
+- Verbesserung des Tutorials, auf dem Homescreen sowie beim erstellen eines Casts
+- Cast Titel wird auf Filenamen gesetzt
+- Aufnahme Animation wird angezeigt, um die Nutzer:innen über die laufende Aufnahme zu informieren
 
 
 ### Verwendete Ressourcen
