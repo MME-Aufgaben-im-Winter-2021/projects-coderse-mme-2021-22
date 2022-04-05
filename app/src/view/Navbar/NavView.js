@@ -127,7 +127,10 @@ class NavView extends Observable {
 
     setCreateActive() {
         this.removeActive();
-        //this.createBtn.classList.add("active-link");
+        this.homeBtn.classList.remove("hidden");
+    }
+    setImpressumActive() {
+        this.removeActive();
         this.homeBtn.classList.remove("hidden");
     }
 

@@ -261,6 +261,9 @@ Unsere 36. Sitzung 05.04.22
 - Cast Titel wird auf Filenamen gesetzt
 - Aufnahme Animation wird angezeigt, um die Nutzer:innen über die laufende Aufnahme zu informieren
 
+Unsere 37. Sitzung 05.04.22
+- Impressum hinzugefügt im Homescreen 
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/

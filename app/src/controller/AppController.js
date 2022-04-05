@@ -23,6 +23,7 @@ import Config from "../utils/Config.js";
 // Session deletion
 import { deleteSession } from "../api/Session/deleteSession.js";
 import { getUser } from "../api/User/getUser.js";
+import ImpressumController from "./ImpressumController.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -154,7 +155,12 @@ class AppController {
                     this.controller.init(this.navView, shareData.answer.$id);
                     this.controller.addEventListener("content-load", this.controller.setShareScreen.bind(this
                         .controller, shareData.answer.userName));
-                }
+                    }
+                break;
+                case "#impressum":
+                    this.container.innerHTML = template.template;
+                    this.controller = new ImpressumController();
+                    this.controller.init(this.navView);
                 break;
             default:
                 this.container.innerHTML = template.template;

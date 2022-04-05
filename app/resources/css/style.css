@@ -502,6 +502,18 @@ div[class^="button"] {
     user-select: none;
 }
 
+.impressum-link{
+    position: absolute;
+    left: 3vw;
+    bottom: 3vw;
+    color: var(--border-grey);
+    text-decoration: underline;
+    font-size:medium;
+}
+.impressum-link:hover{
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .fab-help {
     position: absolute;
     right: 3vw;
@@ -1470,4 +1482,29 @@ mark {
 .modal-btn-decline {
     border: 2px solid orange;
     color: orange;
+}
+/* ------------------------------------------------------------- Impressum ----------- */
+.impressum-template{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2vh 9vw;
+}
+
+.impressum-title{
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    margin: 2vh 9vw;
+    font-size: xx-large;
+    text-decoration: underline;
+}
+.impressum-container{
+    margin: 2vh 9vw;
+}
+.impressum-container>a{
+    color:var(--electric-blue); 
+}
+.impressum-container>a:hover{
+    color:var(--baby-blue-eyes); 
 }
