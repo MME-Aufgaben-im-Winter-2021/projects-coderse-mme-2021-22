@@ -1,42 +1,27 @@
-# Template für die MME-Projekte
+# CODERSE präsentiert: Code-casts
 
 Die aktuelle _Release_-Version dieses Projekts kann unter: https://coderse.software-engineering.education aufgerufen werden.
+Installation ist keine notwendig. Sie können sich einen eigenen Account erstellen (die E-Mail-Adresse muss nicht valide sein).
 
-```
-Beschreiben Sie hier in einem kurzen Absatz Ihrer Anwendung bzw. die Ziele Ihres Projekts
-```
+Code-Cast ist eine Web-Applikation, um umfangreiche Code-Dateien mithilfe von Sprachnachrichten zu erläutern. Es gibt die Möglichkeit Stellen im Code zu markieren und mit Sprachnachrichten zu verbinden. Außerdem kann man alle Sprachnachrichten als ein "Code-Cast" anhören. Es gibt außerdem die Möglichkeit den Code-Cast mit anderen zu teilen. Betrachter benötigen dafür keinen eigenen Account. Ziel ist es den Code durch Sprachnachrichten verständlich erklären zu können. Dies vereinfacht die Dokumentation von Code für die Gruppenarbeit oder auch die Vorstellung von Code, beispielsweise in der Lehre.
 
-In diesem Repository finden Sie eine Vorlage für die Entwicklung Ihrer Anwendung im MME-Kurs. Das Repository gibt eine grobe Struktur für Ihre Arbeit vor. Dort wo nötig, können Sie von diesen Vorgaben abweichen. Besprechen Sie Änderungen, insbesondere solche am _Deployment-Workflow_ aber im Vorfeld mit uns. 
-
-## Übersicht über das Repository
-
-Im Repository befinden sich zu Beginn die folgenden Ordner und Dateien:
-
-- `/.github` In diesem Ordner ist der [Workflow](https://github.com/features/actions) zum automatischen Bauen und Veröffentlichen Ihrer Anwendung formuliert. Idealerweise sprechen Sie Änderungen an der Konfiguration mit uns ab.
-- `/app` In diesem Ordner liegen Quellcode und weitere Inhalte Ihrer Anwendung. Hier befinden sich alle Ressourcen, **die Sie selber für das Projekt angefertigt haben**. Externe Bibliotheken werden nicht in diesem Ordner abgelegt.
-- `.env` In dieser Datei werden [Umgebungsvariablen](https://en.wikipedia.org/wiki/Environment_variable) festgehalten, die während des Bauvorgangs der Software benötigt werden.
-- `.eslintrc`, `.jsbeautifyrc` Diese Dateien unterstützen Sie bei der [sauberen Formatierung](https://www.npmjs.com/package/js-beautify) und [Formulierung des Quellcodes](https://eslint.org/).
-- `.gitignore` Die [gitignore-Datei](https://git-scm.com/docs/gitignore) ist für den hier beschriebenen Aufbau und Build-Workflow vorkonfiguriert. Denken Sie daran, dass Änderungen am Aufbau des Repositories ggf. auch dazu führen, dass Sie weitere Dateien aus der Versionskontrolle ausschließen müssen.
-- `Readme.md` Diese Datei: Hier finden Sie Informationen zum Repository. Ergänzen Sie diese Datei laufend mit Informationen zu Ihrer Anwendung.
-- `LICENSE` Eine Lizenzdatei mit der [MIT-Lizenz](https://opensource.org/licenses/MIT). Ersetzen Sie die Datei, falls Sie Ihr Repository unter einer anderen Lizenz veröffentlichen möchten oder müssen.
-
-### Weitere Werkzeuge 
-
-- `npm run dev`: Startet einen lokalen Webserver, der den Inhalt des `app`-Verzeichnis bereitstellt. Die `index.html`-Datei wird automatisch im Browser geöffnet. Während der Server läuft, wird der `app`-Ordner auf Änderungen an den beinhalteten Dateien überwacht. Ändern sich die Inhalte, wird der Webserver automatisch neu gestartet. Der Vorgang ist in der Datei `start_dev_server.js` festgehalten.
-- `npm run build`: Erstellt eine _Release_-Version der Anwendung. Dabei werden etwaige Abhängigkeiten\* über `npm install` installiert, die JavaScript-Dateien in `app/src` mittels _ESLint_ geprüft und der gesamte Inhalt des `app`-Ordners in einen neuen Ordner `deploy` kopiert. Der Bauvorgang ist im wesentlich in der Datei `build_for_deployment.js` festgehalten, der bei Bedarf angepasst werden kann. 
-
-\*: **Achtung**: Externe Bibliotheken werden dadurch wahrscheinlich nicht an die Stellen kopiert, an denen sie im _Client_ benötigt werden. Falls Sie auf externe Inhalte angewiesen sind, die Sie nicht durch direkte Links in der HTML-Datei (Stichwort [Content delivery network](https://en.wikipedia.org/wiki/Content_delivery_network)) einbinden können, sprechen Sie das weitere Vorgehen bitte mit uns ab.
+## Screenshots der Anwendung:
 
 
-### Bau und Veröffentlichung
+## Kommentare.md:
 
-Über den im Repository vorhandenen _Workflow_ wird Ihre Anwendung bei jedem _Push_ in die `main`-Branch neu erstellt und veröffentlicht. Dabei passieren folgenden Dinge:
+Erreichter Zustand: Die Applikation wurde wie in der Projektvision geplant umgesetzt.
 
-- Die Anwendung wird über den Befehl `npm run build` (siehe oben) auf den GitHub-Servern gebaut.
-- Der Inhalt des so erstellten `deploy`-Ordners wird in die Branch `gh-pages` kopiert.
-- Die neue Webseite steht dann direkt unter der URL Ihres Projektes zur Verfügung.
+Nicht implementiert wurde die Bearbeitung von mehr als einer Person an einem Codecast. Das heißt, die Aussage:"[...] indem mehrere Teammitglieder zum geteilten Code wichtige Anmerkungen machen können" haben wir nicht implementiert. Die Möglichkeit einen Cast gemeinsam zu bearbeiten funktioniert theoretisch durch die Nutzung eines gemeinsamen Accounts. Wir haben diese Funktion nicht implementiert, da es technisch nicht möglich ist gleichzeitig Aufnahmen zu einem Cast aufzunehmen. 
+Die Übersicht der Casts haben wir anders als geplant implementiert. Wir haben diese in dem Home-Screen gelegt und nicht wie gedacht direkt auf der rechetn Seite des Create-Screens.
 
-### Ablauf
+Zusammenfassung de Arbeitsaufteilung
+Wir haben gemeinschaftlich an der Applikation gearbeitet und nur in einzelnen Fällen Aufgaben allein erledigt. Wir haben uns über Discord und persönlich getroffen und vor jeder Sitzung in Driver und Navigator aufgeteilt. Für Sitzungen über Discord haben wir den Liveshare von Visual Studio Code und das Bildschirmteilen über Discord verwendet.
+Da wir zusammen gearbeitet haben, wäre es sehr schwer, einzelne Programmbestandteile einzelnen Personen zuzuschreiben. 
+
+## Ablauf der einzelnen Sitzungen
+
+Sitzungsablauf
 
 Unsere 1. Sitzung: 28.02.22 13:30
 
@@ -106,11 +91,6 @@ Unsere 10. Sitzung: 08.03.22 09:45 - 12:20
 - Der Start Cast Button wird nur angezeigt, sollte ein valides File geladen werden
 - Der Audio-Title einer Aufnahme kann nun auch im nachhinein mit einem Click auf den Titel verändert werden
 - Sollte bei der Audioaufnahme kein Titel vergeben werden, wird ein nummerierter Titel vergeben
-
-TODO:
-    - Der Titel einer Audio muss auch in der Datenstruktur verändert werden nicht nur im HTML
-        - Auch bei der Vergabe eines generierten Titels überprüfen
-    - Beim Hovern über eine zugeteilte Markierung (data-id = Record ID) soll der Record hervorgehoben werden
 
 
 Unsere 11. Sitzung: 09.03.22 10:00 - 11:00
@@ -224,10 +204,12 @@ Unsere 28. Sitzung 21.03.2022
 Unsere 29. Sitzung 22.03.2022 
 - Es wird eine Errormessage nun angezeigt, wenn beim Login / Registrierung / Accountänderung etwas falsch läuft
 
+
 Unsere 30. Sitzung 23.03.2022 
 - Einfaches (noch verbesserbares) Onboarding bei Cast Creation mit Verbindung zum LocalStorage
 - Tooltips am Home Screen
 - Fixes for build
+
 
 Unsere 31. Sitzung 26.03.2022 9:00-13:00 Uhr
 - Drag and Drop der einzelnen Entries in der Playerlist + Update in Database
