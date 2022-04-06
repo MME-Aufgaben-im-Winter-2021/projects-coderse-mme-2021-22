@@ -11,6 +11,7 @@ var iconLight,
     startTime,
     timerInterval,
     audioLength,
+    iconLightContainer,
     unnamedCastTitleNumber = 1;
 
 class Recorder extends Observable {
@@ -22,6 +23,7 @@ class Recorder extends Observable {
 
     initUI() {
         iconLight = document.querySelector(".recorder-icon-light");
+        iconLightContainer = document.querySelector(".recorder-icon-light-container");
         title = document.querySelector(".recorder-title");
         time = document.querySelector(".recorder-time");
         iconStart = document.querySelector(".recorder-icon-start");
@@ -78,7 +80,7 @@ class Recorder extends Observable {
     onSaveRecordingClicked() {
         stopTimer();
         if (title.value === "") {
-            title.value = "Cast Title (" + unnamedCastTitleNumber + ")";
+            title.value = "Audio title (" + unnamedCastTitleNumber + ")";
             unnamedCastTitleNumber++;
         }
         this.hideIconSave();
@@ -179,10 +181,12 @@ function stopTimer() {
 
 //Turns the Lightbulb on
 function turnLightOn() {
+    iconLightContainer.classList.remove("hidden");
     iconLight.parentElement.classList.add("light-on");
 }
 //Turns the Lightbulb off
 function turnLightOff() {
+    iconLightContainer.classList.add("hidden");
     iconLight.parentElement.classList.remove("light-on");
 }
 

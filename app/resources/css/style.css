@@ -895,24 +895,40 @@ mark {
 .login-template {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
+    /*margin: 0;*/
+    
     align-items: center;
+    justify-content: center;
+    height: 93vh;
 }
 
 .login-template-container {
     display: flex;
     flex-direction: column;
     margin: 0;
-    padding: 2vw;
     align-items: center;
+    align-self: center;
+    /*
     background-color: black;
     border-radius: 0.5vw;
     border: 2px solid var(--border-grey);
+    */
 }
 
 .login-template-container>* {
     padding: 1vh 0;
+}
+
+.login-template-center {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 3.5vh;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 100%;
 }
 
 #coderse-logo-big {
@@ -932,6 +948,14 @@ mark {
     font-size: large;
     text-align: center;
     padding-bottom: 1.5vh;
+}
+
+.coderse-description{
+    font-size: large;
+    text-align: center;
+    padding-bottom: 1.5vh;
+    width: 40vw;
+    padding-top: 2vh;
 }
 
 .login-container input {

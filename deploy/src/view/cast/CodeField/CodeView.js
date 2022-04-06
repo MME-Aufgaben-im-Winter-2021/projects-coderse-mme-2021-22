@@ -8,6 +8,12 @@ class CodeView extends Observable {
         super();
         this.container = document.querySelector(".main-right-code-container");
         this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
+        this.fabHelp = document.querySelector(".fab-help");
+        this.fabHelp.addEventListener("click", () => {this.notifyAll(new Event("code-help-clicked"));});
+    }
+
+    hideFabHelp(){
+        this.fabHelp.classList.add("hidden");
     }
 
     startShareViewMode() {
