@@ -200,6 +200,10 @@ div[class^="button"] {
     cursor: pointer;
 }
 
+#user-dropdown{
+    min-width: 100px;
+}
+
 .nav-dropdown {
     position: absolute;
     top: 100%;
@@ -973,6 +977,23 @@ mark {
 #input-btn:hover {
     background-color: hsl(126, 89%, 95%);
     border: 2px solid var(--granny-smith-apple);
+    cursor: pointer;
+}
+
+#delete-btn {
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 2vh;
+    background-color: var(--strong-red);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: white;
+}
+
+#delete-btn:hover {
+    background-color: hsl(14, 98%, 61%);
     cursor: pointer;
 }
 

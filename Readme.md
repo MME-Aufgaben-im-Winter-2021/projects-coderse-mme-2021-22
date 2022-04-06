@@ -245,6 +245,10 @@ Unsere 36. Sitzung 05.04.22
 Unsere 37. Sitzung 05.04.22
 - Impressum hinzugefügt im Homescreen 
 
+Unsere 38. Sitzung 06.04.22
+- Delete Account Feature
+- Bug fixes
+
 
 ### Verwendete Ressourcen
 https://feathericons.com/

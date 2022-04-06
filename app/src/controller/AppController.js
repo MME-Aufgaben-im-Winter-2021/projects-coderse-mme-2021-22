@@ -128,6 +128,7 @@ class AppController {
                 this.controller.init(this.navView);
                 break;
             case "#create":
+                this.navView.resetCastTitle();
                 this.container.innerHTML = template.template;
                 this.controller = new CastController();
                 computedID = await this.computeCreateID();

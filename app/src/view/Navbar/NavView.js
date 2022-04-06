@@ -27,6 +27,10 @@ class NavView extends Observable {
         return this.castTitle.value;
     }
 
+    resetCastTitle(){
+        this.castTitle.value = "Code-Cast title";
+    }
+
     hideNavView() {
         this.view.classList.add("invisible");
     }
