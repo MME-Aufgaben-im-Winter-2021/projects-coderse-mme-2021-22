@@ -45,25 +45,6 @@
     background-color: var(--electric-blue);
 }
 
-/* 
-body {
-    background-color: var(--snow);
-    font-family: 'Space Grotesk', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-.ui {
-    display: flex;
-    flex-direction: column;
-    width: 90vw;
-    margin: 0 auto;
-    padding: 0;
-}
-.ui h1 {
-    text-align: center;
-    color: var(--jet);
-} */
-
 body {
     display: flex;
     flex-direction: column;
@@ -180,10 +161,13 @@ div[class^="button"] {
 }
 
 .button-save {
+    width: 80px;
+    height: 25px;
     background-color: var(--granny-smith-apple);
     /* color: var(--eerie-black-2); */
     border: 2px solid hsl(126, 89%, 95%);
     color: var(--eerie-black-2);
+    text-align: center;
 }
 
 .button-save:hover {
@@ -214,6 +198,10 @@ div[class^="button"] {
 .user-name:hover {
     color: var(--mauve);
     cursor: pointer;
+}
+
+#user-dropdown{
+    min-width: 100px;
 }
 
 .nav-dropdown {
@@ -274,6 +262,35 @@ div[class^="button"] {
     border: 2px solid white;
     cursor: pointer;
     color: var(--mauve);
+}
+
+.button-loading {
+    width: 80px;
+    height: 25px;
+    background-color: var(--granny-smith-apple);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: var(--eerie-black-2);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+/* Source for Animation, 04.04.22, URL: https://loading.io/css/ */
+.loader-icon {
+    width: 19px;
+    height: 19px;
+    animation: loader-anim 1.2s linear infinite;
+}
+
+@keyframes loader-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -339,7 +356,7 @@ div[class^="button"] {
 }
 
 .player-list-entry-highlight {
-    box-shadow: 2px 0px 3px var(--non-photo-blue), 0px 2px 3px var(--non-photo-blue), -2px 0px 3px var(--non-photo-blue), 0px -2px 3px var(--non-photo-blue);
+    box-shadow: 2px 0px 3px var(--pink-lavender), 0px 2px 3px var(--pink-lavender), -2px 0px 3px var(--pink-lavender), 0px -2px 3px var(--pink-lavender);
 }
 
 .player-list-entry-play-group {
@@ -489,6 +506,18 @@ div[class^="button"] {
     user-select: none;
 }
 
+.impressum-link{
+    position: absolute;
+    left: 3vw;
+    bottom: 3vw;
+    color: var(--border-grey);
+    text-decoration: underline;
+    font-size:medium;
+}
+.impressum-link:hover{
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .fab-help {
     position: absolute;
     right: 3vw;
@@ -625,13 +654,13 @@ mark {
 }
 
 .marking:hover {
-    transition: text-shadow 1s;
-    transition: background-color 1s;
+    /* transition: text-shadow 1s; */
+    /* transition: background-color 1s; */
     /* text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue); */
     /* https://stackoverflow.com/questions/13426875/text-border-using-css-border-around-text#13427256 Abgerufen am 08.03.22 */
     /* text-shadow: 1px 1px 1px  */
-    color: var(--electric-blue);
-    background-color: rgba(255, 255, 255, 0.164);
+    /* color: var(--electric-blue); */
+    /* background-color: rgba(255, 255, 255, 0.164); */
 }
 
 .marking-highlight {
@@ -714,6 +743,7 @@ mark {
     margin-right: auto;
     overflow: hidden;
     align-items: center;
+    justify-content: center;
 }
 
 .recorder-right {
@@ -757,6 +787,7 @@ mark {
     background-color: var(--eerie-black-2);
     color: white;
     padding-left: 0.6vw;
+    margin-left: 4vw;
 }
 
 .recorder-title:focus {
@@ -806,6 +837,21 @@ mark {
 
 .light-on {
     background-color: red;
+    animation: recorder-anim 1.8s linear infinite;
+}
+
+@keyframes recorder-anim {
+    0% {
+        opacity: 10%;
+    }
+
+    50% {
+        opacity: 100%;
+    }
+
+    100% {
+        opacity: 10%;
+    }
 }
 
 .recorder-icon-stop-grey-container>img {
@@ -849,24 +895,40 @@ mark {
 .login-template {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
+    /*margin: 0;*/
+    
     align-items: center;
+    justify-content: center;
+    height: 93vh;
 }
 
 .login-template-container {
     display: flex;
     flex-direction: column;
     margin: 0;
-    padding: 2vw;
     align-items: center;
+    align-self: center;
+    /*
     background-color: black;
     border-radius: 0.5vw;
     border: 2px solid var(--border-grey);
+    */
 }
 
 .login-template-container>* {
     padding: 1vh 0;
+}
+
+.login-template-center {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 3.5vh;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 100%;
 }
 
 #coderse-logo-big {
@@ -886,6 +948,14 @@ mark {
     font-size: large;
     text-align: center;
     padding-bottom: 1.5vh;
+}
+
+.coderse-description{
+    font-size: large;
+    text-align: center;
+    padding-bottom: 1.5vh;
+    width: 40vw;
+    padding-top: 2vh;
 }
 
 .login-container input {
@@ -922,6 +992,7 @@ mark {
     text-align: center;
     border-radius: 4px;
     padding: 5px;
+    margin-top: 1.5vh;
     background-color: var(--granny-smith-apple);
     border: 2px solid hsl(126, 89%, 95%);
     color: var(--eerie-black-2);
@@ -930,6 +1001,23 @@ mark {
 #input-btn:hover {
     background-color: hsl(126, 89%, 95%);
     border: 2px solid var(--granny-smith-apple);
+    cursor: pointer;
+}
+
+#delete-btn {
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 2vh;
+    background-color: var(--strong-red);
+    border: 2px solid hsl(126, 89%, 95%);
+    color: white;
+}
+
+#delete-btn:hover {
+    background-color: hsl(14, 98%, 61%);
     cursor: pointer;
 }
 
@@ -1047,7 +1135,7 @@ mark {
     display: flex;
     flex-direction: column;
     justify-content: left;
-    padding: 2vh 5vw;
+    padding: 4vw 5vw;
 }
 
 .fab-create-cast {
@@ -1055,13 +1143,13 @@ mark {
     right: 3vw;
     bottom: 3vw;
     display: flex;
-    flex-direction: column;
-    border-radius: 9999px;
+    flex-direction: row;
+    border-radius: 4px;
     background-color: var(--jet);
     border: 2px solid var(--border-grey);
     padding: 0.5vh;
     align-content: center;
-    width: 50px;
+    width: 150px;
     height: 50px;
 }
 
@@ -1072,7 +1160,7 @@ mark {
 .fab-create-cast:hover {
     background-color: var(--onyx);
     cursor: pointer;
-    color: white;
+    color: var(--granny-smith-apple);
     box-shadow: 1px 0px 6px var(--granny-smith-apple), 0px 1px 6px var(--granny-smith-apple), -1px 0px 6px var(--granny-smith-apple), 0px -1px 6px var(--granny-smith-apple);
 }
 
@@ -1082,6 +1170,16 @@ mark {
 
 .fab-create-cast>* {
     user-select: none;
+}
+
+.fab-title {
+    font-size: medium;
+    align-self: center;
+    margin-left: 0.5vh;
+}
+
+.fab-title:hover {
+    color: var(--granny-smith-apple);
 }
 
 .home-title {
@@ -1120,6 +1218,7 @@ mark {
 .cast-element:hover .cast-title {
     color: var(--mauve);
     font-weight: bolder;
+    text-decoration: underline;
 }
 
 .cast-element>* {
@@ -1428,4 +1527,29 @@ mark {
 .modal-btn-decline {
     border: 2px solid orange;
     color: orange;
+}
+/* ------------------------------------------------------------- Impressum ----------- */
+.impressum-template{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2vh 9vw;
+}
+
+.impressum-title{
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    margin: 2vh 9vw;
+    font-size: xx-large;
+    text-decoration: underline;
+}
+.impressum-container{
+    margin: 2vh 9vw;
+}
+.impressum-container>a{
+    color:var(--electric-blue); 
+}
+.impressum-container>a:hover{
+    color:var(--baby-blue-eyes); 
 }

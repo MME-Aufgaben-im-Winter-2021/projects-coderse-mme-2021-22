@@ -232,9 +232,11 @@ async function saveCast(title, codeHTML, self) {
 
     castDocumentJSON = self.cast.getJSON(user);
     if (doesCastExistInCloud) { //if the cast was already once saved in the cloud then update and don't create a new one
-        await updateDocument(Config.CAST_COLLECTION_ID, self.cast.castServerID, castDocumentJSON);
+        await updateDocument(Config.CAST_COLLECTION_ID, self.cast.castServerID, castDocumentJSON)
+        .then(self.notifyAll(new Event("cast-reached-cloud","cast reached cloud")));
     } else { //create a new castDocument on the server
-        await createDocument(Config.CAST_COLLECTION_ID, castDocumentJSON);
+        await createDocument(Config.CAST_COLLECTION_ID, castDocumentJSON)
+        .then(self.notifyAll(new Event("cast-reached-cloud","cast reached cloud")));
     }
 }
 
