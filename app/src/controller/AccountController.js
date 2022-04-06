@@ -3,6 +3,7 @@ import AccountManager from "../model/account/AccountManager.js";
 import { Observable, Event } from "../utils/Observable.js";
 import AccountView from "../view/account/AccountView.js";
 
+// Controls the Account page
 class AccountController extends Observable {
 
     init(navView) {
