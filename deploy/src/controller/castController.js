@@ -352,6 +352,7 @@ class CastController extends Observable {
         file = FileTypeValidator.getFile();
         this.dropView.onFileDropped(file);
         this.navView.showTitle(file.name);
+        castManager.setTitle(file.name);
     }
 
     onFileSelected(event) {
@@ -359,6 +360,8 @@ class CastController extends Observable {
         if (FileTypeValidator.checkValidFileType(file)) {
             this.dropView.onFileDropped(file);
             this.dropView.showButton();
+            this.navView.showTitle(file.name);
+            castManager.setTitle(file.name);
         } else {
             this.dropView.onFileDropped(null);
             this.dropView.hideButton();
