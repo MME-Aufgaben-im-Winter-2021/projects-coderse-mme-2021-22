@@ -382,13 +382,13 @@ class CastController extends Observable {
     setShareScreen(name) {
         this.navView.hideLinks();
         this.navView.hideSafeBtn();
-        this.fabHelp.classList.add("hidden");
+        this.codeView.hideFabHelp();
+        this.navView.disableTitleInput();
         this.navView.showCreatorName(name);
         this.recorder.hideRecorder();
         this.playerList.hideEditable();
         this.playerList.disableDragAndDrop();
         this.codeView.startShareViewMode();
-        this.navView.disableTitleInput();
     }
 
 }

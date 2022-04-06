@@ -69,7 +69,6 @@ class NavView extends Observable {
 
     showLinks() {
         this.homeBtn.classList.remove("hidden");
-       // this.createBtn.classList.remove("hidden");
         this.userBtn.classList.remove("hidden");
     }
 
@@ -96,7 +95,6 @@ class NavView extends Observable {
 
     hideLinks() {
         this.homeBtn.classList.add("hidden");
-        //this.createBtn.classList.add("hidden");
         this.userBtn.classList.add("hidden");
     }
 
@@ -112,8 +110,8 @@ class NavView extends Observable {
         let newTitle = document.createElement("div");
         newTitle.classList.add("code-cast-title-share-view");
         newTitle.innerHTML = this.castTitle.value;
-        this.castTitle.parentNode.insertBefore(newTitle, this.castTitle);
-        this.castTitle.parentNode.removeChild(this.castTitle);
+        document.querySelector(".nav-align-left").appendChild(newTitle);
+        this.hideTitleInput();
     }
 
     showCreatorName(name) {
@@ -151,7 +149,6 @@ class NavView extends Observable {
     removeActive() {
         this.homeBtn.classList.remove("active-link");
         this.userBtn.classList.remove("active-link");
-        //this.createBtn.classList.remove("active-link");
     }
 
     resetShareData(){

@@ -12,6 +12,10 @@ class CodeView extends Observable {
         this.fabHelp.addEventListener("click", () => {this.notifyAll(new Event("code-help-clicked"));});
     }
 
+    hideFabHelp(){
+        this.fabHelp.classList.add("hidden");
+    }
+
     startShareViewMode() {
         this.container.style.userSelect = "none";
     }
