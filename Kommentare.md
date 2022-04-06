@@ -1,7 +1,7 @@
 # Kommentar zur Anwendung
 
 
-## Erreichter Zustand: 
+### Erreichter Zustand: 
 
 Die Applikation wurde wie in der Projektvision geplant umgesetzt.
 
