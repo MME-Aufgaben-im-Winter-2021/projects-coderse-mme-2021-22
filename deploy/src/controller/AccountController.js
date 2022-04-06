@@ -16,6 +16,7 @@ class AccountController extends Observable {
 
         this.accountView = new AccountView();
         this.accountView.addEventListener("account-submit", this.onAccountSubmit.bind(this));
+        this.accountView.addEventListener("account-delete", this.onAccountDelete.bind(this));
 
         this.accountManager = new AccountManager();
         this.accountManager.addEventListener("update-error", this.onUpdateError.bind(this));
@@ -41,6 +42,11 @@ class AccountController extends Observable {
         }
 
         this.accountManager.onAccountSubmit(username, email, password);
+    }
+
+    // Deletes Account and linked Codecasts. Reloads to switch to the login page.
+    onAccountDelete(event){
+       this.accountManager.onAccountDelete(event.data).catch(() => location.reload());
     }
 
     onUpdateSuccess(event) {

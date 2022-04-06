@@ -40,7 +40,7 @@ class Player extends Observable {
         }
     }
 
-    disableDragAndDrop(){
+    disableDragAndDrop() {
         this.entryViews.forEach(entry => {
             entry.disableDragAndDrop();
         });
@@ -135,12 +135,14 @@ class Player extends Observable {
         let id = event.data,
             entry = this.getEntryById(id);
         entry.showEntryHighlight();
+        this.notifyAll(new Event("mouse-over-player-entry", id));
     }
     // Removes the Highlight from proper entry while end hovering over marked code
     onMouseOutMarking(event) {
         let id = event.data,
             entry = this.getEntryById(id);
         entry.deleteEntryHighlight();
+        this.notifyAll(new Event("mouse-out-player-entry", id));
     }
 
     hideEditable() {

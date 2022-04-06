@@ -14,6 +14,8 @@ class HomeView extends Observable {
         // this.castListView.addEventListener("on-delete", (event) => this.notifyAll(event));
         this.createCastFAB = document.querySelector(".fab-create-cast");
         this.createCastFAB.addEventListener("click", this.onFABcreateCastClicked.bind(this));
+        this.helpButton = document.querySelector(".fab-help");
+        this.helpButton.addEventListener("click", () => {this.notifyAll(new Event("home-help-clicked"));});
     }
 
     showDeleteModal(event) {
