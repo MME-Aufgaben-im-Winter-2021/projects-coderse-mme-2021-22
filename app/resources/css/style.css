@@ -660,7 +660,7 @@ mark {
 }
 
 .marking[data-id] {
-    color: white;
+    color: white; 
 }
 
 .marking:hover {

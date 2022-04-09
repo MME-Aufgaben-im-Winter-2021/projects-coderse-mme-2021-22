@@ -24,13 +24,11 @@ class CodeView extends Observable {
 
     // Shows File 
     showFile(codeInput) {
-        // let html = hljs.highlight(codeInput, {language: "javascript"}).value;
         this.container.textContent = codeInput;
         hljs.highlightElement(this.container);
     }
 
     showLoadedFile(codeInput) {
-        // let html = hljs.highlight(codeInput, {language: "javascript"}).value;
         this.container.innerHTML = codeInput;
     }
 
@@ -187,6 +185,7 @@ class CodeView extends Observable {
             emptyMark = textEl.querySelector("mark");
             emptyMark.parentElement.removeChild(emptyMark);
         }
+        this.removeInnerMarks();
         //remove empty top level mark tags
         markings = document.querySelectorAll(".main-right-code-container > mark");
         markings.forEach(mark => {
@@ -233,6 +232,43 @@ class CodeView extends Observable {
                 prevEl = elements[i];
             }
         }
+    }
+
+    // Because of the structure of highlighted code (many spans), marks in a span cause bugs.
+    // This function splits spans which are parent of a mark into many parts.
+    removeInnerMarks(){
+        let marksIn;
+        marksIn = document.querySelectorAll("span > mark");
+        marksIn.forEach(mark => {
+            let parentCopy = document.createElement("span"),
+                classlist = mark.parentNode.classList,
+                newElements = [];
+                parentCopy.innerHTML = mark.parentNode.innerHTML;
+                
+                parentCopy.childNodes.forEach(node => {
+                    let el = node;
+                    if(node.nodeType === Node.TEXT_NODE){
+                        el = document.createElement("span");
+                        el.innerHTML = node.data;
+                    }
+                    if(el.tagName !== "MARK"){
+                        el.classList = classlist;
+                    }else{
+                        let inner = el.innerHTML,
+                        newInner = document.createElement("span");
+                        newInner.innerHTML = inner;
+                        newInner.classList = classlist;
+                        el.innerHTML = "";
+                        el.appendChild(newInner);
+                    }
+                    newElements.push(el);
+                });
+                for(let el of newElements){
+                    mark.parentNode.parentNode.insertBefore(el, mark.parentNode);
+                }
+                mark.parentNode.parentNode.removeChild(mark.parentNode);
+            
+        });
     }
 
     getHTML() {
