@@ -671,17 +671,7 @@ mark {
     /* background-color: rgba(255, 255, 255, 0.164); */
 }
 
-.marking-highlight, .marking-highlight  * {
-    transition: text-shadow 0.5s;
-    /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
-    transition: background-color 0.5s;
-    transition: color 1s;
-    color: black !important;
-    text-shadow: 1px 1px 1px var(--pink-lavender);
-    background-color: var(--mauve);
-}
-
-.marking-highlight-play, .marking-highlight-play  * {
+.marking-highlight-play, .marking-highlight-play  *, .marking-highlight, .marking-highlight  * {
     transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 0.5s;
