@@ -98,7 +98,6 @@ class Recorder extends Observable {
 
     onStartRecording() {
         this.hideIconMic();
-        // this.showIconStop();
         turnLightOn();
         startTimer.call(this);
         let event = new Event("start-recording", "data");
@@ -179,12 +178,12 @@ function stopTimer() {
     time.innerHTML = "00:00";
 }
 
-//Turns the Lightbulb on
+//Turns the lightbulb on
 function turnLightOn() {
     iconLightContainer.classList.remove("hidden");
     iconLight.parentElement.classList.add("light-on");
 }
-//Turns the Lightbulb off
+//Turns the lightbulb off
 function turnLightOff() {
     iconLightContainer.classList.add("hidden");
     iconLight.parentElement.classList.remove("light-on");

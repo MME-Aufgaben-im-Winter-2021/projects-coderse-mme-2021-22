@@ -44,8 +44,6 @@ class AppController {
         // Navbar links (This listener is used to push this page onto the stack)
         this.homeLink = document.querySelector("#home-link").addEventListener("click", this
             .checkIfUserLeavesCastCreation.bind(this));
-        //this.createLink = document.querySelector("#create-link").addEventListener("click", this
-           // .checkIfUserLeavesCastCreation.bind(this));
         this.userLink = document.querySelector("#user-link").addEventListener("click", this
             .checkIfUserLeavesCastCreation.bind(this));
 
@@ -93,7 +91,6 @@ class AppController {
             // The case we have a good result
             // Now we have to test if a user is logged in or not
             let logged = res.login;
-            // user = res.user;
             if (logged) {
                 this.navView.setCurrentlyLoggedInUser(res.user.name);
             }

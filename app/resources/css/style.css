@@ -34,6 +34,9 @@
     --strong-red: #ff0000;
 
     --border-grey: rgba(255, 255, 255, 0.30);
+
+    --mauve-dark-dark: #614f7d;
+    --baby-blue-eyes-dark: rgb(68, 89, 121);
 }
 
 .hidden {
@@ -555,7 +558,9 @@ div[class^="button"] {
 .main-right-code-container {
     font-family: 'Anonymous Pro', sans-serif;
     user-select: text;
+    background-color: transparent !important;
 }
+
 
 .main-right-drag-drop-container {
     background-color: var(--eerie-black-2);
@@ -635,21 +640,24 @@ mark {
     color: white;
 }
 
-.marking {
+.marking, .marking  * {
     transition: text-shadow 1s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
-    text-shadow: 1px 1px 1px var(--electric-blue);
-    background-color: var(--baby-blue-eyes);
-    color: black;
+    text-shadow: 1px 1px 1px var(--electric-blue); 
+    background-color: var(--baby-blue-eyes-dark);
 }
 
-.marking[data-id] {
+.marking[data-id], .marking[data-id]  *  {
     transition: text-shadow 1s;
+    border: none;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
     text-shadow: 1px 0px 1px var(--eerie-black), 0px 1px 1px var(--eerie-black), -1px 0px 1px var(--eerie-black), 0px -1px 1px var(--eerie-black);
     background-color: var(--jet);
+}
+
+.marking[data-id] {
     color: white;
 }
 
@@ -663,24 +671,27 @@ mark {
     /* background-color: rgba(255, 255, 255, 0.164); */
 }
 
-.marking-highlight {
+.marking-highlight, .marking-highlight  * {
     transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 0.5s;
     transition: color 1s;
-    color: black;
+    color: black !important;
     text-shadow: 1px 1px 1px var(--pink-lavender);
     background-color: var(--mauve);
 }
 
-.marking-highlight-play {
+.marking-highlight-play, .marking-highlight-play  * {
     transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 0.5s;
     transition: color 1s;
-    color: black;
-    text-shadow: 1px 1px 1px var(--pink-lavender);
-    background-color: var(--mauve-dark);
+    text-shadow: 1px 1px 1px var(--pink-lavender); 
+    background-color: var(--mauve-dark-dark);
+}
+
+.hljs {
+    color: white !important;
 }
 
 /* ------------- BOTTOM-SECTION ------------- */

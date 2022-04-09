@@ -2,6 +2,8 @@
 import Config from "../../../utils/Config.js";
 import { Event, Observable } from "../../../utils/Observable.js";
 
+const hljs = window.hljs;
+
 class CodeView extends Observable {
 
     constructor() {
@@ -22,10 +24,13 @@ class CodeView extends Observable {
 
     // Shows File 
     showFile(codeInput) {
-        this.container.innerText = codeInput;
+        // let html = hljs.highlight(codeInput, {language: "javascript"}).value;
+        this.container.textContent = codeInput;
+        hljs.highlightElement(this.container);
     }
 
     showLoadedFile(codeInput) {
+        // let html = hljs.highlight(codeInput, {language: "javascript"}).value;
         this.container.innerHTML = codeInput;
     }
 
@@ -94,9 +99,11 @@ class CodeView extends Observable {
     //remove markings by id
     removeMarkingsById(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
-            el.replaceWith(el.innerText);
+            let span = document.createElement("span");
+            span.innerHTML = el.innerHTML;
+            el.replaceWith(span);
         });
     }
 
@@ -105,14 +112,16 @@ class CodeView extends Observable {
         let markings = document.querySelectorAll("mark");
         markings.forEach(el => {
             if (!el.hasAttribute("data-id")) {
-                el.replaceWith(el.innerText);
+                let span = document.createElement("span");
+                span.innerHTML = el.innerHTML;
+                el.replaceWith(span);
             }
         });
     }
 
     hideMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking");
         });
@@ -120,7 +129,7 @@ class CodeView extends Observable {
 
     highlightMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
             if (!el.classList.contains("marking-highlight-play")) {
                 el.classList.add("marking-highlight");
@@ -131,7 +140,7 @@ class CodeView extends Observable {
 
     resetMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight");
             if (!el.classList.contains("marking-highlight-play")) {
@@ -141,15 +150,20 @@ class CodeView extends Observable {
     }
 
     highlightPlayMarking(id) {
-        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        let markings = document.querySelectorAll(`mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.add("marking-highlight-play");
             el.classList.remove("marking");
         });
+        // Scrolls to a highlighted marking
+        markings[0].scrollIntoView({
+            block: "center",
+            behavior: "smooth",
+        });
     }
 
     resetPlayMarking(id) {
-        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        let markings = document.querySelectorAll(`mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight-play");
             el.classList.add("marking");
@@ -192,7 +206,9 @@ class CodeView extends Observable {
         markings.forEach(mark => {
             let els = mark.querySelectorAll("mark");
             els.forEach(el => {
-                el.replaceWith(el.innerText);
+                let span = document.createElement("span");
+                span.innerHTML = el.innerHTML;
+                el.replaceWith(span);
             });
         });
         elements = document.querySelectorAll(".main-right-code-container > *");
@@ -207,7 +223,7 @@ class CodeView extends Observable {
                     if (prevEl.getAttribute("data-id")) {
                         newMark.setAttribute("data-id", prevEl.getAttribute("data-id"));
                     }
-                    newMark.innerText = prevEl.innerText + elements[i].innerText;
+                    newMark.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
                     prevEl.parentNode.insertBefore(newMark, prevEl);
                     prevEl.parentNode.removeChild(prevEl);
                     elements[i].parentNode.removeChild(elements[i]);

@@ -3,6 +3,7 @@ import AccountManager from "../model/account/AccountManager.js";
 import { Observable, Event } from "../utils/Observable.js";
 import AccountView from "../view/account/AccountView.js";
 
+// Controls the Account page
 class AccountController extends Observable {
 
     init(navView) {
@@ -22,7 +23,7 @@ class AccountController extends Observable {
         this.accountManager.addEventListener("update-error", this.onUpdateError.bind(this));
         this.accountManager.addEventListener("update-success", this.onUpdateSuccess.bind(this));
     }
-
+    // Sets the user data in Accountscreen
     fillUserData(accountData) {
         let username = accountData.user.name,
             email = accountData.user.email;
@@ -31,7 +32,7 @@ class AccountController extends Observable {
         this.accountView.setUsername(username);
         this.accountView.setEmail(email);
     }
-
+    // Called if there are changes in user data
     onAccountSubmit(event) {
         let username = event.data.username,
             email = event.data.email,
@@ -44,15 +45,15 @@ class AccountController extends Observable {
         this.accountManager.onAccountSubmit(username, email, password);
     }
 
-    // Deletes Account and linked Codecasts. Reloads to switch to the login page.
+    // Deletes Account and linked codecasts. Reloads to switch to the login page.
     onAccountDelete(event){
        this.accountManager.onAccountDelete(event.data).catch(() => location.reload());
     }
-
+    // Notifies if update is successful
     onUpdateSuccess(event) {
         this.notifyAll(new Event("account-update", event));
     }
-
+    // Sets error if update is not successful
     onUpdateError(event) {
         this.accountView.setUsername(this.accountManager.currentUsername);
         this.accountView.setEmail(this.accountManager.currentEmail);

@@ -13,7 +13,6 @@ class LoginView extends Observable {
         this.registerBtn = document.getElementById("register-btn");
         this.registerBtn.addEventListener("click", this.onRegister.bind(this));
         this.viewPassword.addEventListener("change", this.onSubmit.bind(this));
-        // TODO: Better way for Error animations
         this.answerView = document.getElementById("server-answer");
     }
 
