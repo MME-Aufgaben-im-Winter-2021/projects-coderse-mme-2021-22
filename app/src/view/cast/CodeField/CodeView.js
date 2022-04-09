@@ -1,5 +1,4 @@
 /* eslint-env browser */
-import Config from "../../../utils/Config.js";
 import { Event, Observable } from "../../../utils/Observable.js";
 
 const hljs = window.hljs;
@@ -101,7 +100,7 @@ class CodeView extends Observable {
         markings.forEach(el => {
             let span = document.createElement("span");
             span.innerHTML = el.innerHTML;
-            el.replaceWith(span);
+            replaceElement(el, span.childNodes);
         });
     }
 
@@ -112,7 +111,7 @@ class CodeView extends Observable {
             if (!el.hasAttribute("data-id")) {
                 let span = document.createElement("span");
                 span.innerHTML = el.innerHTML;
-                el.replaceWith(span);
+                replaceElement(el, span.childNodes);
             }
         });
     }
@@ -153,11 +152,13 @@ class CodeView extends Observable {
             el.classList.add("marking-highlight-play");
             el.classList.remove("marking");
         });
-        // Scrolls to a highlighted marking
-        markings[0].scrollIntoView({
+        if(markings.length > 0){
+            // Scrolls to a highlighted marking
+            markings[0].scrollIntoView({
             block: "center",
             behavior: "smooth",
-        });
+            });
+        }
     }
 
     resetPlayMarking(id) {
@@ -176,7 +177,7 @@ class CodeView extends Observable {
             textEl = document.createElement("span"),
             textContent, emptyMark, spans;
         //if the previous element of the mark element is text, the text is packed in a span, so that it stays in the same position when connecting the mark elements
-        if (mark.previousSibling.nodeType === Config.NODE_TYPE_TEXT) {
+        if (mark.previousSibling.nodeType === Node.TEXT_NODE) {
             range.setStart(mark.previousSibling, 0);
             range.setEnd(mark, 0);
             textContent = range.extractContents();
@@ -210,7 +211,7 @@ class CodeView extends Observable {
                 el.replaceWith(span);
             });
         });
-        elements = document.querySelectorAll(".main-right-code-container > *");
+        elements = document.querySelector(".main-right-code-container").childNodes;
         prevEl = elements[0];
         //connect two consecutive mark elements to one
         for (let i = 1; i < elements.length - 1; i++) {
@@ -252,7 +253,10 @@ class CodeView extends Observable {
                         el.innerHTML = node.data;
                     }
                     if(el.tagName !== "MARK"){
-                        el.classList = classlist;
+                        if(el.classList.length === 0){
+                            el.classList = classlist;
+                        }
+                        
                     }else{
                         let inner = el.innerHTML,
                         newInner = document.createElement("span");
@@ -263,10 +267,8 @@ class CodeView extends Observable {
                     }
                     newElements.push(el);
                 });
-                for(let el of newElements){
-                    mark.parentNode.parentNode.insertBefore(el, mark.parentNode);
-                }
-                mark.parentNode.parentNode.removeChild(mark.parentNode);
+
+                replaceElement(mark.parentNode, newElements);
             
         });
     }
@@ -275,6 +277,13 @@ class CodeView extends Observable {
         this.removeUnconnectedMarkings();
         return this.container.innerHTML;
     }
+}
+
+function replaceElement(elementRep, list){
+    for(let el of list){
+        elementRep.parentNode.insertBefore(el, elementRep);
+    }
+    elementRep.parentNode.removeChild(elementRep);
 }
 
 export default CodeView;
