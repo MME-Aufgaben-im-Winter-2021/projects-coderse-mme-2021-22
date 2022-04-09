@@ -380,6 +380,8 @@ div[class^="button"] {
     font-weight: bold;
     font-size: large;
     padding-right: 20px;
+    width: 75%;
+    word-break: break-all;
 }
 
 .player-list-entry-title-no-hover {
@@ -393,7 +395,7 @@ div[class^="button"] {
 .player-list-entry-title:hover:after {
     position: absolute;
     top: 10px;
-    right: auto;
+    right: 23%;
     margin-left: 5px;
     bottom: 0;
     width: 30px;
@@ -644,7 +646,7 @@ mark {
     transition: text-shadow 1s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
-    text-shadow: 1px 1px 1px var(--electric-blue); 
+    text-shadow: 1px 1px 1px var(--eerie-black); 
     background-color: var(--baby-blue-eyes-dark);
 }
 
@@ -676,7 +678,7 @@ mark {
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 0.5s;
     transition: color 1s;
-    text-shadow: 1px 1px 1px var(--pink-lavender); 
+    text-shadow: 1px 1px 1px var(--eerie-black); 
     background-color: var(--mauve-dark-dark);
 }
 
