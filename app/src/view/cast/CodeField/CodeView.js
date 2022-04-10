@@ -115,9 +115,12 @@ class CodeView extends Observable {
         let markings = document.querySelectorAll("mark");
         markings.forEach(el => {
             if (!el.hasAttribute("data-id")) {
-                let span = document.createElement("span");
-                span.innerHTML = el.innerHTML;
-                replaceElement(el, span.childNodes);
+                let innerEls = [];
+                el.childNodes.forEach(node => {
+                    let el = node;
+                    innerEls.push(el);
+                });
+                replaceElement(el, innerEls);
             }
         });
     }
