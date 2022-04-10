@@ -11,7 +11,7 @@ class Record extends Observable {
 
     constructor(title, time) {
         super();
-        this.id = uuid().substring(substring) + "_audio.ogg"; //Date.now();
+        this.id = uuid().substring(substring) + "_audio.ogg"; 
         this.title = title;
         this.time = time;
         this.audioFile = null;
@@ -19,7 +19,7 @@ class Record extends Observable {
         
     }
 
-    // returns the audioFile as a .ogg file
+    // Returns the audioFile as a .ogg file
     async getOggFile() {
         return await fetch(this.audioFile)
             .then(result => result.blob())

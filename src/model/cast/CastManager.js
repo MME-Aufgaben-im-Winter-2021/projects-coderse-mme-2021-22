@@ -24,10 +24,7 @@ class CastManager extends Observable {
 
     constructor(title) {
         super();
-        // this.castServerID = undefined;
-        // this.codeFileID = undefined;
-
-        // The last Record (Just a help variable for Record Creation)
+        // The last record (Just a help variable for record creation)
         this.currentRecord = null;
         // The Audio manager creates audio files
         audioManager = new AudioManager();
@@ -53,12 +50,12 @@ class CastManager extends Observable {
         this.cast.codeFileID = id;
     }
 
-    //starts the record in the audioManager
+    // Starts the record in the audio manager
     startRecord() {
         audioManager.record();
     }
 
-    //stops the record and stores title and time in a new Record object
+    //Stops the record and stores title and time in a new record object
     stopRecord(event) {
         this.currentRecord = new Record(event.data.title, event.data.time);
         audioManager.stopRecord();
@@ -90,7 +87,7 @@ class CastManager extends Observable {
         recordManager.stopRecord(id);
     }
 
-    //adds Audio to the current Record object and informs the CastController
+    // Adds audio to the current record object and informs the CastController
     onAudioFileRecorded(event) {
         if (event.data) {
             this.currentRecord.setAudio(event.data);
@@ -240,7 +237,7 @@ async function saveCast(title, codeHTML, self) {
     }
 }
 
-//https://redstapler.co/generate-text-file-javascript/ Abgerufen am 15.03.22
+//https://redstapler.co/generate-text-file-javascript/ aufgerufen am 15.03.22
 async function saveCodeAsFileToServer(codeHTML, self) {
     let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
         file = new File([blob], self.cast.codeFileID, { type: "text/plain;charset=utf-8" });

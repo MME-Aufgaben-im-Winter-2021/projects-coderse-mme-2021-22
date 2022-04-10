@@ -2,6 +2,8 @@
 
 import Observable from "../utils/Observable.js";
 
+//Controls the Impressum page
+// There are general information of the developers and the curse
 class ImpressumController extends Observable {
 
     init(navView) {

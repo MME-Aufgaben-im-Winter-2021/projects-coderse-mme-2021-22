@@ -1,6 +1,6 @@
 /* eslint-env browser */
 
-// Just a Controller to handle 404 Errors 
+// Just a controller to handle 404 Errors 
 class ErrorController {
 
     init(navView){

@@ -4,7 +4,7 @@ import Config from "../utils/Config.js";
 // File types which are accepted in the drag and drop zone
 const VALID_FILES = Config.VALID_FILETYPES;
 
-// Validator for File types
+// Validator for file types
 class FileTypeValidator{
 
     constructor(){
@@ -38,7 +38,6 @@ function checkFile(event){
             }
         }
     }
-    
     // No valid file
     res = null;
     return res;

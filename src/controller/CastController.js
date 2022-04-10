@@ -116,7 +116,7 @@ class CastController extends Observable {
             LocalStorageProvider.setCreateCastOnBoarding("drag-done");
         }
     }
-
+    // Tutorial of the cast-screen. Shows up at first opening or by clicking on the questionmark-button
     showAdvancedIntro() {
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
         if (onBoardingDone === "drag-done") {
@@ -264,12 +264,12 @@ class CastController extends Observable {
         this.codeView.resetMarking(id);
     }
 
-    // sends new title-input to castmanager
+    // sends new title-input to cast manager
     onEntryTitleChanged(event) {
         let data = event.data;
         castManager.onEntryTitleChanged(data);
     }
-
+    
     onRecordListChanged(event) {
         castManager.onRecordListChanged(event.data);
     }
@@ -344,8 +344,8 @@ class CastController extends Observable {
     }
 
     // Validator checks dropped file
-    // File is stored in Cast Manager model
-    // File is handed to View 
+    // File is stored in cast manager model
+    // File is handed to view 
     onFileDropped(event) {
         let file;
         FileTypeValidator.check(event.data);
@@ -370,12 +370,12 @@ class CastController extends Observable {
 
     /* ---------------------------------------------------navView--------------------------------------------------------------- */
 
-    // Safes Cast to Cloud
+    // Safes cast to cloud
     safeCast() {
         castManager.checkForModal();
         castManager.saveCast(this.codeView.getHTML());
     }
-
+    // Sets changed title
     onCastTitleChanged(event) {
         castManager.setTitle(event.data);
     }

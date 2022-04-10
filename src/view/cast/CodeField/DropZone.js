@@ -4,7 +4,7 @@ import {Observable, Event} from "../../../utils/Observable.js";
 
 const VALID_FILES = Config.VALID_FILETYPES;
 
-// Drop Zone to drag files into the code field.
+// Drop Zone to drag files into the code field
 // For more details: https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
 class DropZone extends Observable {
 
