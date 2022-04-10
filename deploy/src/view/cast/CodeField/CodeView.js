@@ -98,9 +98,15 @@ class CodeView extends Observable {
         let markings = document.querySelectorAll(
             `mark[data-id="${id}"]`);
         markings.forEach(el => {
-            let span = document.createElement("span");
-            span.innerHTML = el.innerHTML;
-            replaceElement(el, span.childNodes);
+            let innerEls = [];
+            // To keep text nodes, this is a kind of work around instead of 
+            // replace with el.childNodes directly 
+            el.childNodes.forEach(node => {
+                let el = node;
+                innerEls.push(el);
+            });
+            replaceElement(el, innerEls);
+            
         });
     }
 
