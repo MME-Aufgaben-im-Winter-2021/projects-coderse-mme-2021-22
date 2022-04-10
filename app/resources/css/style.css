@@ -663,16 +663,6 @@ mark {
     color: white; 
 }
 
-.marking:hover {
-    /* transition: text-shadow 1s; */
-    /* transition: background-color 1s; */
-    /* text-shadow: 1px 0px 1px var(--non-photo-blue), 0px 1px 1px var(--non-photo-blue), -1px 0px 1px var(--non-photo-blue), 0px -1px 1px var(--non-photo-blue); */
-    /* https://stackoverflow.com/questions/13426875/text-border-using-css-border-around-text#13427256 Abgerufen am 08.03.22 */
-    /* text-shadow: 1px 1px 1px  */
-    /* color: var(--electric-blue); */
-    /* background-color: rgba(255, 255, 255, 0.164); */
-}
-
 .marking-highlight-play, .marking-highlight-play  *, .marking-highlight, .marking-highlight  * {
     transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/

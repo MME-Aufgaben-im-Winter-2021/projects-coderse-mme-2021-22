@@ -206,10 +206,18 @@ class CodeView extends Observable {
         markings.forEach(mark => {
             let els = mark.querySelectorAll("mark");
             els.forEach(el => {
-                let span = document.createElement("span");
-                span.innerHTML = el.innerHTML;
-                el.replaceWith(span);
+                let innerEls = [];
+                el.childNodes.forEach(node => {
+                    let el = node;
+                    innerEls.push(el);
+                });
+                replaceElement(el, innerEls);
+                
             });
+            if(els.length !== 0){
+                connectSpans(mark);
+            }
+            
         });
         elements = document.querySelector(".main-right-code-container").childNodes;
         prevEl = elements[0];
@@ -253,7 +261,7 @@ class CodeView extends Observable {
                         el.innerHTML = node.data;
                     }
                     if(el.tagName !== "MARK"){
-                        if(el.classList.length === 0){
+                        if(el.classList.length === 0 && classlist.length !== 0){
                             el.classList = classlist;
                         }
                         
@@ -279,11 +287,33 @@ class CodeView extends Observable {
     }
 }
 
+// Replaces a node with a list of nodes
 function replaceElement(elementRep, list){
     for(let el of list){
         elementRep.parentNode.insertBefore(el, elementRep);
     }
     elementRep.parentNode.removeChild(elementRep);
+}
+
+// Connects two spans with the same classes
+function connectSpans(mark){
+    let elements = mark.childNodes,
+        prevEl = elements[0];
+        for (let i = 1; i < elements.length - 1; i++) {
+            if (prevEl.tagName === "SPAN" && elements[i].tagName === "SPAN") {
+                // How to compare two arrays, retrieved from https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript on 10.04.22
+                if (Array.from(prevEl.classList).every((val, index) => val === Array.from(elements[i].classList)[index] ) ) {
+                    let newSpan = document.createElement("span");
+                    newSpan.classList = prevEl.classList;
+                    newSpan.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
+                    prevEl.parentNode.insertBefore(newSpan, prevEl);
+                    prevEl.parentNode.removeChild(prevEl);
+                    elements[i].parentNode.removeChild(elements[i]);
+                    prevEl = newSpan;
+                }
+            }
+            prevEl = elements[i];
+        }
 }
 
 export default CodeView;
