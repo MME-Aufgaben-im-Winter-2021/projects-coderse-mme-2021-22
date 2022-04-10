@@ -20,7 +20,7 @@ class RecordManager extends Observable {
         record.addEventListener("audio-end", event => { this.onRecordEnd(event); });
     }
 
-    //stores the audio files with its IDs in the database and returns an array of the IDs
+    // Stores the audio files with its IDs in the database and returns an array of the IDs
     async createDBRecord() {
         let files = await this.getRecords(),
             results = [],
@@ -61,7 +61,7 @@ class RecordManager extends Observable {
         if (this.index > deletedIndex) {
             this.index--;
         }
-        // We keep track of the deleted file IDs so when the cast is safed (from an edit point of view)
+        // We keep track of the deleted file IDs so when the cast is saved (from an edit point of view)
         // we have to delete these files, because they would be staying on the DB Storage otherwise
         this.deletedFiles.push(id);
     }
@@ -83,7 +83,7 @@ class RecordManager extends Observable {
         record.playAudio();
     }
 
-    // Stops the currentRecord
+    // Stops the current record
     stopRecord(id) {
         let record = this.data.filter(entry => entry.getID() === id)[0];
         if (record !== null && record !== undefined) {
@@ -193,7 +193,7 @@ class RecordManager extends Observable {
         this.data = records;
     }
 
-    // returns an array of the .ogg files in the cast
+    // Returns an array of the .ogg files in the cast
     async getRecords() {
         let files = [];
         for (let record of this.data) {

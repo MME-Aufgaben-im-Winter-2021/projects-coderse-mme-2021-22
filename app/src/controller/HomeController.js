@@ -9,6 +9,7 @@ import LocalStorageProvider from "../utils/LocalStorageProvider.js";
 
 var introJs = window.introJs;
 
+//Controls the Home page
 class HomeController extends Observable {
 
     init(navView) {
@@ -28,7 +29,7 @@ class HomeController extends Observable {
         this.homeView.addEventListener("on-fab-clicked", (event) => this.notifyAll(event));
         this.homeView.addEventListener("home-help-clicked", this.showTutorial.bind(this));
 
-        // Data Manager of this Controller
+        // Data manager of this Controller
         this.homeManager = new HomeManager();
         this.homeManager.addEventListener("casts-retrieved", this.onCastsRetrieved.bind(this));
 
@@ -68,7 +69,7 @@ class HomeController extends Observable {
         await this.homeManager.deleteCast(castID);
         this.getCasts();
     }
-
+    // Tutorial of the home-screen. Shows up at first opening or by clicking on the questionmark-button
     showTutorial() {
         introJs().setOptions({
             steps: [{

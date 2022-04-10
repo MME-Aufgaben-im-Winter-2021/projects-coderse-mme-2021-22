@@ -4,9 +4,9 @@ import LoginView from "../view/login/LoginView.js";
 
 import LoginManager from "../model/login/LoginManager.js";
 
-// Controls the Login page.
-// The Login Manager handles account validations.
-// The Login View is there to show proceedings to the user. 
+// Controls the Login page
+// The Login Manager handles account validations
+// The Login View is there to show proceedings to the user
 class LoginController {
 
     init(navView) {

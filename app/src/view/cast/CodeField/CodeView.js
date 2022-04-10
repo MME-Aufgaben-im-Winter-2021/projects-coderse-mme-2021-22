@@ -1,6 +1,7 @@
 /* eslint-env browser */
-import Config from "../../../utils/Config.js";
 import { Event, Observable } from "../../../utils/Observable.js";
+
+const hljs = window.hljs;
 
 class CodeView extends Observable {
 
@@ -22,7 +23,8 @@ class CodeView extends Observable {
 
     // Shows File 
     showFile(codeInput) {
-        this.container.innerText = codeInput;
+        this.container.textContent = codeInput;
+        hljs.highlightElement(this.container);
     }
 
     showLoadedFile(codeInput) {
@@ -94,9 +96,11 @@ class CodeView extends Observable {
     //remove markings by id
     removeMarkingsById(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
-            el.replaceWith(el.innerText);
+            let span = document.createElement("span");
+            span.innerHTML = el.innerHTML;
+            replaceElement(el, span.childNodes);
         });
     }
 
@@ -105,14 +109,16 @@ class CodeView extends Observable {
         let markings = document.querySelectorAll("mark");
         markings.forEach(el => {
             if (!el.hasAttribute("data-id")) {
-                el.replaceWith(el.innerText);
+                let span = document.createElement("span");
+                span.innerHTML = el.innerHTML;
+                replaceElement(el, span.childNodes);
             }
         });
     }
 
     hideMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking");
         });
@@ -120,7 +126,7 @@ class CodeView extends Observable {
 
     highlightMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
             if (!el.classList.contains("marking-highlight-play")) {
                 el.classList.add("marking-highlight");
@@ -131,7 +137,7 @@ class CodeView extends Observable {
 
     resetMarking(id) {
         let markings = document.querySelectorAll(
-            `.main-right-code-container > mark[data-id="${id}"]`);
+            `mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight");
             if (!el.classList.contains("marking-highlight-play")) {
@@ -141,15 +147,22 @@ class CodeView extends Observable {
     }
 
     highlightPlayMarking(id) {
-        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        let markings = document.querySelectorAll(`mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.add("marking-highlight-play");
             el.classList.remove("marking");
         });
+        if(markings.length > 0){
+            // Scrolls to a highlighted marking
+            markings[0].scrollIntoView({
+            block: "center",
+            behavior: "smooth",
+            });
+        }
     }
 
     resetPlayMarking(id) {
-        let markings = document.querySelectorAll(`.main-right-code-container > mark[data-id="${id}"]`);
+        let markings = document.querySelectorAll(`mark[data-id="${id}"]`);
         markings.forEach(el => {
             el.classList.remove("marking-highlight-play");
             el.classList.add("marking");
@@ -164,7 +177,7 @@ class CodeView extends Observable {
             textEl = document.createElement("span"),
             textContent, emptyMark, spans;
         //if the previous element of the mark element is text, the text is packed in a span, so that it stays in the same position when connecting the mark elements
-        if (mark.previousSibling.nodeType === Config.NODE_TYPE_TEXT) {
+        if (mark.previousSibling.nodeType === Node.TEXT_NODE) {
             range.setStart(mark.previousSibling, 0);
             range.setEnd(mark, 0);
             textContent = range.extractContents();
@@ -173,6 +186,7 @@ class CodeView extends Observable {
             emptyMark = textEl.querySelector("mark");
             emptyMark.parentElement.removeChild(emptyMark);
         }
+        this.removeInnerMarks();
         //remove empty top level mark tags
         markings = document.querySelectorAll(".main-right-code-container > mark");
         markings.forEach(mark => {
@@ -192,10 +206,20 @@ class CodeView extends Observable {
         markings.forEach(mark => {
             let els = mark.querySelectorAll("mark");
             els.forEach(el => {
-                el.replaceWith(el.innerText);
+                let innerEls = [];
+                el.childNodes.forEach(node => {
+                    let el = node;
+                    innerEls.push(el);
+                });
+                replaceElement(el, innerEls);
+                
             });
+            if(els.length !== 0){
+                connectSpans(mark);
+            }
+            
         });
-        elements = document.querySelectorAll(".main-right-code-container > *");
+        elements = document.querySelector(".main-right-code-container").childNodes;
         prevEl = elements[0];
         //connect two consecutive mark elements to one
         for (let i = 1; i < elements.length - 1; i++) {
@@ -207,7 +231,7 @@ class CodeView extends Observable {
                     if (prevEl.getAttribute("data-id")) {
                         newMark.setAttribute("data-id", prevEl.getAttribute("data-id"));
                     }
-                    newMark.innerText = prevEl.innerText + elements[i].innerText;
+                    newMark.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
                     prevEl.parentNode.insertBefore(newMark, prevEl);
                     prevEl.parentNode.removeChild(prevEl);
                     elements[i].parentNode.removeChild(elements[i]);
@@ -219,10 +243,77 @@ class CodeView extends Observable {
         }
     }
 
+    // Because of the structure of highlighted code (many spans), marks in a span cause bugs.
+    // This function splits spans which are parent of a mark into many parts.
+    removeInnerMarks(){
+        let marksIn;
+        marksIn = document.querySelectorAll("span > mark");
+        marksIn.forEach(mark => {
+            let parentCopy = document.createElement("span"),
+                classlist = mark.parentNode.classList,
+                newElements = [];
+                parentCopy.innerHTML = mark.parentNode.innerHTML;
+                
+                parentCopy.childNodes.forEach(node => {
+                    let el = node;
+                    if(node.nodeType === Node.TEXT_NODE){
+                        el = document.createElement("span");
+                        el.innerHTML = node.data;
+                    }
+                    if(el.tagName !== "MARK"){
+                        if(el.classList.length === 0 && classlist.length !== 0){
+                            el.classList = classlist;
+                        }
+                        
+                    }else{
+                        let inner = el.innerHTML,
+                        newInner = document.createElement("span");
+                        newInner.innerHTML = inner;
+                        newInner.classList = classlist;
+                        el.innerHTML = "";
+                        el.appendChild(newInner);
+                    }
+                    newElements.push(el);
+                });
+
+                replaceElement(mark.parentNode, newElements);
+            
+        });
+    }
+
     getHTML() {
         this.removeUnconnectedMarkings();
         return this.container.innerHTML;
     }
+}
+
+// Replaces a node with a list of nodes
+function replaceElement(elementRep, list){
+    for(let el of list){
+        elementRep.parentNode.insertBefore(el, elementRep);
+    }
+    elementRep.parentNode.removeChild(elementRep);
+}
+
+// Connects two spans with the same classes
+function connectSpans(mark){
+    let elements = mark.childNodes,
+        prevEl = elements[0];
+        for (let i = 1; i < elements.length - 1; i++) {
+            if (prevEl.tagName === "SPAN" && elements[i].tagName === "SPAN") {
+                // How to compare two arrays, retrieved from https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript on 10.04.22
+                if (Array.from(prevEl.classList).every((val, index) => val === Array.from(elements[i].classList)[index] ) ) {
+                    let newSpan = document.createElement("span");
+                    newSpan.classList = prevEl.classList;
+                    newSpan.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
+                    prevEl.parentNode.insertBefore(newSpan, prevEl);
+                    prevEl.parentNode.removeChild(prevEl);
+                    elements[i].parentNode.removeChild(elements[i]);
+                    prevEl = newSpan;
+                }
+            }
+            prevEl = elements[i];
+        }
 }
 
 export default CodeView;

@@ -11,7 +11,6 @@ class CastListElementView extends Observable {
         this.view = this.createView();
         this.setTitle(title);
         this.copyLink = this.view.querySelector("#copy-icon");
-        // this.viewCast = this.view.querySelector("#view-btn");
         this.deleteCast = this.view.querySelector("#delete-cast-btn");
         this.linkEl = this.view.querySelector("#copy-link");
         this.copyLink.addEventListener("click", this.onCopyLinkClicked.bind(this));
@@ -27,10 +26,10 @@ class CastListElementView extends Observable {
             if (result.state === "granted" || result.state === "prompt") {
                 let self = this;
                 navigator.clipboard.writeText(this.linkEl.value).then(function() {
-                    /* clipboard successfully set */
+                    // clipboard successfully set 
                     self.showSuccess();
                 }, function() {
-                    /* clipboard write failed */
+                    // clipboard write failed 
                 });
             }
         }, () => {

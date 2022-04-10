@@ -4,9 +4,9 @@ import RegisterView from "../view/register/RegisterView.js";
 
 import RegisterManager from "../model/register/RegisterManager.js";
 
-// Controls the Register page.
-// The Register Manager handles account creation.
-// The Register View is there to show proceedings to the user. 
+// Controls the Register page
+// The Register Manager handles account creation
+// The Register View is there to show proceedings to the user
 class RegisterController {
 
     init(navView) {
@@ -33,9 +33,6 @@ class RegisterController {
         if (username.trim() === "") {
             username = email;
         }
-
-        // TODO: Maybe validation for username - at least with length
-
         this.registerManager.createUser(email, password, username);
     }
 

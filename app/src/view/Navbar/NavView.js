@@ -10,14 +10,13 @@ class NavView extends Observable {
         this.view = document.querySelector(".nav-bar");
         this.safeBtn = this.view.querySelector(".button-save");
         this.homeBtn = this.view.querySelector("#home-link");
-       // this.createBtn = this.view.querySelector("#create-link");
         this.userBtn = this.view.querySelector("#user-dropdown");
         this.castTitle = this.view.querySelector(".code-cast-title");
         this.userLogout = this.view.querySelector("#user-logout");
         this.loggedUserName = this.view.querySelector("#user-name");
         this.iconLoader = this.view.querySelector(".button-loading");
 
-        // Eventlistener
+        // Event Listener
         this.safeBtn.addEventListener("click", this.castSafe.bind(this));
         this.userBtn.addEventListener("click", this.toggleDropdown.bind(this));
         this.userLogout.addEventListener("click", this.onUserLogOutClicked.bind(this));
@@ -39,7 +38,7 @@ class NavView extends Observable {
         this.view.classList.remove("invisible");
     }
 
-    //shows current Title in the view
+    //shows current title in the view
     showTitle(title) {
         this.castTitle.value = title;
     }
@@ -49,7 +48,7 @@ class NavView extends Observable {
         this.notifyAll(event);
     }
 
-    // Event which fires on Save-Button click to safe/end the Cast
+    // Event which fires on save-button click to safe/end the cast
     castSafe() {
         let title = this.castTitle.value,
             event = new Event("cast-safe", title);

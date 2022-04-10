@@ -2,7 +2,7 @@
 import { Observable, Event } from "../../../utils/Observable.js";
 import DropZone from "./DropZone.js";
 
-// View for the Code section of the Cast edit
+// View for the Code section of the cast edit
 class DropView extends Observable {
 
     constructor() {
@@ -40,7 +40,7 @@ class DropView extends Observable {
         }
     }
 
-    //informs CodeView and stores the current file
+    // Informs CodeView and stores the current file
     onFileDropped(file) {
         this.showButton();
         this.dropZone.onFileDropped(file);

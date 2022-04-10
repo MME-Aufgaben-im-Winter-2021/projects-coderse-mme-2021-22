@@ -11,14 +11,12 @@ class RegisterView extends Observable {
         this.viewUsername = document.getElementById("input-username");
         this.viewBtn = document.getElementById("input-btn");
         this.viewBtn.addEventListener("click", this.onSubmit.bind(this));
-
-        // TODO: Better way for Error animations
         this.answerView = document.getElementById("server-answer");
     }
 
     // User wants to create an account
     onSubmit(){
-        // Data as JSON Object stores email and password and the username
+        // Data as JSON object stores email and password and the username
         let data = {
                 email: this.viewEmail.value,
                 password: this.viewPassword.value,

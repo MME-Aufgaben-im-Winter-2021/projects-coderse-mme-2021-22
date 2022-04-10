@@ -219,3 +219,9 @@ Unsere 38. Sitzung 06.04.22
 Unsere 39. Sitzung 06.04.22
 - Login Page überarbeitet
 - Code Dokumentation in der ReadMe.md
+
+Unsere 40. Sitzung 09.04.22
+- Syntax Highlighting hinzugefügt
+
+Unsere 41. Sitzung 10.04.22
+- Erneutes testen des Syntax Higlighting (Überarbeitung und bug fixes)
