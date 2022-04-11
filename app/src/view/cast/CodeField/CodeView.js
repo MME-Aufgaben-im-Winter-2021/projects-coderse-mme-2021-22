@@ -25,6 +25,7 @@ class CodeView extends Observable {
     showFile(codeInput) {
         this.container.textContent = codeInput;
         hljs.highlightElement(this.container);
+        convertTextToSpans(this.container.childNodes);
     }
 
     showLoadedFile(codeInput) {
@@ -186,6 +187,7 @@ class CodeView extends Observable {
             textEl = document.createElement("span"),
             textContent, emptyMark, spans;
         //if the previous element of the mark element is text, the text is packed in a span, so that it stays in the same position when connecting the mark elements
+        // May not be necessary after change to Syntax Highlighting, but do not want to mess it up 
         if (mark.previousSibling.nodeType === Node.TEXT_NODE) {
             range.setStart(mark.previousSibling, 0);
             range.setEnd(mark, 0);
@@ -221,17 +223,13 @@ class CodeView extends Observable {
                     innerEls.push(el);
                 });
                 replaceElement(el, innerEls);
-                
             });
-            if(els.length !== 0){
-                connectSpans(mark);
-            }
-            
         });
+
         elements = document.querySelector(".main-right-code-container").childNodes;
         prevEl = elements[0];
         //connect two consecutive mark elements to one
-        for (let i = 1; i < elements.length - 1; i++) {
+        for (let i = 1; i < elements.length; i++) {
             if (prevEl.tagName === "MARK" && elements[i].tagName === "MARK") {
                 // if() check for previous id and connect only when id is same and then give new mark the same id
                 if (prevEl.getAttribute("data-id") === elements[i].getAttribute("data-id")) {
@@ -244,12 +242,17 @@ class CodeView extends Observable {
                     prevEl.parentNode.insertBefore(newMark, prevEl);
                     prevEl.parentNode.removeChild(prevEl);
                     elements[i].parentNode.removeChild(elements[i]);
-                    prevEl = newMark;
+                    i -= 1;
+                    prevEl = elements[i];
                 }
             } else {
                 prevEl = elements[i];
             }
         }
+        markings = document.querySelectorAll(".main-right-code-container > mark");
+        for(let mark of markings){
+            connectSpans(mark);
+        }    
     }
 
     // Because of the structure of highlighted code (many spans), marks in a span cause bugs.
@@ -278,7 +281,9 @@ class CodeView extends Observable {
                         let inner = el.innerHTML,
                         newInner = document.createElement("span");
                         newInner.innerHTML = inner;
-                        newInner.classList = classlist;
+                        if(classlist.length !== 0){
+                            newInner.classList = classlist;
+                        }
                         el.innerHTML = "";
                         el.appendChild(newInner);
                     }
@@ -308,21 +313,51 @@ function replaceElement(elementRep, list){
 function connectSpans(mark){
     let elements = mark.childNodes,
         prevEl = elements[0];
-        for (let i = 1; i < elements.length - 1; i++) {
+        for (let i = 1; i < elements.length; i++) {
             if (prevEl.tagName === "SPAN" && elements[i].tagName === "SPAN") {
                 // How to compare two arrays, retrieved from https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript on 10.04.22
-                if (Array.from(prevEl.classList).every((val, index) => val === Array.from(elements[i].classList)[index] ) ) {
+                if (compareClassLists(Array.from(prevEl.classList),Array.from(elements[i].classList))) {
                     let newSpan = document.createElement("span");
                     newSpan.classList = prevEl.classList;
                     newSpan.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
                     prevEl.parentNode.insertBefore(newSpan, prevEl);
                     prevEl.parentNode.removeChild(prevEl);
                     elements[i].parentNode.removeChild(elements[i]);
-                    prevEl = newSpan;
+                    i -=1;
+                    prevEl = elements[i];
+                } else {
+                    prevEl = elements[i];
                 }
+            } else {
+                prevEl = elements[i];
             }
-            prevEl = elements[i];
+            
         }
+}
+
+// Converts text nodes into spans, as those are a possible bug source
+function convertTextToSpans(nodes){
+    for (let node of nodes){
+        if(node.nodeType === Node.TEXT_NODE){
+            let span = document.createElement("span");
+            span.innerText = node.data;
+            node.replaceWith(span);
+        }
+    
+    }
+}
+
+// Compares two class lists for equality
+function compareClassLists(list1, list2){
+    if(list1.length !== list2.length || list1.length === 0){
+        return false;
+    }
+    for(let i = 0; i < list1.length; i++){
+        if(list1[i] !== list2[i]){
+            return false;
+        }
+    }
+    return true;
 }
 
 export default CodeView;
