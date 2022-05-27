@@ -1561,8 +1561,11 @@ mark {
 
 /* ------------------------------------------------------------- Landing ----------- */
 .landing-template {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    background-color: var(--mauve-dark-dark);
+
 }
 
 .lan-bar {
@@ -1608,10 +1611,46 @@ div[class^="lan-btn"]:hover {
     cursor: pointer;
 }
 
-.lan-btn-login {}
+.lan-btn-login {
+    background-color: var(--mauve-dark-dark);
+}
 
-.lan-btn-sign-up {}
+.lan-btn-login:hover {
+    background-color: var(--mauve-dark);
+    /* box-shadow: 1px 0px 6px var(--mauve-dark), 0px 1px 6px var(--mauve-dark), -1px 0px 6px var(--mauve-dark), 0px -1px 6px var(--mauve-dark); */
+}
+
+.lan-btn-sign-up {
+    background-color: white;
+    color: black;
+}
+
+.lan-btn-sign-up:hover {
+    background-color: var(--mauve);
+    color: white;
+    /* box-shadow: 1px 0px 6px var(--mauve), 0px 1px 6px var(--mauve), -1px 0px 6px var(--mauve), 0px -1px 6px var(--mauve); */
+}
+
+.lan-main-convert {}
+
+.lan-headline {}
+
+.lan-subhead {}
+
+.lan-btn-call-to-action {
+    background-color: white;
+    color: black;
+}
+
+.lan-btn-call-to-action:hover {
+    background-color: var(--mauve);
+    color: white;
+}
 
 .lan-main-content {
-    background-color: var(--mauve);
+    background-color: var(--mauve-dark);
+    height: 110vh;
+    margin: 5vh 5vw;
+    border-radius: 3vw;
+    padding: 5vw;
 }
