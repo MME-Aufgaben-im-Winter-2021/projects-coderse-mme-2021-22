@@ -203,7 +203,7 @@ div[class^="button"] {
     cursor: pointer;
 }
 
-#user-dropdown{
+#user-dropdown {
     min-width: 100px;
 }
 
@@ -511,15 +511,16 @@ div[class^="button"] {
     user-select: none;
 }
 
-.impressum-link{
+.impressum-link {
     position: absolute;
     left: 3vw;
     bottom: 3vw;
     color: var(--border-grey);
     text-decoration: underline;
-    font-size:medium;
+    font-size: medium;
 }
-.impressum-link:hover{
+
+.impressum-link:hover {
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -642,15 +643,17 @@ mark {
     color: white;
 }
 
-.marking, .marking  * {
+.marking,
+.marking * {
     transition: text-shadow 1s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
-    text-shadow: 1px 1px 1px var(--eerie-black); 
+    text-shadow: 1px 1px 1px var(--eerie-black);
     background-color: var(--baby-blue-eyes-dark);
 }
 
-.marking[data-id], .marking[data-id]  *  {
+.marking[data-id],
+.marking[data-id] * {
     transition: text-shadow 1s;
     border: none;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
@@ -660,15 +663,18 @@ mark {
 }
 
 .marking[data-id] {
-    color: white; 
+    color: white;
 }
 
-.marking-highlight-play, .marking-highlight-play  *, .marking-highlight, .marking-highlight  * {
+.marking-highlight-play,
+.marking-highlight-play *,
+.marking-highlight,
+.marking-highlight * {
     transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 0.5s;
     transition: color 1s;
-    text-shadow: 1px 1px 1px var(--eerie-black); 
+    text-shadow: 1px 1px 1px var(--eerie-black);
     background-color: var(--mauve-dark-dark);
 }
 
@@ -889,7 +895,7 @@ mark {
     display: flex;
     flex-direction: column;
     /*margin: 0;*/
-    
+
     align-items: center;
     justify-content: center;
     height: 93vh;
@@ -943,7 +949,7 @@ mark {
     padding-bottom: 1.5vh;
 }
 
-.coderse-description{
+.coderse-description {
     font-size: large;
     text-align: center;
     padding-bottom: 1.5vh;
@@ -1067,6 +1073,7 @@ mark {
     display: flex;
     flex-direction: column;
     margin: 0;
+    margin-top: 7vh;
     padding: 2vw;
     align-items: center;
     background-color: black;
@@ -1521,15 +1528,16 @@ mark {
     border: 2px solid orange;
     color: orange;
 }
+
 /* ------------------------------------------------------------- Impressum ----------- */
-.impressum-template{
+.impressum-template {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 2vh 9vw;
 }
 
-.impressum-title{
+.impressum-title {
     display: flex;
     flex-direction: row;
     justify-self: center;
@@ -1537,12 +1545,73 @@ mark {
     font-size: xx-large;
     text-decoration: underline;
 }
-.impressum-container{
+
+.impressum-container {
     margin: 2vh 9vw;
 }
-.impressum-container>a{
-    color:var(--electric-blue); 
+
+.impressum-container>a {
+    color: var(--electric-blue);
 }
-.impressum-container>a:hover{
-    color:var(--baby-blue-eyes); 
+
+.impressum-container>a:hover {
+    color: var(--baby-blue-eyes);
+}
+
+
+/* ------------------------------------------------------------- Landing ----------- */
+.landing-template {
+    display: flex;
+    flex-direction: column;
+}
+
+.lan-bar {
+    display: flex;
+    flex-direction: row;
+    margin: 3vh 4vw;
+    justify-content: space-between;
+}
+
+.lan-bar-left {}
+
+.lan-bar-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.lan-bar-right>* {
+    margin-left: 1vw;
+}
+
+.lan-emph-txt {}
+
+.lan-logo {}
+
+.lan-logo>img {
+    width: 200px;
+    height: 100px;
+}
+
+div[class^="lan-btn"] {
+    display: flex;
+    flex-direction: row;
+    padding: 1.8vh 1.8vw;
+    border-radius: 4px;
+    border: 2px solid var(--border-grey);
+    align-self: center;
+    font-size: larger;
+    user-select: none;
+}
+
+div[class^="lan-btn"]:hover {
+    cursor: pointer;
+}
+
+.lan-btn-login {}
+
+.lan-btn-sign-up {}
+
+.lan-main-content {
+    background-color: var(--mauve);
 }
