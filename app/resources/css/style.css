@@ -1675,14 +1675,6 @@ div[class^="lan-btn"]:hover {
     /* align-items: flex-start; */
 }
 
-.lan-main-content {
-    background-color: var(--mauve-dark);
-    height: 110vh;
-    margin: 5vh 5vw;
-    border-radius: 3vw;
-    padding: 5vw;
-}
-
 .lan-main-convert-img {}
 
 .lan-main-convert-img>img {
@@ -1691,13 +1683,15 @@ div[class^="lan-btn"]:hover {
     border-radius: 10px;
     border: 2px solid var(--border-grey);
     transform: perspective(1200px) rotateY(-40deg) translate3d(-50px, +50px, 0px);
-    filter: drop-shadow(rgba(0, 0, 0, 0.38) 0px 14px 10px);
-    transition: 0.4s ease-in-out transform;
+    /* filter: drop-shadow(rgba(0, 0, 0, 0.38) 0px 14px 10px); */
+    box-shadow: 0px 27px 18px -19px rgba(0, 0, 0, 0.37);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
 }
 
 .lan-main-convert-img>img:hover {
     transform: perspective(1600px) rotateY(-20deg) translate3d(0px, +30px, 0px) scale(110%);
-    transition: 0.4s ease-in-out transform;
+    box-shadow: 0px 47px 18px -19px rgba(0, 0, 0, 0.37);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
 }
 
 .lan-convert-flex {
@@ -1705,4 +1699,84 @@ div[class^="lan-btn"]:hover {
     flex-direction: row;
     justify-content: space-between;
     margin: 0 5vw;
+}
+
+.lan-main-content {
+    background-color: var(--mauve-dark);
+    /* height: 110vh; */
+    margin: 5vh 5vw;
+    border-radius: 3vw;
+    padding: 4vw;
+}
+
+.lan-content-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 5vh;
+}
+
+.lan-content-item:last-child {
+    padding: 0 0;
+}
+
+.lan-item-text {
+    align-self: center;
+    font-size: x-large;
+    padding: 0 3vw;
+    width: 40vw;
+}
+
+div[class^="lan-item-picture"]>img {
+    max-width: 36vw;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+
+    box-shadow: 0px 27px 18px -19px rgba(0, 0, 0, 0.37);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-item-picture>img:hover {
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+
+    transform: translate3d(-20vw, +30px, 0px) scale(150%);
+    box-shadow: 0px 0px 257px 13px rgba(0, 0, 0, 0.43);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-item-picture-left>img:hover {
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+
+    transform: translate3d(+20vw, +30px, 0px) scale(150%);
+    box-shadow: 0px 0px 257px 13px rgba(0, 0, 0, 0.43);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-scnd-call-to-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.lan-scnd-text {
+    font-size: larger;
+    text-align: center;
+}
+
+.lan-scnd-btn {
+    background-color: white;
+    color: black;
+    padding: 1.8vh 1.8vw;
+    border-radius: 4px;
+    margin-top: 3vh;
+}
+
+.lan-scnd-btn:hover {
+    background-color: var(--mauve);
+    color: white;
 }

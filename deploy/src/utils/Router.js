@@ -11,6 +11,7 @@ const ROUTES = {
     "#register": "./src/pages/register.html",
     "#/share/:id": "./src/pages/createCast.html",
     "#impressum": "./src/pages/impressum.html",
+    "#landing": "./src/pages/landing-page.html",
 };
 
 // Router Class to navigate between pages with templates

@@ -24,6 +24,7 @@ import Config from "../utils/Config.js";
 import { deleteSession } from "../api/Session/deleteSession.js";
 import { getUser } from "../api/User/getUser.js";
 import ImpressumController from "./ImpressumController.js";
+import LandingController from "./LandingController.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -55,7 +56,7 @@ class AppController {
         this.initNavView();
     }
 
-    initNavView(){
+    initNavView() {
         this.navView = new NavView();
         this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
         this.navView.addEventListener("cast-safe", this.onSaveCastClicked.bind(this));
@@ -81,6 +82,7 @@ class AppController {
     }
 
     setHash(hash) {
+        console.log(hash);
         window.location.hash = hash;
     }
 
@@ -130,7 +132,7 @@ class AppController {
                 this.controller = new CastController();
                 computedID = await this.computeCreateID();
                 this.controller.init(this.navView, computedID);
-                this.controller.addEventListener("switch-to-homescreen", this.setHash.bind(this,"home"));
+                this.controller.addEventListener("switch-to-homescreen", this.setHash.bind(this, "home"));
                 break;
             case "#account":
                 this.container.innerHTML = template.template;
@@ -153,12 +155,19 @@ class AppController {
                     this.controller.init(this.navView, shareData.answer.$id);
                     this.controller.addEventListener("content-load", this.controller.setShareScreen.bind(this
                         .controller, shareData.answer.userName));
-                    }
+                }
                 break;
-                case "#impressum":
-                    this.container.innerHTML = template.template;
-                    this.controller = new ImpressumController();
-                    this.controller.init(this.navView);
+            case "#impressum":
+                this.container.innerHTML = template.template;
+                this.controller = new ImpressumController();
+                this.controller.init(this.navView);
+                break;
+            case "#landing":
+                this.container.innerHTML = template.template;
+                this.controller = new LandingController();
+                this.controller.init(this.navView);
+                this.controller.addEventListener("on-login-clicked", () => this.setHash("login"));
+                this.controller.addEventListener("on-sign-up-clicked", () => this.setHash("register"));
                 break;
             default:
                 this.container.innerHTML = template.template;
@@ -184,7 +193,7 @@ class AppController {
                 }
             } else {
                 if (currentHash !== "#login" && currentHash !== "#register") {
-                    this.setHash("login");
+                    this.setHash("landing");
                 }
             }
         }

@@ -3,6 +3,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap');
 
+@font-face {
+    font-family: norwester;
+    src: url("../../resources/font/norwester/norwester.otf");
+    font-weight: bold;
+    font-style: normal;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -203,7 +210,7 @@ div[class^="button"] {
     cursor: pointer;
 }
 
-#user-dropdown{
+#user-dropdown {
     min-width: 100px;
 }
 
@@ -511,15 +518,16 @@ div[class^="button"] {
     user-select: none;
 }
 
-.impressum-link{
+.impressum-link {
     position: absolute;
     left: 3vw;
     bottom: 3vw;
     color: var(--border-grey);
     text-decoration: underline;
-    font-size:medium;
+    font-size: medium;
 }
-.impressum-link:hover{
+
+.impressum-link:hover {
     color: rgba(255, 255, 255, 0.6);
 }
 
@@ -642,15 +650,17 @@ mark {
     color: white;
 }
 
-.marking, .marking  * {
+.marking,
+.marking * {
     transition: text-shadow 1s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 1s;
-    text-shadow: 1px 1px 1px var(--eerie-black); 
+    text-shadow: 1px 1px 1px var(--eerie-black);
     background-color: var(--baby-blue-eyes-dark);
 }
 
-.marking[data-id], .marking[data-id]  *  {
+.marking[data-id],
+.marking[data-id] * {
     transition: text-shadow 1s;
     border: none;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
@@ -660,15 +670,18 @@ mark {
 }
 
 .marking[data-id] {
-    color: white; 
+    color: white;
 }
 
-.marking-highlight-play, .marking-highlight-play  *, .marking-highlight, .marking-highlight  * {
+.marking-highlight-play,
+.marking-highlight-play *,
+.marking-highlight,
+.marking-highlight * {
     transition: text-shadow 0.5s;
     /*https://www.w3schools.com/css/css3_transitions.asp Aufgerufen am 08.03.22*/
     transition: background-color 0.5s;
     transition: color 1s;
-    text-shadow: 1px 1px 1px var(--eerie-black); 
+    text-shadow: 1px 1px 1px var(--eerie-black);
     background-color: var(--mauve-dark-dark);
 }
 
@@ -889,7 +902,7 @@ mark {
     display: flex;
     flex-direction: column;
     /*margin: 0;*/
-    
+
     align-items: center;
     justify-content: center;
     height: 93vh;
@@ -943,7 +956,7 @@ mark {
     padding-bottom: 1.5vh;
 }
 
-.coderse-description{
+.coderse-description {
     font-size: large;
     text-align: center;
     padding-bottom: 1.5vh;
@@ -1067,6 +1080,7 @@ mark {
     display: flex;
     flex-direction: column;
     margin: 0;
+    margin-top: 7vh;
     padding: 2vw;
     align-items: center;
     background-color: black;
@@ -1521,15 +1535,16 @@ mark {
     border: 2px solid orange;
     color: orange;
 }
+
 /* ------------------------------------------------------------- Impressum ----------- */
-.impressum-template{
+.impressum-template {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: 2vh 9vw;
 }
 
-.impressum-title{
+.impressum-title {
     display: flex;
     flex-direction: row;
     justify-self: center;
@@ -1537,12 +1552,231 @@ mark {
     font-size: xx-large;
     text-decoration: underline;
 }
-.impressum-container{
+
+.impressum-container {
     margin: 2vh 9vw;
 }
-.impressum-container>a{
-    color:var(--electric-blue); 
+
+.impressum-container>a {
+    color: var(--electric-blue);
 }
-.impressum-container>a:hover{
-    color:var(--baby-blue-eyes); 
+
+.impressum-container>a:hover {
+    color: var(--baby-blue-eyes);
+}
+
+
+/* ------------------------------------------------------------- Landing ----------- */
+.landing-template {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--mauve-dark-dark);
+
+}
+
+.lan-bar {
+    display: flex;
+    flex-direction: row;
+    margin: 3vh 4vw;
+    justify-content: space-between;
+}
+
+.lan-bar-left {}
+
+.lan-bar-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.lan-bar-right>* {
+    margin-left: 1vw;
+}
+
+.lan-emph-txt {}
+
+.lan-logo {}
+
+.lan-logo>img {
+    width: 200px;
+    height: 100px;
+}
+
+div[class^="lan-btn"] {
+    display: flex;
+    flex-direction: row;
+    padding: 1.8vh 1.8vw;
+    border-radius: 4px;
+    border: 2px solid var(--border-grey);
+    align-self: center;
+    font-size: larger;
+    user-select: none;
+}
+
+div[class^="lan-btn"]:hover {
+    cursor: pointer;
+}
+
+.lan-btn-login {
+    background-color: var(--mauve-dark-dark);
+}
+
+.lan-btn-login:hover {
+    background-color: var(--mauve-dark);
+    /* box-shadow: 1px 0px 6px var(--mauve-dark), 0px 1px 6px var(--mauve-dark), -1px 0px 6px var(--mauve-dark), 0px -1px 6px var(--mauve-dark); */
+}
+
+.lan-btn-sign-up {
+    background-color: white;
+    color: black;
+}
+
+.lan-btn-sign-up:hover {
+    background-color: var(--mauve);
+    color: white;
+    /* box-shadow: 1px 0px 6px var(--mauve), 0px 1px 6px var(--mauve), -1px 0px 6px var(--mauve), 0px -1px 6px var(--mauve); */
+}
+
+.lan-main-convert {
+    width: 50%;
+}
+
+.lan-headline {
+    font-family: norwester;
+    font-size: 100pt;
+    line-height: 0.9;
+}
+
+.lan-subhead {
+    font-size: larger;
+    text-align: center;
+}
+
+.lan-btn-call-to-action {
+    background-color: white;
+    color: black;
+    padding: 1.8vh 1.8vw;
+    align-self: flex-start;
+    margin-top: 3vh;
+}
+
+.lan-btn-call-to-action:hover {
+    background-color: var(--mauve);
+    color: white;
+}
+
+.lan-head-center {
+    margin: 3vw 0 0 0;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    /* align-items: flex-start; */
+}
+
+.lan-main-convert-img {}
+
+.lan-main-convert-img>img {
+    max-width: 45vw;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+    transform: perspective(1200px) rotateY(-40deg) translate3d(-50px, +50px, 0px);
+    /* filter: drop-shadow(rgba(0, 0, 0, 0.38) 0px 14px 10px); */
+    box-shadow: 0px 27px 18px -19px rgba(0, 0, 0, 0.37);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-main-convert-img>img:hover {
+    transform: perspective(1600px) rotateY(-20deg) translate3d(0px, +30px, 0px) scale(110%);
+    box-shadow: 0px 47px 18px -19px rgba(0, 0, 0, 0.37);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-convert-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 5vw;
+}
+
+.lan-main-content {
+    background-color: var(--mauve-dark);
+    /* height: 110vh; */
+    margin: 5vh 5vw;
+    border-radius: 3vw;
+    padding: 4vw;
+}
+
+.lan-content-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 5vh;
+}
+
+.lan-content-item:last-child {
+    padding: 0 0;
+}
+
+.lan-item-text {
+    align-self: center;
+    font-size: x-large;
+    padding: 0 3vw;
+    width: 40vw;
+}
+
+div[class^="lan-item-picture"]>img {
+    max-width: 36vw;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+
+    box-shadow: 0px 27px 18px -19px rgba(0, 0, 0, 0.37);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-item-picture>img:hover {
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+
+    transform: translate3d(-20vw, +30px, 0px) scale(150%);
+    box-shadow: 0px 0px 257px 13px rgba(0, 0, 0, 0.43);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-item-picture-left>img:hover {
+    border-radius: 10px;
+    border: 2px solid var(--border-grey);
+
+    transform: translate3d(+20vw, +30px, 0px) scale(150%);
+    box-shadow: 0px 0px 257px 13px rgba(0, 0, 0, 0.43);
+    transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+}
+
+.lan-scnd-call-to-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.lan-scnd-text {
+    font-size: larger;
+    text-align: center;
+}
+
+.lan-scnd-btn {
+    background-color: white;
+    color: black;
+    padding: 1.8vh 1.8vw;
+    border-radius: 4px;
+    margin-top: 3vh;
+}
+
+.lan-scnd-btn:hover {
+    background-color: var(--mauve);
+    color: white;
 }

@@ -31,11 +31,11 @@ class NavView extends Observable {
     }
 
     hideNavView() {
-        this.view.classList.add("invisible");
+        this.view.classList.add("hidden");
     }
 
     showNavView() {
-        this.view.classList.remove("invisible");
+        this.view.classList.remove("hidden");
     }
 
     //shows current title in the view
