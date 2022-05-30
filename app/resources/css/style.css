@@ -1780,6 +1780,7 @@ div[class^="lan-item-picture"]>img {
 }
 
 .lan-scnd-btn {
+    user-select: none;
     background-color: white;
     color: black;
     padding: 1.8vh 1.8vw;
