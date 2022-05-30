@@ -169,6 +169,11 @@ class AppController {
                 this.controller.addEventListener("on-login-clicked", () => this.setHash("login"));
                 this.controller.addEventListener("on-sign-up-clicked", () => this.setHash("register"));
                 break;
+            case "#datenschutz":
+                this.container.innerHTML = template.template;
+                this.controller = new ImpressumController();
+                this.controller.init(this.navView);
+                break;
             default:
                 this.container.innerHTML = template.template;
                 this.controller = new ErrorController();
@@ -192,7 +197,8 @@ class AppController {
                     this.setHash("home");
                 }
             } else {
-                if (currentHash !== "#login" && currentHash !== "#register") {
+                if (currentHash !== "#login" && currentHash !== "#register" && currentHash !== "#impressum" &&
+                    currentHash !== "#datenschutz") {
                     this.setHash("landing");
                 }
             }

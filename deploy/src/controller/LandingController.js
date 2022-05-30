@@ -21,6 +21,14 @@ class LandingController extends Observable {
         this.scndBtn = document.querySelector(".lan-scnd-btn");
         this.scndBtn.addEventListener("click", this.notifyAll.bind(this, new Event("on-sign-up-clicked",
             "register")));
+
+        this.footerIcon = document.querySelector(".lan-info-logo>img");
+        this.footerIcon.addEventListener("click", this.scrollToTop.bind(this));
+    }
+
+    // Quelle: https://stackoverflow.com/questions/15935318/smooth-scroll-to-top Abgerufen am 30.05.22
+    scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }
 

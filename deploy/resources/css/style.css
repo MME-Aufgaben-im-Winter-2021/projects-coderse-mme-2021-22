@@ -1646,6 +1646,9 @@ div[class^="lan-btn"]:hover {
     font-family: norwester;
     font-size: 100pt;
     line-height: 0.9;
+    animation: slideInLeft;
+    animation-duration: 0.8s;
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1);
 }
 
 .lan-subhead {
@@ -1686,6 +1689,9 @@ div[class^="lan-btn"]:hover {
     /* filter: drop-shadow(rgba(0, 0, 0, 0.38) 0px 14px 10px); */
     box-shadow: 0px 27px 18px -19px rgba(0, 0, 0, 0.37);
     transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+    animation: bendRight;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-in-out;
 }
 
 .lan-main-convert-img>img:hover {
@@ -1735,6 +1741,9 @@ div[class^="lan-item-picture"]>img {
 
     box-shadow: 0px 27px 18px -19px rgba(0, 0, 0, 0.37);
     transition: 0.4s ease-in-out transform, 0.4s ease-in-out box-shadow;
+    animation: simpleOpacity;
+    animation-timing-function: ease-in;
+    animation-duration: 0.8s;
 }
 
 .lan-item-picture>img:hover {
@@ -1779,4 +1788,104 @@ div[class^="lan-item-picture"]>img {
 .lan-scnd-btn:hover {
     background-color: var(--mauve);
     color: white;
+}
+
+.lan-footer {
+    background-color: var(--eerie-black);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3vw 3vw 2vw 3vw;
+}
+
+.lan-footer-list {
+    list-style: none;
+}
+
+.lan-footer-list>li>a {
+    color: var(--border-grey);
+    text-decoration: underline;
+    font-size: medium;
+}
+
+.lan-footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lan-info-logo>img {
+    width: 10vw;
+    height: auto;
+    -webkit-filter: invert() grayscale(100%);
+    filter: invert() grayscale(100%);
+}
+
+
+/* ------------------------------------------------------------- Datenschutz ----------- */
+.datenschutz-template {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2vh 9vw;
+}
+
+.datenschutz-title {
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    margin: 2vh 9vw;
+    font-size: xx-large;
+    text-decoration: underline;
+}
+
+.datenschutz-container {
+    margin: 2vh 9vw;
+}
+
+.datenschutz-container>a {
+    color: var(--electric-blue);
+}
+
+.datenschutz-container>a:hover {
+    color: var(--baby-blue-eyes);
+}
+
+
+
+
+
+/** Animations **/
+@keyframes slideInLeft {
+    from {
+        position: relative;
+        left: -10vw;
+        opacity: 0.3;
+    }
+
+    to {
+        position: relative;
+        left: -0vw;
+        opacity: 1;
+    }
+}
+
+@keyframes bendRight {
+    from {
+        transform: perspective(800px) rotateY(0deg);
+    }
+
+    to {
+        transform: perspective(1200px) rotateY(-40deg) translate3d(-50px, 50px, 0px);
+    }
+}
+
+@keyframes simpleOpacity {
+    from {
+        opacity: 0.25;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
