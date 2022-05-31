@@ -61,6 +61,8 @@ body {
     background-color: var(--eerie-black);
     color: #fff;
     font-family: 'Space Grotesk', sans-serif;
+    /*https://stackoverflow.com/questions/12046315/prevent-overscrolling-of-web-page Abgerufen am 30.05.22 Gegen Overscrolling in y Richtung*/
+    overscroll-behavior-y: none;
 }
 
 /* -------------- Onboarding ----------- */
@@ -1778,6 +1780,7 @@ div[class^="lan-item-picture"]>img {
 }
 
 .lan-scnd-btn {
+    user-select: none;
     background-color: white;
     color: black;
     padding: 1.8vh 1.8vw;
