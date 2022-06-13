@@ -119,7 +119,8 @@ class AppController {
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
                 this.controller.addEventListener("on-view", this.onViewCastClicked.bind(this));
-                this.controller.addEventListener("on-fab-clicked", () => this.setHash("#create"));
+                //this.controller.addEventListener("on-fab-clicked", () => this.setHash("#create"));
+                //this.controller.addEventListener("on-fab-clicked", this.onCreateCastClicked.bind(this));
                 break;
             case "#login":
                 this.container.innerHTML = template.template;
@@ -250,5 +251,10 @@ class AppController {
     onAccountUpdate() {
         this.setHash("home");
     }
+
+    // onCreateCastClicked(){
+    //     //AdController.showAd();
+    //     //console.log("show Ad");
+    // }
 }
 export default AppController;
