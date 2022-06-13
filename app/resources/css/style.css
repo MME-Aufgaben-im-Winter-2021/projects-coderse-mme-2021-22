@@ -573,6 +573,14 @@ div[class^="button"] {
     background-color: transparent !important;
 }
 
+.main-right-canvas {
+    display: none;
+    background-color: #b65d5d;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
 
 .main-right-drag-drop-container {
     background-color: var(--eerie-black-2);

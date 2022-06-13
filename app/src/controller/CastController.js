@@ -11,6 +11,7 @@ import { Observable, Event } from "../utils/Observable.js";
 import Cast from "../model/cast/Cast.js";
 
 import LocalStorageProvider from "../utils/LocalStorageProvider.js";
+import CanvasView from "../view/cast/CodeField/CanvasView.js";
 
 var castManager,
     introJs = window.introJs;
@@ -67,9 +68,13 @@ class CastController extends Observable {
         this.codeView.addEventListener("marking-mouse-out", (e) => this.playerList.onMouseOutMarking(e));
         this.codeView.addEventListener("code-help-clicked", this.onHelpClicked.bind(this));
 
+        // Canvas
+        this.canvasView = new CanvasView();
+
         // Drop View
         this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", this.onFileReady.bind(this));
+        this.dropView.addEventListener("file-ready-txt", this.onFileReadyTxt.bind(this));
+        this.dropView.addEventListener("file-ready-pdf", this.onFileReadyPdf.bind(this));
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
@@ -337,9 +342,16 @@ class CastController extends Observable {
 
     /* ---------------------------------------------------dropView--------------------------------------------------------------- */
 
-    onFileReady(event) {
+    onFileReadyTxt(event) {
         this.showAdvancedIntro();
         this.codeView.showFile(event.data);
+        this.computeOnboarding();
+    }
+
+    onFileReadyPdf(event) {
+        this.canvasView.setDocument(event.data);
+        this.canvasView.show();
+        this.showAdvancedIntro();
         this.computeOnboarding();
     }
 

@@ -2,6 +2,8 @@
 import { Observable, Event } from "../../../utils/Observable.js";
 import DropZone from "./DropZone.js";
 
+var pdfJs = window.pdfjsLib;
+
 // View for the Code section of the cast edit
 class DropView extends Observable {
 
@@ -27,17 +29,18 @@ class DropView extends Observable {
     // Reads a file with FileReader
     // Source: https://riptutorial.com/javascript/example/7081/read-file-as-string
     onFileReady() {
-        let reader = new FileReader();
-        // If a file is loaded, it fires a event with the file converted to a string
-        reader.onload = (ev) => {
-            let event = new Event("file-ready", ev.target.result);
-            this.notifyAll(event);
-            this.hide();
-        };
-        // If a file is available it is parsed to text
-        if (this.currentFile !== null) {
-            reader.readAsText(this.currentFile);
+        let fileType = this.currentFile.type;
+        switch (fileType){
+            case "text/plain":
+                loadTextFile(this);
+                break;
+            case "application/pdf":
+                loadPdfFile(this);
+                break;
+            default:
+                break;
         }
+        
     }
 
     // Informs CodeView and stores the current file
@@ -69,6 +72,35 @@ class DropView extends Observable {
             this.notifyAll(event);
         };
     }
+}
+
+function loadTextFile(self){
+    let reader = new FileReader();
+        // If a file is loaded, it fires a event with the file converted to a string
+        reader.onload = (ev) => {
+            let event = new Event("file-ready-txt", ev.target.result);
+            self.notifyAll(event);
+            self.hide();
+        };
+
+        // If a file is available it is parsed to text
+        if (self.currentFile !== null) {
+            reader.readAsText(self.currentFile);
+        }
+}
+
+async function loadPdfFile(self){
+    let pdf, event, url;
+    try {
+        url = URL.createObjectURL(self.currentFile);
+        pdf = await pdfJs.getDocument({ url: url });
+    }
+    catch(error) {
+        console.log(error);
+    }
+    event = new Event("file-ready-pdf", pdf);
+    self.notifyAll(event);
+    self.hide();
 }
 
 export default DropView;
