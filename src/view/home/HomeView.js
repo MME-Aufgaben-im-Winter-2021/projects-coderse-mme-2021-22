@@ -12,7 +12,20 @@ class HomeView extends Observable {
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.castListView.addEventListener("on-delete", (event) => this.showDeleteModal(event));
         this.createCastFAB = document.querySelector(".fab-create-cast");
-        this.createCastFAB.addEventListener("click", this.onFABcreateCastClicked.bind(this));
+        //this.createCastFAB.addEventListener("click", this.onFABcreateCastClicked.bind(this)); //TODO: Add
+        // this.createCastFAB.onclick = function () {
+        //     invokeApplixirVideoUnit({
+        //         zoneId: 2050,
+        //         adStatusCb: (status) => {console.log(status);},
+        //     });
+        // };
+        // this.createCastFAB.addEventListener("click", () => {
+        //     console.log("hi");
+        //     invokeApplixirVideoUnit({
+        //         zoneId: 2050,
+        //         adStatusCb: (status) => {console.log(status);},
+        //     });
+        // });
         this.helpButton = document.querySelector(".fab-help");
         this.helpButton.addEventListener("click", () => {this.notifyAll(new Event("home-help-clicked"));});
     }
