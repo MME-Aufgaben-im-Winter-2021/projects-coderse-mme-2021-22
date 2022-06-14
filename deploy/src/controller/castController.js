@@ -22,12 +22,6 @@ class CastController extends Observable {
 
     init(navView, id) {
 
-        const queryString = window.location
-            .search, //Quelle: https://www.sitepoint.com/get-url-parameters-with-javascript/ Abgerufen am 14.06.2022
-            urlParams = new URLSearchParams(queryString);
-        console.log(queryString);
-        console.log("URL Params" + urlParams);
-
         // General model for a cast. Combines multiple models
         castManager = new CastManager(navView.getCastTitle());
         castManager.addEventListener("audio-saved", this.onAudioSaved.bind(this));

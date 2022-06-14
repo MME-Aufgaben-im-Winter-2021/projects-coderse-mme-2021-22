@@ -26,7 +26,7 @@ class HomeController extends Observable {
         this.homeView = new HomeView();
         this.homeView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.homeView.addEventListener("on-delete", this.onDeleteCast.bind(this));
-        this.homeView.addEventListener("on-fab-clicked", (event) => this.notifyAll(event));
+        this.homeView.addEventListener("ad-status", (event) => this.notifyAll(event));
         this.homeView.addEventListener("home-help-clicked", this.showTutorial.bind(this));
 
         // Data manager of this Controller

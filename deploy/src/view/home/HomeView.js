@@ -13,23 +13,10 @@ class HomeView extends Observable {
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.castListView.addEventListener("on-delete", (event) => this.showDeleteModal(event));
         this.createCastFAB = document.querySelector(".fab-create-cast");
-        //this.createCastFAB.addEventListener("click", this.onFABcreateCastClicked.bind(this)); //TODO: Add
-        // this.createCastFAB.onclick = function () {
-        //     invokeApplixirVideoUnit({
-        //         zoneId: 2050,
-        //         adStatusCb: (status) => {console.log(status);},
-        //     });
-        // };
-        // this.createCastFAB.addEventListener("click", () => {
-        //     console.log("hi");
-        //     invokeApplixirVideoUnit({
-        //         zoneId: 2050,
-        //         adStatusCb: (status) => {console.log(status);},
-        //     });
-        // });
 
         function adStatusCallback(status) { // Status Callback Method
-            console.log('Ad Status: ' + status);
+            let ev = new Event("ad-status", status);
+            this.notifyAll(ev);
         }
 
         //var userId = await getUser().$id;
@@ -38,14 +25,12 @@ class HomeView extends Observable {
             accountId: 6773, // Required field for RMS                                                                               
             gameId: 7249, // Required field for RMS
             adStatusCb: adStatusCallback,
+            endMsg: 1,
             //userId: userId,                      
         };
 
-        console.log("script ran");
-
         let playBtn = document.querySelector(".fab-create-cast");
         playBtn.onclick = function() {
-            console.log("play ad onclick");
             invokeApplixirVideoUnit(options); // Invoke Video ad
         };
 
@@ -60,11 +45,6 @@ class HomeView extends Observable {
         this.modal = new Modal("Cast delete", "Do you really want to delete the Cast \"" + title + "\" ?",
             "Yes, delete", "No, decline");
         this.modal.addEventListener("onAcceptClicked", () => this.notifyAll(event));
-    }
-
-    onFABcreateCastClicked() {
-        let ev = new Event("on-fab-clicked", "fab click");
-        this.notifyAll(ev);
     }
 
     setServerAnswer(string) {
