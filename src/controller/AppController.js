@@ -256,11 +256,13 @@ class AppController {
 
     onAdStatusChanged(event) {
         let status = event.data;
-        if (status === "ad-rewarded" || status === "ad-watched") {
+        if (status === "ad-rewarded" || status === "ad-watched" || status === "fb-watched" || status ===
+            "network-error") {
             this.setHash("create");
-        } else {
-            let modal = new Modal("Ad reward error", "Please watch the whole ad to create a new Cast", "", ""),
-                appearanceTime = 2000;
+        } else if (status === "ad-interrupted" || status === "ad-blocker") {
+            let modal = new Modal("Ad reward error",
+                    "Please watch the whole ad and deactivate your ad-blocker, to create a new Cast", "", ""),
+                appearanceTime = 2500;
             modal.hideActionBtn();
             setTimeout(() => {
                 modal.remove();
