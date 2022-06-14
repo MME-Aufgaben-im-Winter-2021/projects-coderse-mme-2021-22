@@ -1,4 +1,5 @@
 /* eslint-env browser */
+/* eslint-disable */ //TODO: only here because missing invokeApplixirVideoUnit(options); import
 import { Observable, Event } from "../../utils/Observable.js";
 import CastListView from "./CastListView.js";
 import Modal from "../utilViews/Modal.js";
@@ -26,8 +27,31 @@ class HomeView extends Observable {
         //         adStatusCb: (status) => {console.log(status);},
         //     });
         // });
+
+        function adStatusCallback(status) { // Status Callback Method
+            console.log('Ad Status: ' + status);
+        }
+
+        //var userId = await getUser().$id;
+        const options = { // Video Ad Options
+            zoneId: 2050, // Required field for RMS
+            accountId: 6773, // Required field for RMS                                                                               
+            gameId: 7249, // Required field for RMS
+            adStatusCb: adStatusCallback,
+            //userId: userId,                      
+        };
+
+        console.log("script ran");
+
+        let playBtn = document.querySelector(".fab-create-cast");
+        playBtn.onclick = function() {
+            console.log("play ad onclick");
+            invokeApplixirVideoUnit(options); // Invoke Video ad
+        };
+
+
         this.helpButton = document.querySelector(".fab-help");
-        this.helpButton.addEventListener("click", () => {this.notifyAll(new Event("home-help-clicked"));});
+        this.helpButton.addEventListener("click", () => { this.notifyAll(new Event("home-help-clicked")); });
     }
 
     showDeleteModal(event) {
