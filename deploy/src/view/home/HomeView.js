@@ -15,10 +15,16 @@ class HomeView extends Observable {
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.castListView.addEventListener("on-delete", (event) => this.showDeleteModal(event));
         this.createCastFAB = document.querySelector(".fab-create-cast");
+        this.adBlur = document.querySelector(".ad-background-blur");
         self = this;
 
         function adStatusCallback(status) { // Status Callback Method
             let ev = new Event("ad-status", status);
+            if (status == "ad-started" || status === "fb-started") {
+                self.adBlur.classList.remove("hidden");
+            } else {
+                self.adBlur.classList.add("hidden");
+            }
             self.notifyAll(ev);
         }
 
