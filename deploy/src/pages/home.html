@@ -18,24 +18,4 @@
     <div class="response-home-container">
         <div id="server-answer"></div>
     </div>
-
-    <script type="application/javascript">
-        function adStatusCallback(status) { // Status Callback Method
-            console.log('Ad Status: ' + status);
-        }
-
-        //var userId = await getUser().$id;
-        var options = { // Video Ad Options
-            zoneId: 2050, // Required field for RMS
-            accountId: 6773, // Required field for RMS                                                                               
-            gameId: 7249, // Required field for RMS
-            adStatusCb: adStatusCallback,
-            //userId: userId,                      
-        };
-        playBtn = document.querySelector(".fab-create-cast");
-        playBtn.onclick = function() {
-            console.log("play ad onclick");
-            invokeApplixirVideoUnit(options); // Invoke Video ad
-        }
-    </script>
 </div>
