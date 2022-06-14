@@ -1,4 +1,4 @@
-<div class="home-template"> 
+<div class="home-template">
     <a href="#impressum" class="impressum-link">Impressum</a>
     <div class="fab-help">
         <img id="help-img" src="../../resources/icons/help-circle.svg">
@@ -20,21 +20,22 @@
     </div>
 
     <script type="application/javascript">
-        function adStatusCallback(status) {                  // Status Callback Method
+        function adStatusCallback(status) { // Status Callback Method
             console.log('Ad Status: ' + status);
         }
 
-        var userId = await getUser().$id;
-        var options = {                                     // Video Ad Options
-            zoneId: 2050,                         // Required field for RMS
-            accountId: 6773,                               // Required field for RMS                                                                               
-            gameId: 7249,                                  // Required field for RMS
+        //var userId = await getUser().$id;
+        var options = { // Video Ad Options
+            zoneId: 2050, // Required field for RMS
+            accountId: 6773, // Required field for RMS                                                                               
+            gameId: 7249, // Required field for RMS
             adStatusCb: adStatusCallback,
-            userId: userId,                      
-        };  
-        playBtn = document.querySelector(".fab-create-cast");                                                      
-        playBtn.onclick = function () {                     
-            invokeApplixirVideoUnit(options);     // Invoke Video ad
+            //userId: userId,                      
+        };
+        playBtn = document.querySelector(".fab-create-cast");
+        playBtn.onclick = function() {
+            console.log("play ad onclick");
+            invokeApplixirVideoUnit(options); // Invoke Video ad
         }
     </script>
 </div>
