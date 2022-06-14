@@ -40,6 +40,7 @@ class Recorder extends Observable {
         this.iconStopPlaceholder = document.querySelector(".recorder-icon-stop-grey-container");
     }
 
+    // Player will be full bottom size
     hideRecorder() {
         this.bottomBar.style.justifyContent = "center";
         this.containerControls.classList.remove("bottom-left");

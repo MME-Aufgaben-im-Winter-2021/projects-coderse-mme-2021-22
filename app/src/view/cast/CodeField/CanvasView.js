@@ -6,6 +6,7 @@ class CanvasView {
         this.container = document.querySelector(".main-right-code-container");
         this.pdf = undefined;
         this.pageNum = 1;
+        this.pictureUrl = undefined;
     }
 
     createCanvas(){
@@ -16,11 +17,15 @@ class CanvasView {
         return canvas;
     }
 
+    setPictureUrl(url){
+        this.pictureUrl = url;
+    }
+
     setDocument(pdf){
         this.pdf = pdf;
     }
 
-    async show(){
+    async showPdf(){
         try {
             let page = await this.pdf.getPage(this.pageNum);
             this.showPage(page);
@@ -37,7 +42,7 @@ class CanvasView {
             viewport, 
             renderContext;
         canvas = this.createCanvas();
-        scale = 5;
+        scale = 10;
         viewport = page.getViewport(scale);
 
         canvas.width = viewport.width;
@@ -52,7 +57,7 @@ class CanvasView {
 
         try {
              await page.render(renderContext);
-             this.show();
+             this.showPdf();
         }
         catch(error) {
             console.log(error);
@@ -60,6 +65,19 @@ class CanvasView {
 
         this.container.appendChild(canvas);
 
+    }
+
+    showPicture(){
+        let canvas = this.createCanvas(),
+        context = canvas.getContext("2d"),
+        image = new Image();
+        this.container.appendChild(canvas);
+        image.addEventListener("load", () => {
+            canvas.width = image.naturalWidth;
+            canvas.height = this.naturalHeight;
+            context.drawImage(image,0,0,canvas.width,canvas.height);
+        });
+        image.src = this.pictureUrl;   
     }
 
 }

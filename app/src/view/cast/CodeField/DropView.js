@@ -37,6 +37,15 @@ class DropView extends Observable {
             case "application/pdf":
                 loadPdfFile(this);
                 break;
+            case "image/png" || "image/jpeg" || "image/jpg":
+                loadImage(this);
+                break;
+            case "image/jpeg":
+                loadImage(this);
+                break;
+            case "image/jpg":
+                loadImage(this);
+                break;
             default:
                 break;
         }
@@ -45,6 +54,7 @@ class DropView extends Observable {
 
     // Informs CodeView and stores the current file
     onFileDropped(file) {
+        console.log(file);
         this.showButton();
         this.dropZone.onFileDropped(file);
         this.currentFile = file;
@@ -99,6 +109,14 @@ async function loadPdfFile(self){
         console.log(error);
     }
     event = new Event("file-ready-pdf", pdf);
+    self.notifyAll(event);
+    self.hide();
+}
+
+function loadImage(self){
+    let event, url;
+    url = URL.createObjectURL(self.currentFile);
+    event = new Event("file-ready-pic", url);
     self.notifyAll(event);
     self.hide();
 }

@@ -75,6 +75,7 @@ class CastController extends Observable {
         this.dropView = new DropView();
         this.dropView.addEventListener("file-ready-txt", this.onFileReadyTxt.bind(this));
         this.dropView.addEventListener("file-ready-pdf", this.onFileReadyPdf.bind(this));
+        this.dropView.addEventListener("file-ready-pic", this.onFileReadyPic.bind(this));
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
@@ -350,9 +351,14 @@ class CastController extends Observable {
 
     onFileReadyPdf(event) {
         this.canvasView.setDocument(event.data);
-        this.canvasView.show();
+        this.canvasView.showPdf();
         this.showAdvancedIntro();
         this.computeOnboarding();
+    }
+
+    onFileReadyPic(event) {
+        this.canvasView.setPictureUrl(event.data);
+        this.canvasView.showPicture();
     }
 
     // Validator checks dropped file
