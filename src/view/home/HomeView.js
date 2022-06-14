@@ -4,6 +4,8 @@ import { Observable, Event } from "../../utils/Observable.js";
 import CastListView from "./CastListView.js";
 import Modal from "../utilViews/Modal.js";
 
+var self;
+
 class HomeView extends Observable {
 
     constructor() {
@@ -13,10 +15,11 @@ class HomeView extends Observable {
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.castListView.addEventListener("on-delete", (event) => this.showDeleteModal(event));
         this.createCastFAB = document.querySelector(".fab-create-cast");
+        self = this;
 
         function adStatusCallback(status) { // Status Callback Method
             let ev = new Event("ad-status", status);
-            this.notifyAll(ev);
+            self.notifyAll(ev);
         }
 
         //var userId = await getUser().$id;
