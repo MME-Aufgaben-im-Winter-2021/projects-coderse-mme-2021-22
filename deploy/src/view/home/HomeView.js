@@ -20,7 +20,7 @@ class HomeView extends Observable {
 
         function adStatusCallback(status) { // Status Callback Method
             let ev = new Event("ad-status", status);
-            if (status == "ad-started" || status === "fb-started") {
+            if (status === "ad-started" || status === "fb-started") {
                 self.adBlur.classList.remove("hidden");
             } else {
                 self.adBlur.classList.add("hidden");
