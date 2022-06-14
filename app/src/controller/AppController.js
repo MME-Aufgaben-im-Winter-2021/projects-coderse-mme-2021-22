@@ -262,7 +262,7 @@ class AppController {
         } else if (status === "ad-interrupted" || status === "ad-blocker") {
             let modal = new Modal("Ad reward error",
                     "Please watch the whole ad and deactivate your ad-blocker, to create a new Cast", "", ""),
-                appearanceTime = 2500;
+                appearanceTime = 4500;
             modal.hideActionBtn();
             setTimeout(() => {
                 modal.remove();
