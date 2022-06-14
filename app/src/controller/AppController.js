@@ -25,6 +25,7 @@ import { deleteSession } from "../api/Session/deleteSession.js";
 import { getUser } from "../api/User/getUser.js";
 import ImpressumController from "./ImpressumController.js";
 import LandingController from "./LandingController.js";
+import Modal from "../view/utilViews/Modal.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -119,6 +120,7 @@ class AppController {
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
                 this.controller.addEventListener("on-view", this.onViewCastClicked.bind(this));
+                this.controller.addEventListener("ad-status", (event) => this.onAdStatusChanged(event));
                 //this.controller.addEventListener("on-fab-clicked", () => this.setHash("#create"));
                 //this.controller.addEventListener("on-fab-clicked", this.onCreateCastClicked.bind(this));
                 break;
@@ -252,9 +254,18 @@ class AppController {
         this.setHash("home");
     }
 
-    // onCreateCastClicked(){
-    //     //AdController.showAd();
-    //     //console.log("show Ad");
-    // }
+    onAdStatusChanged(event) {
+        let status = event.data;
+        if (status === "ad-rewarded" || status === "ad-watched") {
+            this.setHash("create");
+        } else {
+            let modal = new Modal("Ad reward error", "Please watch the whole ad to create a new Cast", "", ""),
+                appearanceTime = 2000;
+            modal.hideActionBtn();
+            setTimeout(() => {
+                modal.remove();
+            }, appearanceTime);
+        }
+    }
 }
 export default AppController;

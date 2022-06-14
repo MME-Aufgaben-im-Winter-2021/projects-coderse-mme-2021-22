@@ -16,6 +16,9 @@
     box-sizing: border-box;
 }
 
+#applixir_vanishing_div {
+    z-index: 999;
+}
 
 /* Beispiel für die einfache Einbindung eines Farbschema, generiert auf coolors.co */
 :root {
