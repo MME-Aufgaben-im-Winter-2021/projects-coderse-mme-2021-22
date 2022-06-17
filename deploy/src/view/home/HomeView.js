@@ -1,10 +1,9 @@
 /* eslint-env browser */
-/* eslint-disable */ //TODO: only here because missing invokeApplixirVideoUnit(options); import
+
 import { Observable, Event } from "../../utils/Observable.js";
 import CastListView from "./CastListView.js";
-import Modal from "../utilViews/Modal.js";
-
-var self;
+import Modal, { generateAdModal } from "../utilViews/Modal.js";
+import AdController from "../../adSystem/AdController.js";
 
 class HomeView extends Observable {
 
@@ -15,34 +14,6 @@ class HomeView extends Observable {
         this.castListView.addEventListener("on-view", (event) => this.notifyAll(event));
         this.castListView.addEventListener("on-delete", (event) => this.showDeleteModal(event));
         this.createCastFAB = document.querySelector(".fab-create-cast");
-        this.adBlur = document.querySelector(".ad-background-blur");
-        self = this;
-
-        function adStatusCallback(status) { // Status Callback Method
-            let ev = new Event("ad-status", status);
-            if (status === "ad-started" || status === "fb-started") {
-                self.adBlur.classList.remove("hidden");
-            } else {
-                self.adBlur.classList.add("hidden");
-            }
-            self.notifyAll(ev);
-        }
-
-        //var userId = await getUser().$id;
-        const options = { // Video Ad Options
-            zoneId: 2050, // Required field for RMS
-            accountId: 6773, // Required field for RMS                                                                               
-            gameId: 7249, // Required field for RMS
-            adStatusCb: adStatusCallback,
-            endMsg: 1,
-            //userId: userId,                      
-        };
-
-        let playBtn = document.querySelector(".fab-create-cast");
-        playBtn.onclick = function() {
-            invokeApplixirVideoUnit(options); // Invoke Video ad
-        };
-
 
         this.helpButton = document.querySelector(".fab-help");
         this.helpButton.addEventListener("click", () => { this.notifyAll(new Event("home-help-clicked")); });
@@ -66,6 +37,20 @@ class HomeView extends Observable {
 
     clearList() {
         this.castListView.clear();
+    }
+
+    setNumOfCasts(numberOfShownCasts = 0) {
+        this.numberOfShownCasts = numberOfShownCasts;
+        if (this.numberOfShownCasts > 2) {
+            this.adController = new AdController(".fab-create-cast");
+        } else if (this.numberOfShownCasts === 2) {
+            this.createCastFAB.addEventListener("click", generateAdModal);
+        } else {
+            this.createCastFAB.addEventListener("click", () => {
+                this.notifyAll(new Event("ad-status",
+                    "ad-successfull"));
+            });
+        }
     }
 
 }
