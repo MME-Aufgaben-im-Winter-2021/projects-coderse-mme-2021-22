@@ -1541,6 +1541,7 @@ mark {
 .modal-content {
     width: 80%;
     margin: 2.5vh 0;
+    word-wrap: break-word;
 }
 
 .modal-btn-container {

@@ -36,6 +36,10 @@ class Modal extends Observable {
         this.declineBtnEl.classList.add("invisible");
     }
 
+    setIntroModal() {
+        this.setInfoModal();
+    }
+
     remove() {
         removeModal(this.modal);
     }
@@ -86,5 +90,13 @@ function generateAdModal() {
     adController.addEventListener("ad-error-modal-hidden", generateAdModal.bind(this));
 }
 
+function generateIntroModal(title, content) {
+    let introModal = new Modal(
+        title,
+        content,
+        "Got it!", "");
+    introModal.setIntroModal();
+}
+
 export default Modal;
-export { generateAdModal };
+export { generateAdModal, generateIntroModal };

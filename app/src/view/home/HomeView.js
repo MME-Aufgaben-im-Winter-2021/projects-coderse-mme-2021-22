@@ -1,11 +1,9 @@
 /* eslint-env browser */
-/* eslint-disable */ //TODO: only here because missing invokeApplixirVideoUnit(options); import
+
 import { Observable, Event } from "../../utils/Observable.js";
 import CastListView from "./CastListView.js";
 import Modal, { generateAdModal } from "../utilViews/Modal.js";
 import AdController from "../../adSystem/AdController.js";
-
-var self;
 
 class HomeView extends Observable {
 
@@ -45,7 +43,7 @@ class HomeView extends Observable {
         this.numberOfShownCasts = numberOfShownCasts;
         if (this.numberOfShownCasts > 2) {
             this.adController = new AdController(".fab-create-cast");
-        } else if (this.numberOfShownCasts == 2) {
+        } else if (this.numberOfShownCasts === 2) {
             this.createCastFAB.addEventListener("click", generateAdModal);
         } else {
             this.createCastFAB.addEventListener("click", () => {
