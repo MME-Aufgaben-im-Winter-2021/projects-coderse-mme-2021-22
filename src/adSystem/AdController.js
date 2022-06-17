@@ -20,7 +20,7 @@ class AdController extends Observable {
             }
             if (status === "ad-rewarded" || status === "ad-watched" || status === "fb-watched" || status ===
                 "network-error") {
-                ev = new Event("ad-successfull", status);
+                ev = new Event("ad-status", "ad-successfull");
             } else if (status === "ad-interrupted" || status === "ad-blocker") {
                 let modal = new Modal("Ad reward error",
                         "Please watch the whole ad and deactivate your ad-blocker", "", ""),
@@ -30,7 +30,7 @@ class AdController extends Observable {
                     modal.remove();
                     self.notifyAll(new Event("ad-error-modal-hidden", status));
                 }, appearanceTime);
-                ev = new Event("ad-error", status);
+                ev = new Event("ad-status", "ad-error");
             }
             self.notifyAll(ev);
         }
