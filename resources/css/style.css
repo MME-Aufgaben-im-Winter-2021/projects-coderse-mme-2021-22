@@ -25,7 +25,7 @@
     --mauve: hsl(263, 64%, 84%);
     --mauve-dark: #b392e7;
     --baby-blue-eyes: #a3c4f3ff;
-    --non-photo-blue: #90dbf4ff;
+    --non-photo-blue: #90dbf4;
     --electric-blue: #8eecf5ff;
     --magic-mint: hsl(167, 82%, 78%);
     --granny-smith-apple: #b7fbbe;
@@ -1507,6 +1507,15 @@ mark {
     filter: invert(65%) sepia(22%) saturate(2176%) hue-rotate(359deg) brightness(100%) contrast(107%);
 }
 
+#modal-info-img {
+    display: block;
+    width: 3vw;
+    height: 3vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
+    filter: invert(78%) sepia(63%) saturate(390%) hue-rotate(164deg) brightness(98%) contrast(96%);
+}
+
 #modal-success-img {
     display: block;
     width: 3vw;
@@ -1520,6 +1529,10 @@ mark {
     color: rgb(183, 255, 100) !important;
 }
 
+.modal-info-title {
+    color: var(--non-photo-blue) !important;
+}
+
 .modal-title {
     color: orange;
     font-size: x-large;
@@ -1528,6 +1541,7 @@ mark {
 .modal-content {
     width: 80%;
     margin: 2.5vh 0;
+    word-wrap: break-word;
 }
 
 .modal-btn-container {

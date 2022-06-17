@@ -18,6 +18,10 @@ class LandingController extends Observable {
         this.signUpBtn.addEventListener("click", this.notifyAll.bind(this, new Event("on-sign-up-clicked",
             "register")));
 
+        this.startCreatingBtn = document.querySelector(".lan-btn-call-to-action");
+        this.startCreatingBtn.addEventListener("click", this.notifyAll.bind(this, new Event("on-sign-up-clicked",
+            "register")));
+
         this.scndBtn = document.querySelector(".lan-scnd-btn");
         this.scndBtn.addEventListener("click", this.notifyAll.bind(this, new Event("on-sign-up-clicked",
             "register")));

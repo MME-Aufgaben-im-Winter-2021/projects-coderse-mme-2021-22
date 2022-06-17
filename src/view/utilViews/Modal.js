@@ -1,5 +1,6 @@
 /* eslint-env browser */
 
+import AdController from "../../adSystem/AdController.js";
 import { Observable, Event } from "../../utils/Observable.js";
 
 const TEMPLATE = document.getElementById("modal").innerHTML.trim();
@@ -17,21 +18,31 @@ class Modal extends Observable {
         showModal(this.modal);
     }
 
-    hideActionBtn(){
+    hideActionBtn() {
         this.acceptBtnEl.classList.add("hidden");
         this.declineBtnEl.classList.add("hidden");
     }
 
-    setSuccessModal(){
+    setSuccessModal() {
         this.modal.querySelector("#modal-warning-img").classList.add("hidden");
         this.modal.querySelector("#modal-success-img").classList.remove("hidden");
         this.modal.querySelector(".modal-title").classList.add("modal-success-title");
     }
 
-    remove(){
-        removeModal(this.modal);
+    setInfoModal() {
+        this.modal.querySelector("#modal-warning-img").classList.add("hidden");
+        this.modal.querySelector("#modal-info-img").classList.remove("hidden");
+        this.modal.querySelector(".modal-title").classList.add("modal-info-title");
+        this.declineBtnEl.classList.add("invisible");
     }
 
+    setIntroModal() {
+        this.setInfoModal();
+    }
+
+    remove() {
+        removeModal(this.modal);
+    }
 }
 
 function onButtonClicked(isAccept) {
@@ -69,4 +80,23 @@ function createModal() {
     return view.firstChild;
 }
 
+function generateAdModal() {
+    let adModal = new Modal(
+            "Short ad before we start...",
+            "Help us finance our start-up project by watching this ad.<br> Thank you for your support! 😊",
+            "Start ad", ""),
+        adController = new AdController(".modal-btn-accept");
+    adModal.setInfoModal();
+    adController.addEventListener("ad-error-modal-hidden", generateAdModal.bind(this));
+}
+
+function generateIntroModal(title, content) {
+    let introModal = new Modal(
+        title,
+        content,
+        "Got it!", "");
+    introModal.setIntroModal();
+}
+
 export default Modal;
+export { generateAdModal, generateIntroModal };
