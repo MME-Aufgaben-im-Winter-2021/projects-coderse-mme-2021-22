@@ -9,7 +9,7 @@ import FileTypeValidator from "../utils/FileTypeValidator.js";
 import DropView from "../view/cast/CodeField/DropView.js";
 import { Observable, Event } from "../utils/Observable.js";
 import Cast from "../model/cast/Cast.js";
-
+import { generateAdModal } from "../view/utilViews/Modal.js";
 import LocalStorageProvider from "../utils/LocalStorageProvider.js";
 
 var castManager,
@@ -392,6 +392,7 @@ class CastController extends Observable {
         this.playerList.hideEditable();
         this.playerList.disableDragAndDrop();
         this.codeView.startShareViewMode();
+        generateAdModal();
     }
 
 }

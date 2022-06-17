@@ -25,7 +25,6 @@ import { deleteSession } from "../api/Session/deleteSession.js";
 import { getUser } from "../api/User/getUser.js";
 import ImpressumController from "./ImpressumController.js";
 import LandingController from "./LandingController.js";
-import Modal from "../view/utilViews/Modal.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -256,17 +255,8 @@ class AppController {
 
     onAdStatusChanged(event) {
         let status = event.data;
-        if (status === "ad-rewarded" || status === "ad-watched" || status === "fb-watched" || status ===
-            "network-error") {
+        if (status === "ad-successfull") {
             this.setHash("create");
-        } else if (status === "ad-interrupted" || status === "ad-blocker") {
-            let modal = new Modal("Ad reward error",
-                    "Please watch the whole ad and deactivate your ad-blocker, to create a new Cast", "", ""),
-                appearanceTime = 2500;
-            modal.hideActionBtn();
-            setTimeout(() => {
-                modal.remove();
-            }, appearanceTime);
         }
     }
 }

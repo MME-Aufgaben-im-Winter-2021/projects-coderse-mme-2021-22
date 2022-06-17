@@ -48,8 +48,9 @@ class AccountView extends Observable {
 
     onDelete() {
         let password = this.viewPassword.value;
-        this.modal = new Modal("Are you sure you want to delete your CODERSE account?", "All your Codecasts will be lost ...", "Delete", "Decline");
-        this.modal.addEventListener("onAcceptClicked", () => this.notifyAll(new Event("account-delete",password)));
+        this.modal = new Modal("Are you sure you want to delete your CODERSE account?",
+            "All your Codecasts will be lost ...", "Delete", "Decline");
+        this.modal.addEventListener("onAcceptClicked", () => this.notifyAll(new Event("account-delete", password)));
     }
 
 }

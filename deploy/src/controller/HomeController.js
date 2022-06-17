@@ -59,6 +59,17 @@ class HomeController extends Observable {
                 }
 
             });
+            return user;
+        }).then((user) => {
+            let counter = 0;
+            data.documents.forEach(document => {
+                // Hand document 
+                if (document.userID === user.$id) {
+                    counter++;
+                }
+
+            });
+            this.homeView.setNumOfCasts(counter);
         });
     }
 
