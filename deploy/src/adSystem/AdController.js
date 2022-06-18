@@ -32,10 +32,11 @@ class AdController extends Observable {
                 }, appearanceTime);
                 ev = new Event("ad-status", "ad-error");
             }
-            self.notifyAll(ev);
+            if (ev) {
+                self.notifyAll(ev);
+            }
         }
 
-        //var userId = await getUser().$id;
         const options = { // Video Ad Options
             zoneId: 2050, // Required field for RMS
             accountId: 6773, // Required field for RMS                                                                               
@@ -43,7 +44,6 @@ class AdController extends Observable {
             adStatusCb: adStatusCallback,
             endMsg: 1,
             btnDelay: 31,
-            //userId: userId,                      
         };
 
         let playBtn = document.querySelector(buttonClass);
