@@ -10,6 +10,10 @@ class Modal extends Observable {
     constructor(title, content, acceptBtnText, declineBtnText) {
         super();
         this.modal = createModal();
+        this.title = title;
+        this.content = content;
+        this.acceptBtnText = acceptBtnText;
+        this.declineBtnText = declineBtnText;
         fillModal(this.modal, title, content, acceptBtnText, declineBtnText);
         this.acceptBtnEl = this.modal.querySelector(".modal-btn-accept");
         this.declineBtnEl = this.modal.querySelector(".modal-btn-decline");
@@ -38,6 +42,11 @@ class Modal extends Observable {
 
     setIntroModal() {
         this.setInfoModal();
+        this.modal.querySelector(".modal-content").classList.add("intro-content");
+        this.modal.querySelector(".modal-btn-accept").classList.add("modal-btn-info");
+        this.modal.querySelector(".modal-X-container").addEventListener("click", () => onButtonClicked.call(this,
+            false));
+        this.modal.querySelector(".modal-X-container").classList.remove("hidden");
     }
 
     remove() {
@@ -90,12 +99,19 @@ function generateAdModal() {
     adController.addEventListener("ad-error-modal-hidden", generateAdModal.bind(this));
 }
 
-function generateIntroModal(title, content) {
+function generateIntroModal(title, content, nextIntroModal = undefined) {
     let introModal = new Modal(
         title,
         content,
         "Got it!", "");
     introModal.setIntroModal();
+    if (nextIntroModal !== undefined) {
+        removeModal(nextIntroModal.modal);
+        introModal.addEventListener("onAcceptClicked", () => {
+            showModal(nextIntroModal.modal);
+        });
+    }
+    return introModal;
 }
 
 export default Modal;
