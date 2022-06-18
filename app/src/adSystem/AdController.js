@@ -1,7 +1,7 @@
 /* eslint-env browser */
 /* eslint-disable */ //TODO: only here because missing invokeApplixirVideoUnit(options); import
 import { Observable, Event } from "../utils/Observable.js";
-import Modal from "../view/utilViews/Modal.js"
+import Modal from "../view/utilViews/Modal.js";
 
 var self;
 
