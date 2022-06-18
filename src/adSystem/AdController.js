@@ -1,6 +1,7 @@
 /* eslint-env browser */
 /* eslint-disable */ //TODO: only here because missing invokeApplixirVideoUnit(options); import
 import { Observable, Event } from "../utils/Observable.js";
+import Modal from "../view/utilViews/Modal.js"
 
 var self;
 
@@ -13,6 +14,7 @@ class AdController extends Observable {
 
         function adStatusCallback(status) { // Status Callback Method
             let ev;
+            console.log(status);
             if (status === "ad-started" || status === "fb-started") {
                 self.adBlur.classList.remove("hidden");
             } else {

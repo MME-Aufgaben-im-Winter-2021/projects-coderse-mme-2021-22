@@ -587,12 +587,49 @@ div[class^="button"] {
     user-select: none;
 }
 
+div[class^="fab-syntax-"] {
+    position: absolute;
+    right: 3vw;
+    top: 10vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 9999px;
+    background-color: var(--jet);
+    border: 2px solid var(--border-grey);
+    padding: 0.5vh;
+    align-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+div[class^="fab-syntax-"]>img {
+    filter: invert(100%);
+}
+
+div[class^="fab-syntax-"]:hover {
+    background-color: var(--onyx);
+    cursor: pointer;
+    color: white;
+    box-shadow: 1px 0px 6px var(--mauve), 0px 1px 6px var(--mauve), -1px 0px 6px var(--mauve), 0px -1px 6px var(--mauve);
+}
+
+div[class^="fab-syntax-"]:hover>img {
+    filter: invert(85%) sepia(23%) saturate(1320%) hue-rotate(195deg) brightness(98%) contrast(91%);
+}
+
+div[class^="fab-syntax-"]>* {
+    user-select: none;
+}
+
 .main-right-code-container {
     font-family: 'Anonymous Pro', sans-serif;
     user-select: text;
     background-color: transparent !important;
 }
 
+.main-right-code-container-unhighlighted * {
+    color: white !important;
+}
 
 .main-right-drag-drop-container {
     background-color: var(--eerie-black-2);
@@ -763,22 +800,26 @@ mark {
     height: 100%;
     width: 100%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .recorder-left {
     display: flex;
     flex-direction: row;
-    margin-right: auto;
-    overflow: hidden;
     align-items: center;
     justify-content: center;
+    width: 30%;
+    height: 100%;
+    border-right: 2px solid black;
 }
 
 .recorder-right {
     display: flex;
     flex-direction: row;
-    margin-left: auto;
+    overflow: hidden;
+    justify-content: end;
     align-items: center;
+    width: 70%;
 }
 
 .recorder>*>div {
@@ -815,7 +856,8 @@ mark {
     background-color: var(--eerie-black-2);
     color: white;
     padding-left: 0.6vw;
-    margin-left: 4vw;
+    /* margin-left: 2vw; */
+
 }
 
 .recorder-title:focus {
