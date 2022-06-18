@@ -21,7 +21,7 @@ class AdController extends Observable {
                 self.adBlur.classList.add("hidden");
             }
             if (status === "ad-rewarded" || status === "ad-watched" || status === "fb-watched" || status ===
-                "network-error") {
+                "network-error") { //|| status === "ads-unavailable"
                 ev = new Event("ad-status", "ad-successfull");
             } else if (status === "ad-interrupted" || status === "ad-blocker") {
                 let modal = new Modal("Ad reward error",
@@ -46,6 +46,7 @@ class AdController extends Observable {
             adStatusCb: adStatusCallback,
             endMsg: 1,
             btnDelay: 31,
+            fallback: 1,
         };
 
         let playBtn = document.querySelector(buttonClass);
