@@ -76,9 +76,11 @@ class CodeView extends Observable {
             for (let i = 0; i < newMarkings.length; i++) {
                 if (!newMarkings[i].hasAttribute("data-id")) {
                     newMarkings[i].setAttribute("data-id", id);
-                    newMarkings[i].addEventListener("mouseover", this.onMouseOverMarking.bind(this, id));
-                    newMarkings[i].addEventListener("mouseout", this.onMouseOutMarking.bind(this, id));
                 }
+                newMarkings[i].addEventListener("mouseover", this.onMouseOverMarking.bind(this, newMarkings[i]
+                    .getAttribute("data-id")));
+                newMarkings[i].addEventListener("mouseout", this.onMouseOutMarking.bind(this, newMarkings[i]
+                    .getAttribute("data-id")));
             }
         }
     }
