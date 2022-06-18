@@ -8,12 +8,14 @@ class CodeView extends Observable {
     constructor() {
         super();
         this.container = document.querySelector(".main-right-code-container");
-        this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
+        //this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
+        this.mainRight = document.querySelector(".main-right");
+        this.mainRight.addEventListener("mouseup", this.onTextSelected.bind(this));
         this.fabHelp = document.querySelector(".fab-help");
-        this.fabHelp.addEventListener("click", () => {this.notifyAll(new Event("code-help-clicked"));});
+        this.fabHelp.addEventListener("click", () => { this.notifyAll(new Event("code-help-clicked")); });
     }
 
-    hideFabHelp(){
+    hideFabHelp() {
         this.fabHelp.classList.add("hidden");
     }
 
@@ -37,7 +39,7 @@ class CodeView extends Observable {
     onTextSelected() {
         let selection = window.getSelection(),
             range, selectionContents, mark;
-        if (selection.anchorNode === null) {
+        if (selection.rangeCount === 0) {
             return;
         }
         range = selection.getRangeAt(0);
@@ -47,9 +49,8 @@ class CodeView extends Observable {
                 .anchorNode.parentElement.tagName === "MARK") && !(selection
                 .anchorNode.parentElement.tagName === "SPAN")) {
             this.clearSelection();
-            return;
+            //return;
         }
-
         selectionContents = range.extractContents();
         mark.appendChild(selectionContents);
         range.insertNode(mark);
@@ -75,13 +76,15 @@ class CodeView extends Observable {
             for (let i = 0; i < newMarkings.length; i++) {
                 if (!newMarkings[i].hasAttribute("data-id")) {
                     newMarkings[i].setAttribute("data-id", id);
-                    newMarkings[i].addEventListener("mouseover", this.onMouseOverMarking.bind(this, id));
-                    newMarkings[i].addEventListener("mouseout", this.onMouseOutMarking.bind(this, id));
                 }
+                newMarkings[i].addEventListener("mouseover", this.onMouseOverMarking.bind(this, newMarkings[i]
+                    .getAttribute("data-id")));
+                newMarkings[i].addEventListener("mouseout", this.onMouseOutMarking.bind(this, newMarkings[i]
+                    .getAttribute("data-id")));
             }
         }
     }
-    
+
     // Sends id from hover over markings to CastController
     onMouseOverMarking(id) {
         let event = new Event("marking-mouse-over", id);
@@ -107,7 +110,7 @@ class CodeView extends Observable {
                 innerEls.push(el);
             });
             replaceElement(el, innerEls);
-            
+
         });
     }
 
@@ -162,11 +165,11 @@ class CodeView extends Observable {
             el.classList.add("marking-highlight-play");
             el.classList.remove("marking");
         });
-        if(markings.length > 0){
+        if (markings.length > 0) {
             // Scrolls to a highlighted marking
             markings[0].scrollIntoView({
-            block: "center",
-            behavior: "smooth",
+                block: "center",
+                behavior: "smooth",
             });
         }
     }
@@ -250,48 +253,48 @@ class CodeView extends Observable {
             }
         }
         markings = document.querySelectorAll(".main-right-code-container > mark");
-        for(let mark of markings){
+        for (let mark of markings) {
             connectSpans(mark);
-        }    
+        }
     }
 
     // Because of the structure of highlighted code (many spans), marks in a span cause bugs.
     // This function splits spans which are parent of a mark into many parts.
-    removeInnerMarks(){
+    removeInnerMarks() {
         let marksIn;
         marksIn = document.querySelectorAll("span > mark");
         marksIn.forEach(mark => {
             let parentCopy = document.createElement("span"),
                 classlist = mark.parentNode.classList,
                 newElements = [];
-                parentCopy.innerHTML = mark.parentNode.innerHTML;
-                
-                parentCopy.childNodes.forEach(node => {
-                    let el = node;
-                    if(node.nodeType === Node.TEXT_NODE){
-                        el = document.createElement("span");
-                        el.innerHTML = node.data;
-                    }
-                    if(el.tagName !== "MARK"){
-                        if(el.classList.length === 0 && classlist.length !== 0){
-                            el.classList = classlist;
-                        }
-                        
-                    }else{
-                        let inner = el.innerHTML,
-                        newInner = document.createElement("span");
-                        newInner.innerHTML = inner;
-                        if(classlist.length !== 0){
-                            newInner.classList = classlist;
-                        }
-                        el.innerHTML = "";
-                        el.appendChild(newInner);
-                    }
-                    newElements.push(el);
-                });
+            parentCopy.innerHTML = mark.parentNode.innerHTML;
 
-                replaceElement(mark.parentNode, newElements);
-            
+            parentCopy.childNodes.forEach(node => {
+                let el = node;
+                if (node.nodeType === Node.TEXT_NODE) {
+                    el = document.createElement("span");
+                    el.innerHTML = node.data;
+                }
+                if (el.tagName !== "MARK") {
+                    if (el.classList.length === 0 && classlist.length !== 0) {
+                        el.classList = classlist;
+                    }
+
+                } else {
+                    let inner = el.innerHTML,
+                        newInner = document.createElement("span");
+                    newInner.innerHTML = inner;
+                    if (classlist.length !== 0) {
+                        newInner.classList = classlist;
+                    }
+                    el.innerHTML = "";
+                    el.appendChild(newInner);
+                }
+                newElements.push(el);
+            });
+
+            replaceElement(mark.parentNode, newElements);
+
         });
     }
 
@@ -302,58 +305,58 @@ class CodeView extends Observable {
 }
 
 // Replaces a node with a list of nodes
-function replaceElement(elementRep, list){
-    for(let el of list){
+function replaceElement(elementRep, list) {
+    for (let el of list) {
         elementRep.parentNode.insertBefore(el, elementRep);
     }
     elementRep.parentNode.removeChild(elementRep);
 }
 
 // Connects two spans with the same classes
-function connectSpans(mark){
+function connectSpans(mark) {
     let elements = mark.childNodes,
         prevEl = elements[0];
-        for (let i = 1; i < elements.length; i++) {
-            if (prevEl.tagName === "SPAN" && elements[i].tagName === "SPAN") {
-                // How to compare two arrays, retrieved from https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript on 10.04.22
-                if (compareClassLists(Array.from(prevEl.classList),Array.from(elements[i].classList))) {
-                    let newSpan = document.createElement("span");
-                    newSpan.classList = prevEl.classList;
-                    newSpan.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
-                    prevEl.parentNode.insertBefore(newSpan, prevEl);
-                    prevEl.parentNode.removeChild(prevEl);
-                    elements[i].parentNode.removeChild(elements[i]);
-                    i -=1;
-                    prevEl = elements[i];
-                } else {
-                    prevEl = elements[i];
-                }
+    for (let i = 1; i < elements.length; i++) {
+        if (prevEl.tagName === "SPAN" && elements[i].tagName === "SPAN") {
+            // How to compare two arrays, retrieved from https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript on 10.04.22
+            if (compareClassLists(Array.from(prevEl.classList), Array.from(elements[i].classList))) {
+                let newSpan = document.createElement("span");
+                newSpan.classList = prevEl.classList;
+                newSpan.innerHTML = prevEl.innerHTML + elements[i].innerHTML;
+                prevEl.parentNode.insertBefore(newSpan, prevEl);
+                prevEl.parentNode.removeChild(prevEl);
+                elements[i].parentNode.removeChild(elements[i]);
+                i -= 1;
+                prevEl = elements[i];
             } else {
                 prevEl = elements[i];
             }
-            
+        } else {
+            prevEl = elements[i];
         }
+
+    }
 }
 
 // Converts text nodes into spans, as those are a possible bug source
-function convertTextToSpans(nodes){
-    for (let node of nodes){
-        if(node.nodeType === Node.TEXT_NODE){
+function convertTextToSpans(nodes) {
+    for (let node of nodes) {
+        if (node.nodeType === Node.TEXT_NODE) {
             let span = document.createElement("span");
             span.innerText = node.data;
             node.replaceWith(span);
         }
-    
+
     }
 }
 
 // Compares two class lists for equality
-function compareClassLists(list1, list2){
-    if(list1.length !== list2.length || list1.length === 0){
+function compareClassLists(list1, list2) {
+    if (list1.length !== list2.length || list1.length === 0) {
         return false;
     }
-    for(let i = 0; i < list1.length; i++){
-        if(list1[i] !== list2[i]){
+    for (let i = 0; i < list1.length; i++) {
+        if (list1[i] !== list2[i]) {
             return false;
         }
     }

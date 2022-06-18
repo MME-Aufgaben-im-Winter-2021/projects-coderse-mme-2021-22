@@ -9,11 +9,10 @@ import FileTypeValidator from "../utils/FileTypeValidator.js";
 import DropView from "../view/cast/CodeField/DropView.js";
 import { Observable, Event } from "../utils/Observable.js";
 import Cast from "../model/cast/Cast.js";
-import { generateAdModal } from "../view/utilViews/Modal.js";
+import { generateAdModal, generateIntroModal } from "../view/utilViews/Modal.js";
 import LocalStorageProvider from "../utils/LocalStorageProvider.js";
 
-var castManager,
-    introJs = window.introJs;
+var castManager;
 
 // Controller to link data and views on the Cast Creation page
 // Connects Views and Models with events -> Communication
@@ -105,14 +104,13 @@ class CastController extends Observable {
         }
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
         if (onBoardingDone === null || onBoardingDone === "start") {
-            introJs().setOptions({
-                steps: [{
-                    title: "Load your code!",
-                    intro: "Start your cast by choosing a file you'd like to describe and share. You can either <strong>drag and drop</strong> or <strong>load</strong> your code-file from your explorer.",
-                    element: document.querySelector(".main-right-drag-drop-container"),
-                }],
-                tooltipClass: "custom-tooltip",
-            }).start();
+            generateIntroModal(
+                "Load your code!",
+                `Start your cast by choosing a file you'd like to describe and share. 
+                You can either 
+                <strong>drag and drop</strong> or 
+                <strong>load</strong> your code-file 
+                from your explorer.`);
             LocalStorageProvider.setCreateCastOnBoarding("drag-done");
         }
     }
@@ -121,34 +119,39 @@ class CastController extends Observable {
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
         if (onBoardingDone === "drag-done") {
             LocalStorageProvider.setCreateCastOnBoarding("done");
-            introJs().setOptions({
-                steps: [{
-                    title: "Cast title",
-                    intro: "How would you like to name your codecast?",
-                    element: document.querySelector(".code-cast-title"),
-                }, {
-                    title: "Code markings",
-                    intro: "Select ranges of code you want to describe by audio recordings. Selected codeparts are lightblue.",
-                    element: document.querySelector(".main-right"),
-                }, {
-                    title: "Add voice recordings",
-                    intro: "Over here you can make a <strong>voice recording</strong>. If you've marked code, the audio will be connected to it after you saved it. Before saving the audio, you can still make further markings that will be added. Additionally you can customize the audio title.",
-                    element: document.querySelector(".bottom-right"),
-                }, {
-                    title: "Edit your recordings!",
-                    intro: "Hover over audios to see which marked code snippet belongs to it. Listen to your records, change their title or delete them. Grab one to change the order.",
-                    element: document.querySelector(".main-left"),
-                }, {
-                    title: "Listen to your cast!",
-                    intro: "Listen through all your records, and navigate between them.",
-                    element: document.querySelector(".bottom-left"),
-                }, {
-                    title: "Save your cast!",
-                    intro: "Click this button to save your cast. </br> You can still come back later to edit this cast.",
-                    element: document.querySelector(".button-save"),
-                }],
-                tooltipClass: "custom-tooltip",
-            }).start();
+            let markingsModal, voiceRecordingsModal, editRecordingsModal, listenToCastModal,
+                saveCastModal;
+
+            saveCastModal = generateIntroModal("Save your cast",
+                `Click the "Save" button in the top left corner, to save your cast. <br> 
+                You can still come back later to edit this cast.`);
+
+            listenToCastModal = generateIntroModal("Listen to your cast",
+                `On the <strong> left side </strong> you can later see your recordings. <br>
+                Listen through all your records, and navigate between them.`,
+                saveCastModal);
+
+            editRecordingsModal = generateIntroModal("Edit your recordings",
+                `Hover over audios to see which marked code snippet belongs to it. <br>
+                    Listen to your records, change their title or delete them. <br>
+                    Grab one to change the order.`,
+                listenToCastModal);
+
+            voiceRecordingsModal = generateIntroModal("Add voice recordings",
+                `At the <strong> bottom left corner </strong> you can create a <strong>voice recording</strong>. <br>
+                    If you've marked code, the audio will be connected to it after you saved it. 
+                    Before saving the audio, you can still make further markings that will be added. 
+                    Additionally you can <strong> customize the audio title</strong>.`,
+                editRecordingsModal);
+
+            markingsModal = generateIntroModal("Code markings",
+                `Select ranges of text or code you want to describe by audio recordings.<br> 
+                Selected codeparts <strong>change their color</strong> and are then are <mark class="marking">lightblue</mark>.`,
+                voiceRecordingsModal);
+
+            generateIntroModal("Cast title",
+                `In the top left corner, you can give your cast a custom name.`,
+                markingsModal);
         }
     }
 

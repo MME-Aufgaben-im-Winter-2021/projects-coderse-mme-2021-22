@@ -1493,7 +1493,7 @@ mark {
 .modal-title-container {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: space-between;
     width: 100%;
     align-items: center;
 }
@@ -1527,6 +1527,7 @@ mark {
 
 .modal-success-title {
     color: rgb(183, 255, 100) !important;
+    padding-right: 2vw;
 }
 
 .modal-info-title {
@@ -1536,12 +1537,17 @@ mark {
 .modal-title {
     color: orange;
     font-size: x-large;
+    padding-right: 2vw;
 }
 
 .modal-content {
     width: 80%;
     margin: 2.5vh 0;
     word-wrap: break-word;
+}
+
+.intro-content {
+    text-align: left;
 }
 
 .modal-btn-container {
@@ -1567,9 +1573,59 @@ mark {
     color: white;
 }
 
+.modal-btn-accept:hover {
+    background-color: white;
+    border: 2px solid white;
+    color: orange;
+}
+
 .modal-btn-decline {
     border: 2px solid orange;
     color: orange;
+}
+
+.modal-btn-decline:hover {
+    border: 2px solid white;
+    color: white;
+}
+
+.modal-btn-info {
+    background-color: var(--non-photo-blue);
+    border: 2px solid var(--non-photo-blue);
+    color: white;
+    text-shadow: 1px 1px 1px var(--eerie-black);
+}
+
+.modal-btn-info:hover {
+    background-color: white;
+    border: 2px solid white;
+    color: var(--non-photo-blue);
+}
+
+.modal-X-container {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    background-color: var(--onyx);
+    border: 2px solid var(--border-grey);
+    padding: 0.5vh;
+    align-content: center;
+}
+
+.modal-X-container>* {
+    user-select: none;
+}
+
+.modal-X-container>img {
+    filter: invert(100%);
+}
+
+.modal-X-container:hover {
+    background-color: var(--mauve);
+    cursor: pointer;
+    color: white;
 }
 
 /* ------------------------------------------------------------- Impressum ----------- */
