@@ -1527,6 +1527,7 @@ mark {
 
 .modal-success-title {
     color: rgb(183, 255, 100) !important;
+    padding-right: 2vw;
 }
 
 .modal-info-title {
@@ -1536,6 +1537,7 @@ mark {
 .modal-title {
     color: orange;
     font-size: x-large;
+    padding-right: 2vw;
 }
 
 .modal-content {

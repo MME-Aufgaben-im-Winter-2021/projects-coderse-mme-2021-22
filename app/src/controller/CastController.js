@@ -12,8 +12,7 @@ import Cast from "../model/cast/Cast.js";
 import { generateAdModal, generateIntroModal } from "../view/utilViews/Modal.js";
 import LocalStorageProvider from "../utils/LocalStorageProvider.js";
 
-var castManager,
-    introJs = window.introJs;
+var castManager;
 
 // Controller to link data and views on the Cast Creation page
 // Connects Views and Models with events -> Communication
@@ -112,14 +111,6 @@ class CastController extends Observable {
                 <strong>drag and drop</strong> or 
                 <strong>load</strong> your code-file 
                 from your explorer.`);
-            // introJs().setOptions({
-            //     steps: [{
-            //         title: "Load your code!",
-            //         intro: "Start your cast by choosing a file you'd like to describe and share. You can either <strong>drag and drop</strong> or <strong>load</strong> your code-file from your explorer.",
-            //         element: document.querySelector(".main-right-drag-drop-container"),
-            //     }],
-            //     tooltipClass: "custom-tooltip",
-            // }).start();
             LocalStorageProvider.setCreateCastOnBoarding("drag-done");
         }
     }
@@ -132,28 +123,30 @@ class CastController extends Observable {
                 saveCastModal;
 
             saveCastModal = generateIntroModal("Save your cast",
-                `Click this button to save your cast. <br> 
+                `Click the "Save" button in the top left corner, to save your cast. <br> 
                 You can still come back later to edit this cast.`);
 
             listenToCastModal = generateIntroModal("Listen to your cast",
-                `Listen through all your records, and navigate between them.`,
+                `On the <strong> left side </strong> you can later see your recordings. <br>
+                Listen through all your records, and navigate between them.`,
                 saveCastModal);
 
             editRecordingsModal = generateIntroModal("Edit your recordings",
-                `Hover over audios to see which marked code snippet belongs to it. 
-                    Listen to your records, change their title or delete them. 
+                `Hover over audios to see which marked code snippet belongs to it. <br>
+                    Listen to your records, change their title or delete them. <br>
                     Grab one to change the order.`,
                 listenToCastModal);
 
             voiceRecordingsModal = generateIntroModal("Add voice recordings",
-                `Over here you can make a <strong>voice recording</strong>. 
+                `At the <strong> bottom left corner </strong> you can create a <strong>voice recording</strong>. <br>
                     If you've marked code, the audio will be connected to it after you saved it. 
                     Before saving the audio, you can still make further markings that will be added. 
-                    Additionally you can customize the audio title.`,
+                    Additionally you can <strong> customize the audio title</strong>.`,
                 editRecordingsModal);
 
             markingsModal = generateIntroModal("Code markings",
-                `Select ranges of code you want to describe by audio recordings. Selected codeparts are lightblue.`,
+                `Select ranges of text or code you want to describe by audio recordings.<br> 
+                Selected codeparts <strong>change their color</strong> and are then are <mark class="marking">lightblue</mark>.`,
                 voiceRecordingsModal);
 
             generateIntroModal("Cast title",

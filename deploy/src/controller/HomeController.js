@@ -6,8 +6,7 @@ import HomeManager from "../model/home/HomeManager.js";
 import Observable from "../utils/Observable.js";
 import { getUser } from "../api/User/getUser.js";
 import LocalStorageProvider from "../utils/LocalStorageProvider.js";
-
-var introJs = window.introJs;
+import { generateIntroModal } from "../view/utilViews/Modal.js";
 
 //Controls the Home page
 class HomeController extends Observable {
@@ -82,25 +81,28 @@ class HomeController extends Observable {
     }
     // Tutorial of the home-screen. Shows up at first opening or by clicking on the questionmark-button
     showTutorial() {
-        introJs().setOptions({
-            steps: [{
-                title: "Welcome to CODERSE!",
-                intro: "Hey you! This is your place to comment your code with audio-records and spread it to the world. ",
-            }, {
-                title: "Home",
-                intro: "This is your <strong>homescreen</strong>! You can see you saved pod ... eh codecasts. You can share or delete every cast. To edit a cast just click on it.",
-                element: document.querySelector("#cast-list"),
-            }, {
-                title: "Account",
-                intro: "View your <strong>account settings</strong> or <strong>logout</strong> by clicking on your username.",
-                element: document.querySelector("#user-dropdown"),
-            }, {
-                title: "Create cast",
-                intro: "Let's create a new cast!",
-                element: document.querySelector(".fab-create-cast"),
-            }],
-            tooltipClass: "custom-tooltip",
-        }).start();
+        let createCastM, accountM, homeM;
+
+        createCastM = generateIntroModal("Create cast",
+            `Let's create a new cast! <br> 
+        Click on "Create cast" `);
+
+        accountM = generateIntroModal("Account",
+            `View your <strong>account settings</strong> 
+        or <strong>logout</strong> by clicking on your username.`,
+            createCastM);
+
+        homeM = generateIntroModal("Home",
+            `This is your <strong>homescreen</strong>! 
+         You can see you saved pod ... eh codecasts. 
+         You can share or delete every cast. 
+         To edit a cast just click on it.`,
+            accountM);
+
+        generateIntroModal("Welcome to CODERSE!",
+            `Hey😋<br> 
+        This is your place to comment your code with audio-records and spread it to the world.`,
+            homeM);
     }
 
     computeOnboarding() {

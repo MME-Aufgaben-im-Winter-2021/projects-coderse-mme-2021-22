@@ -20,13 +20,14 @@ class NavView extends Observable {
         this.safeBtn.addEventListener("click", this.castSafe.bind(this));
         this.userBtn.addEventListener("click", this.toggleDropdown.bind(this));
         this.userLogout.addEventListener("click", this.onUserLogOutClicked.bind(this));
+        this.homeBtn.addEventListener("click", this.onHomeClicked.bind(this));
     }
 
-    getCastTitle(){
+    getCastTitle() {
         return this.castTitle.value;
     }
 
-    resetCastTitle(){
+    resetCastTitle() {
         this.castTitle.value = "Code-Cast title";
     }
 
@@ -45,6 +46,11 @@ class NavView extends Observable {
 
     onUserLogOutClicked() {
         let event = new Event("user-logout", "user wants to log out");
+        this.notifyAll(event);
+    }
+
+    onHomeClicked() {
+        let event = new Event("onNavHomeClicked", "user wants to go to home");
         this.notifyAll(event);
     }
 
@@ -150,18 +156,18 @@ class NavView extends Observable {
         this.userBtn.classList.remove("active-link");
     }
 
-    resetShareData(){
+    resetShareData() {
         let shareTitle = this.view.querySelectorAll(".code-cast-title-share-view");
-        for(let node of shareTitle){
+        for (let node of shareTitle) {
             this.view.querySelector(".nav-align-left").removeChild(node);
         }
     }
-    showLoadingAnimation(){
+    showLoadingAnimation() {
         this.iconLoader.classList.remove("hidden");
         this.safeBtn.classList.add("hidden");
     }
 
-    removeLoadingAnimation(){
+    removeLoadingAnimation() {
         this.iconLoader.classList.add("hidden");
         this.safeBtn.classList.remove("hidden");
     }

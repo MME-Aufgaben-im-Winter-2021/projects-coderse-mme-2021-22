@@ -45,7 +45,8 @@ class HomeView extends Observable {
             this.adController = new AdController(".fab-create-cast");
         } else if (this.numberOfShownCasts === 2) {
             this.createCastFAB.addEventListener("click", generateAdModal);
-        } else {
+        } else if (this.numberOfShownCasts < 2) {
+            this.createCastFAB.removeEventListener("click", generateAdModal);
             this.createCastFAB.addEventListener("click", () => {
                 this.notifyAll(new Event("ad-status",
                     "ad-successfull"));
