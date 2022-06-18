@@ -9,6 +9,12 @@
         <div class="fab-help">
             <img id="help-img" src="../../resources/icons/help-circle.svg">
         </div>
+        <div class="fab-syntax-hide hidden">
+            <img id="syntax-img" src="../../resources/icons/eye.svg">
+        </div>
+        <div class="fab-syntax-show hidden">
+            <img id="syntax-show-img" src="../../resources/icons/eye-off.svg">
+        </div>
         <div class="main-right-drag-drop-container">
             Drag and Drop your file here!
             <div id="drop_zone" class="main-right-drag-drop-field">
@@ -16,11 +22,11 @@
             <div class="main-right-drag-drop-container-btn-select-file">Select file from disc</div>
             <div class="main-right-drag-drop-container-btn hidden">Start the Cast</div>
         </div>
-       
+
         <div class="main-right-code-container">
         </div>
-        
-        
+
+
 
     </div>
 </div>
@@ -37,9 +43,21 @@
     <div class="bottom-right">
         <div class="recorder">
             <div class="recorder-left">
-                <input class="recorder-title" type="text" placeholder="Audio title" maxlength="30">
+                <div class="recorder-icon-remove-marking-container tooltip-container">
+                    <img src="./resources/icons/delete.svg" class="recorder-icon-remove-marking">
+                    <span class="tooltip">Click to remove the current marking</span>
+                </div>
+                <div class="recorder-icon-hljs-eye-container tooltip-container">
+                    <img src="./resources/icons/eye.svg" class="recorder-icon-hljs-eye">
+                    <span class="tooltip">Disable syntax-highlighting</span>
+                </div>
+                <div class="recorder-icon-hljs-eye-off-container tooltip-container hidden">
+                    <img src="./resources/icons/eye-off.svg" class="recorder-icon-hljs-eye-off">
+                    <span class="tooltip">Enable syntax-highlighting</span>
+                </div>
             </div>
             <div class="recorder-right">
+                <input class="recorder-title" type="text" placeholder="Audio title" maxlength="30">
                 <div class="recorder-icon-light-container hidden">
                     <img src="./resources/icons/circle.svg" class="recorder-icon-light">
                 </div>

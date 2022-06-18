@@ -13,6 +13,27 @@ class CodeView extends Observable {
         this.mainRight.addEventListener("mouseup", this.onTextSelected.bind(this));
         this.fabHelp = document.querySelector(".fab-help");
         this.fabHelp.addEventListener("click", () => { this.notifyAll(new Event("code-help-clicked")); });
+
+        this.fabEye = document.querySelector(".fab-syntax-hide");
+        this.fabEye.addEventListener("click", this.onFabEyeClicked.bind(this));
+        this.fabEyeOff = document.querySelector(".fab-syntax-show");
+        this.fabEyeOff.addEventListener("click", this.onFabEyeOffClicked.bind(this));
+    }
+
+    showSyntaxFab() {
+        this.fabEye.classList.remove("hidden");
+    }
+
+    onFabEyeClicked() {
+        this.notifyAll(new Event("disable-syntax"));
+        this.fabEye.classList.add("hidden");
+        this.fabEyeOff.classList.remove("hidden");
+    }
+
+    onFabEyeOffClicked() {
+        this.notifyAll(new Event("enable-syntax"));
+        this.fabEye.classList.remove("hidden");
+        this.fabEyeOff.classList.add("hidden");
     }
 
     hideFabHelp() {
@@ -28,6 +49,14 @@ class CodeView extends Observable {
         this.container.textContent = codeInput;
         hljs.highlightElement(this.container);
         convertTextToSpans(this.container.childNodes);
+    }
+
+    enableHighlighting() {
+        this.container.classList.remove("main-right-code-container-unhighlighted");
+    }
+
+    disableHighlighting() {
+        this.container.classList.add("main-right-code-container-unhighlighted");
     }
 
     showLoadedFile(codeInput) {

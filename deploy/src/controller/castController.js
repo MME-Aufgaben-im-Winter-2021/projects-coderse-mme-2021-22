@@ -59,12 +59,17 @@ class CastController extends Observable {
         this.recorder.addEventListener("stop-recording", this.onRecordingStop.bind(this));
         this.recorder.addEventListener("delete-recording", this.onRecordingDelete.bind(this));
         this.recorder.addEventListener("save-recording", this.onRecordingSave.bind(this));
+        this.recorder.addEventListener("remove-current-marking", this.removeCurrentMarking.bind(this));
+        this.recorder.addEventListener("disable-syntax", this.disableSyntaxHighlighting.bind(this));
+        this.recorder.addEventListener("enable-syntax", this.enableSyntaxHighlighting.bind(this));
 
         // Code View
         this.codeView = new CodeView();
         this.codeView.addEventListener("marking-mouse-over", (e) => this.playerList.onMouseOverMarking(e));
         this.codeView.addEventListener("marking-mouse-out", (e) => this.playerList.onMouseOutMarking(e));
         this.codeView.addEventListener("code-help-clicked", this.onHelpClicked.bind(this));
+        this.codeView.addEventListener("disable-syntax", this.disableSyntaxHighlighting.bind(this));
+        this.codeView.addEventListener("enable-syntax", this.enableSyntaxHighlighting.bind(this));
 
         // Drop View
         this.dropView = new DropView();
@@ -309,6 +314,18 @@ class CastController extends Observable {
 
     /* ---------------------------------------------------recorder--------------------------------------------------------------- */
 
+    removeCurrentMarking() {
+        this.codeView.removeUnconnectedMarkings();
+    }
+
+    disableSyntaxHighlighting() {
+        this.codeView.disableHighlighting();
+    }
+
+    enableSyntaxHighlighting() {
+        this.codeView.enableHighlighting();
+    }
+
     // Function for communication between player and recorder
     onRecordingSend(event) {
         castManager.saveRecord(event);
@@ -395,6 +412,7 @@ class CastController extends Observable {
         this.playerList.hideEditable();
         this.playerList.disableDragAndDrop();
         this.codeView.startShareViewMode();
+        this.codeView.showSyntaxFab();
         generateAdModal();
     }
 
