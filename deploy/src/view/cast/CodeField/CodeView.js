@@ -8,11 +8,39 @@ class CodeView extends Observable {
     constructor() {
         super();
         this.container = document.querySelector(".main-right-code-container");
-        //this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
         this.mainRight = document.querySelector(".main-right");
         this.mainRight.addEventListener("mouseup", this.onTextSelected.bind(this));
         this.fabHelp = document.querySelector(".fab-help");
         this.fabHelp.addEventListener("click", () => { this.notifyAll(new Event("code-help-clicked")); });
+
+        this.fabEye = document.querySelector(".fab-syntax-hide");
+        this.fabEye.addEventListener("click", this.onFabEyeClicked.bind(this));
+        this.fabEyeOff = document.querySelector(".fab-syntax-show");
+        this.fabEyeOff.addEventListener("click", this.onFabEyeOffClicked.bind(this));
+
+        //Quelle: https://stackoverflow.com/questions/16006583/capturing-ctrlz-key-combination-in-javascript#16006607 abgerufen am 18.06.2022
+        document.onkeydown = (e) => {
+            var evtobj = window.event ? event : e;
+            if (evtobj.keyCode === 90 && evtobj.ctrlKey) {
+                this.removeUnconnectedMarkings();
+            }
+        };
+    }
+
+    showSyntaxFab() {
+        this.fabEye.classList.remove("hidden");
+    }
+
+    onFabEyeClicked() {
+        this.notifyAll(new Event("disable-syntax"));
+        this.fabEye.classList.add("hidden");
+        this.fabEyeOff.classList.remove("hidden");
+    }
+
+    onFabEyeOffClicked() {
+        this.notifyAll(new Event("enable-syntax"));
+        this.fabEye.classList.remove("hidden");
+        this.fabEyeOff.classList.add("hidden");
     }
 
     hideFabHelp() {
@@ -28,6 +56,14 @@ class CodeView extends Observable {
         this.container.textContent = codeInput;
         hljs.highlightElement(this.container);
         convertTextToSpans(this.container.childNodes);
+    }
+
+    enableHighlighting() {
+        this.container.classList.remove("main-right-code-container-unhighlighted");
+    }
+
+    disableHighlighting() {
+        this.container.classList.add("main-right-code-container-unhighlighted");
     }
 
     showLoadedFile(codeInput) {
