@@ -8,7 +8,6 @@ class CodeView extends Observable {
     constructor() {
         super();
         this.container = document.querySelector(".main-right-code-container");
-        //this.container.addEventListener("mouseup", this.onTextSelected.bind(this));
         this.mainRight = document.querySelector(".main-right");
         this.mainRight.addEventListener("mouseup", this.onTextSelected.bind(this));
         this.fabHelp = document.querySelector(".fab-help");
@@ -18,6 +17,14 @@ class CodeView extends Observable {
         this.fabEye.addEventListener("click", this.onFabEyeClicked.bind(this));
         this.fabEyeOff = document.querySelector(".fab-syntax-show");
         this.fabEyeOff.addEventListener("click", this.onFabEyeOffClicked.bind(this));
+
+        //Quelle: https://stackoverflow.com/questions/16006583/capturing-ctrlz-key-combination-in-javascript#16006607 abgerufen am 18.06.2022
+        document.onkeydown = (e) => {
+            var evtobj = window.event ? event : e;
+            if (evtobj.keyCode === 90 && evtobj.ctrlKey) {
+                this.removeUnconnectedMarkings();
+            }
+        };
     }
 
     showSyntaxFab() {

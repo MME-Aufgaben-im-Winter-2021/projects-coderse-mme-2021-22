@@ -124,7 +124,7 @@ class CastController extends Observable {
         let onBoardingDone = LocalStorageProvider.getCreateCastOnBoarding();
         if (onBoardingDone === "drag-done") {
             LocalStorageProvider.setCreateCastOnBoarding("done");
-            let markingsModal, voiceRecordingsModal, editRecordingsModal, listenToCastModal,
+            let markingsModal, toolsModal, voiceRecordingsModal, editRecordingsModal, listenToCastModal,
                 saveCastModal;
 
             saveCastModal = generateIntroModal("Save your cast",
@@ -142,12 +142,19 @@ class CastController extends Observable {
                     Grab one to change the order.`,
                 listenToCastModal);
 
+            toolsModal = generateIntroModal("Tools",
+                `At the bottom between the player controls and the audio controls you see the <b>toolbar</b>. <br>
+                 By pressing on the delete button you can remove the current marking you made in the text. <br>
+                 Alternatively use <b><i>CTRL + Z</i></b>.<br><hr><br>
+                 If you click on the <b>eye icon</b>, you can toggle the visibility of the automatic syntax highlighting.`,
+                editRecordingsModal);
+
             voiceRecordingsModal = generateIntroModal("Add voice recordings",
-                `At the <strong> bottom left corner </strong> you can create a <strong>voice recording</strong>. <br>
+                `At the <strong> bottom right corner </strong> you can create a <strong>voice recording</strong>. <br>
                     If you've marked code, the audio will be connected to it after you saved it. 
                     Before saving the audio, you can still make further markings that will be added. 
                     Additionally you can <strong> customize the audio title</strong>.`,
-                editRecordingsModal);
+                toolsModal);
 
             markingsModal = generateIntroModal("Code markings",
                 `Select ranges of text or code you want to describe by audio recordings.<br> 
