@@ -94,9 +94,14 @@ function generateAdModal() {
             "Short ad before we start...",
             "Help us finance our start-up project by watching this ad.<br> Thank you for your support! 😊",
             "Start ad", ""),
-        adController = new AdController(".modal-btn-accept");
+        adController = new AdController(".modal-btn-accept"),
+        self = this;
     adModal.setInfoModal();
     adController.addEventListener("ad-error-modal-hidden", generateAdModal.bind(this));
+    adController.addEventListener("ad-status", (event) => {
+        self.notifyAll(event);
+    });
+    return adModal;
 }
 
 function generateIntroModal(title, content, nextIntroModal = undefined) {
