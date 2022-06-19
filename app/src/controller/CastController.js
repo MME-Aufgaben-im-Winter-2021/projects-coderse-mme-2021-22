@@ -420,7 +420,7 @@ class CastController extends Observable {
         this.playerList.disableDragAndDrop();
         this.codeView.startShareViewMode();
         this.codeView.showSyntaxFab();
-        generateAdModal();
+        generateAdModal.call(this);
     }
 
 }
