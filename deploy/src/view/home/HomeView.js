@@ -17,6 +17,12 @@ class HomeView extends Observable {
 
         this.helpButton = document.querySelector(".fab-help");
         this.helpButton.addEventListener("click", () => { this.notifyAll(new Event("home-help-clicked")); });
+
+        this.adController = new AdController(".fab-create-cast");
+        this.adController.disable();
+        this.adController.addEventListener("ad-status", (event) => {
+            this.notifyAll(event);
+        });
     }
 
     showDeleteModal(event) {
@@ -46,18 +52,16 @@ class HomeView extends Observable {
             ad.addEventListener("ad-status", (event) => this.notifyAll.bind(this, event));
         };
         if (this.numberOfShownCasts > 2) {
-            this.adController = new AdController(".fab-create-cast");
-            this.adController.addEventListener("ad-status", (event) => this.notifyAll.bind(this, event));
+            this.adController.enable();
         } else if (this.numberOfShownCasts === 2) {
-            if (this.adController) {
-                window.location.reload(true);
-            }
+            this.adController.disable();
             this.createCastFAB.addEventListener("click", () => {
                 if (this.numberOfShownCasts === 2) {
                     this.adM();
                 }
             });
         } else if (this.numberOfShownCasts < 2) {
+            this.adController.disable();
             this.createCastFAB.addEventListener("click", () => {
                 if (this.numberOfShownCasts < 2) {
                     this.notifyAll(new Event("ad-status", "ad-successfull"));

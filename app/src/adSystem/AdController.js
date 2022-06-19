@@ -11,6 +11,7 @@ class AdController extends Observable {
         super();
         this.adBlur = document.querySelector(".ad-background-blur");
         self = this;
+        this.enabled = true;
 
         function adStatusCallback(status) { // Status Callback Method
             let ev;
@@ -51,9 +52,19 @@ class AdController extends Observable {
 
         let playBtn = document.querySelector(buttonClass);
         playBtn.onclick = function() {
-            invokeApplixirVideoUnit(options); // Invoke Video ad
+            if (self.enabled) {
+                invokeApplixirVideoUnit(options); // Invoke Video ad
+            }
         };
 
+    }
+
+    disable() {
+        this.enabled = false;
+    }
+
+    enable() {
+        this.enabled = true;
     }
 }
 
