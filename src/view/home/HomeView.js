@@ -41,19 +41,27 @@ class HomeView extends Observable {
 
     setNumOfCasts(numberOfShownCasts = 0) {
         this.numberOfShownCasts = numberOfShownCasts;
+        this.adM = () => {
+            let ad = generateAdModal.call(this);
+            ad.addEventListener("ad-status", (event) => this.notifyAll.bind(this, event));
+        };
         if (this.numberOfShownCasts > 2) {
             this.adController = new AdController(".fab-create-cast");
             this.adController.addEventListener("ad-status", (event) => this.notifyAll.bind(this, event));
         } else if (this.numberOfShownCasts === 2) {
+            if (this.adController) {
+                window.location.reload(true);
+            }
             this.createCastFAB.addEventListener("click", () => {
-                let ad = generateAdModal.call(this);
-                ad.addEventListener("ad-status", (event) => this.notifyAll.bind(this, event));
+                if (this.numberOfShownCasts === 2) {
+                    this.adM();
+                }
             });
         } else if (this.numberOfShownCasts < 2) {
-            this.createCastFAB.removeEventListener("click", generateAdModal);
             this.createCastFAB.addEventListener("click", () => {
-                this.notifyAll(new Event("ad-status",
-                    "ad-successfull"));
+                if (this.numberOfShownCasts < 2) {
+                    this.notifyAll(new Event("ad-status", "ad-successfull"));
+                }
             });
         }
     }
