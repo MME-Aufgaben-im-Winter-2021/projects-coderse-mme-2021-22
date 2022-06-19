@@ -119,5 +119,22 @@ function generateIntroModal(title, content, nextIntroModal = undefined) {
     return introModal;
 }
 
+// class Cookie extends Observable {
+//     constructor() {
+//         super();
+//         this.cookiePop = this.createCookiePopup();
+
+//         showModal(this.cookiePop);
+//     }
+
+//     createCookiePopup() {
+//         let template = document.getElementById("cookie").innerHTML.trim(),
+//             view = document.createElement("div");
+//         view.innerHTML = template;
+//         return view.firstChild;
+//     }
+
+// }
+
 export default Modal;
-export { generateAdModal, generateIntroModal };
+export { generateAdModal, generateIntroModal }; //, Cookie };
