@@ -1,5 +1,7 @@
 /* eslint-env browser */
 
+import Canvas from "./Canvas.js";
+
 class CanvasView {
 
     constructor(){
@@ -53,29 +55,30 @@ class CanvasView {
             viewport: viewport,
         };
 
-        this.pageNum += 1;
+        // this.pageNum += 1;
 
         try {
              await page.render(renderContext);
-             this.showPdf();
+            //  this.showPdf();
         }
         catch(error) {
             console.log(error);
         }
 
         this.container.appendChild(canvas);
-
+        return new Canvas(canvas);
     }
 
     showPicture(){
         let canvas = this.createCanvas(),
         context = canvas.getContext("2d"),
         image = new Image();
-        this.container.appendChild(canvas);
         image.addEventListener("load", () => {
             canvas.width = image.naturalWidth;
-            canvas.height = this.naturalHeight;
+            canvas.height = image.naturalHeight;
             context.drawImage(image,0,0,canvas.width,canvas.height);
+            this.container.appendChild(canvas);
+            return new Canvas(canvas);
         });
         image.src = this.pictureUrl;   
     }
