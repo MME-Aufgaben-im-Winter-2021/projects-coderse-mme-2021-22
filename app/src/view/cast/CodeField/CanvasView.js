@@ -9,6 +9,23 @@ class CanvasView {
         this.pdf = undefined;
         this.pageNum = 1;
         this.pictureUrl = undefined;
+        this.can = undefined;
+    }
+
+    getPDF(){
+        let data = {
+            "pdf": this.pdf["_transport"]["_params"].url,
+            "lines": this.can.getLineArray(),
+        };
+        return data;
+    }
+
+    getImage(){
+        let data = {
+            "imageURL": this.pictureUrl,
+            "lines": this.can.getLineArray(),
+        };
+        return data;
     }
 
     createCanvas(){
@@ -66,7 +83,7 @@ class CanvasView {
         }
 
         this.container.appendChild(canvas);
-        return new Canvas(canvas);
+        this.can = new Canvas(canvas);
     }
 
     showPicture(){
@@ -78,7 +95,7 @@ class CanvasView {
             canvas.height = image.naturalHeight;
             context.drawImage(image,0,0,canvas.width,canvas.height);
             this.container.appendChild(canvas);
-            return new Canvas(canvas);
+            this.can = new Canvas(canvas);
         });
         image.src = this.pictureUrl;   
     }

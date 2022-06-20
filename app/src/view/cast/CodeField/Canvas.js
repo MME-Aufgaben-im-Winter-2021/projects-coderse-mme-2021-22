@@ -41,6 +41,10 @@ class Canvas {
     this.context.lineWidth = 10 * this.widthFactor;
   }
 
+  getLineArray(){
+    return lineArray;
+  }
+
   handleEvent(e) {
     switch (e.type) {
       case "mousemove":

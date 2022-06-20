@@ -68,6 +68,8 @@ class CastController extends Observable {
         this.codeView.addEventListener("marking-mouse-out", (e) => this.playerList.onMouseOutMarking(e));
         this.codeView.addEventListener("code-help-clicked", this.onHelpClicked.bind(this));
 
+        this.file = "";
+
         // Canvas
         this.canvasView = new CanvasView();
 
@@ -344,12 +346,14 @@ class CastController extends Observable {
     /* ---------------------------------------------------dropView--------------------------------------------------------------- */
 
     onFileReadyTxt(event) {
+        this.file = "text";
         this.showAdvancedIntro();
         this.codeView.showFile(event.data);
         this.computeOnboarding();
     }
 
     onFileReadyPdf(event) {
+        this.file = "pdf";
         this.canvasView.setDocument(event.data);
         this.canvasView.showPdf();
         this.showAdvancedIntro();
@@ -357,6 +361,8 @@ class CastController extends Observable {
     }
 
     onFileReadyPic(event) {
+        this.file = "image";
+        this.textFile = false;
         this.canvasView.setPictureUrl(event.data);
         this.canvasView.showPicture();
     }
@@ -391,7 +397,13 @@ class CastController extends Observable {
     // Safes cast to cloud
     safeCast() {
         castManager.checkForModal();
-        castManager.saveCast(this.codeView.getHTML());
+        if(this.file === "text"){
+            castManager.saveCastText(this.codeView.getHTML());
+        } else if(this.file === "pdf") {
+            castManager.saveCastPDF(this.canvasView.getPDF());
+        } else if(this.file === "image") {
+            castManager.saveCastImage(this.canvasView.getImage());
+        }
     }
     // Sets changed title
     onCastTitleChanged(event) {
