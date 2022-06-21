@@ -571,11 +571,35 @@ div[class^="button"] {
     font-family: 'Anonymous Pro', sans-serif;
     user-select: text;
     background-color: transparent !important;
+    position: relative;
+}
+
+.zoomIn {
+    position: absolute;
+    top: 165px;
+    left: 0;
+}
+
+.zoomOut {
+    position: absolute;
+    top: 220px;
+    left: 0;
+}
+
+.nextPage {
+    position: absolute;
+    top: -55px;
+    left: 110px;
+}
+
+.previousPage {
+    position: absolute;
+    top: -55px;
+    left: 55px;
 }
 
 .main-right-canvas {
     display: none;
-    background-color: #b65d5d;
     width: 70%;
     margin: auto;
     margin-bottom: 20px;

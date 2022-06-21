@@ -1,6 +1,7 @@
 /* eslint-env browser */
 
 import Canvas from "./Canvas.js";
+import CanvasControl from "./CanvasControl.js";
 
 class CanvasView {
 
@@ -8,8 +9,11 @@ class CanvasView {
         this.container = document.querySelector(".main-right-code-container");
         this.pdf = undefined;
         this.pageNum = 1;
+        this.scale = 2;
         this.pictureUrl = undefined;
-        this.can = undefined;
+        this.canvas = this.createCanvas();
+        this.container.appendChild(this.canvas);
+        this.canvasModel = new Canvas(this.canvas);
     }
 
     getPDF(){
@@ -32,9 +36,42 @@ class CanvasView {
         let canvas = document.createElement("canvas");
         // canvas.id = "pdf-canvas";
         canvas.classList.add("main-right-canvas");
-        canvas.style.display = "block";
         return canvas;
     }
+
+    showCanvas(){
+        this.canvas.style.display = "block";
+    }
+
+    addCanvasControl(container){
+        this.control = new CanvasControl(container);
+        this.control.addEventListener("next-page", this.switchNextPage.bind(this));
+        this.control.addEventListener("previous-page", this.switchPreviousPage.bind(this));
+        // this.control.addEventListener("zoomIn-page", this.zoomInPage.bind(this));
+        // this.control.addEventListener("zoomOut-page", this.zoomOutPage.bind(this));
+
+    }
+
+    switchNextPage(){
+        // TODO: bei maximaler Seite ausgrauen oder so
+        this.pageNum += 1;
+        this.showPdf();
+    }
+
+    switchPreviousPage(){
+        this.pageNum -= 1;
+        this.showPdf();
+    }
+
+    // zoomInPage(){
+    //     this.scale += 1;
+    //     this.showPdf();
+    // }
+
+    // zoomOutPage(){
+    //     this.scale -= 1;
+    //     this.showPdf();
+    // }
 
     setPictureUrl(url){
         this.pictureUrl = url;
@@ -56,46 +93,31 @@ class CanvasView {
     }
 
     async showPage(page){
-        let canvas,  
-            scale, 
-            viewport, 
+        let viewport, 
             renderContext;
-        canvas = this.createCanvas();
-        scale = 10;
-        viewport = page.getViewport(scale);
+        this.addCanvasControl(this.container);
+        viewport = page.getViewport(this.scale);
 
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+        this.canvas.width = viewport.width;
+        this.canvas.height = viewport.height;
 
         renderContext = {
-            canvasContext: canvas.getContext("2d"),
+            canvasContext: this.canvas.getContext("2d"),
             viewport: viewport,
         };
 
-        // this.pageNum += 1;
-
-        try {
-             await page.render(renderContext);
-            //  this.showPdf();
-        }
-        catch(error) {
-            console.log(error);
-        }
-
-        this.container.appendChild(canvas);
-        this.can = new Canvas(canvas);
+        await page.render(renderContext);
+        this.showCanvas();
     }
 
     showPicture(){
-        let canvas = this.createCanvas(),
-        context = canvas.getContext("2d"),
+        let context = this.canvas.getContext("2d"),
         image = new Image();
         image.addEventListener("load", () => {
-            canvas.width = image.naturalWidth;
-            canvas.height = image.naturalHeight;
-            context.drawImage(image,0,0,canvas.width,canvas.height);
-            this.container.appendChild(canvas);
-            this.can = new Canvas(canvas);
+            this.canvas.width = image.naturalWidth;
+            this.canvas.height = image.naturalHeight;
+            context.drawImage(image,0,0,this.canvas.width,this.canvas.height);
+            this.showCanvas();
         });
         image.src = this.pictureUrl;   
     }
