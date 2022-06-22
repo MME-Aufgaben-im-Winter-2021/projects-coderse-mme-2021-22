@@ -41,7 +41,7 @@ class AdController extends Observable {
         }
 
         const options = { // Video Ad Options
-            zoneId: 2050, // Required field for RMS
+            zoneId: 5077, // Required field for RMS
             accountId: 6773, // Required field for RMS                                                                               
             gameId: 7249, // Required field for RMS
             adStatusCb: adStatusCallback,
