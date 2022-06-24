@@ -1937,7 +1937,7 @@ div[class^="lan-item-picture"]>img {
     list-style: none;
 }
 
-.lan-footer-list>li>a {
+.lan-footer-list>li a {
     color: var(--border-grey);
     text-decoration: underline;
     font-size: medium;
@@ -1955,6 +1955,40 @@ div[class^="lan-item-picture"]>img {
     -webkit-filter: invert() grayscale(100%);
     filter: invert() grayscale(100%);
 }
+
+
+.insta-link {
+    margin-top: 1vh;
+    padding: 0.5vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border-radius: 9999px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--border-grey);
+}
+
+.insta-link:hover {
+    background: linear-gradient(45deg, rgba(254, 218, 119, 1) 0%, rgba(245, 133, 41, 1) 19%, rgba(221, 42, 123, 1) 46%, rgba(129, 52, 175, 1) 67%, rgba(81, 91, 212, 1) 100%);
+    background-repeat: repeat;
+    border-color: white;
+}
+
+.insta-link:hover a {
+    color: white;
+}
+
+.insta-text {
+    padding-left: 0.8vw;
+}
+
+.insta-link>img {
+    filter: invert()
+}
+
 
 
 /* ------------------------------------------------------------- Datenschutz ----------- */
