@@ -9,18 +9,17 @@ var lineArray = [],
   indexLineArray = -1;
 
 // Draws line between two points
-function drawLine(ctx, xStart, yStart, xEnd, yEnd) {
-  // ctx.moveTo(xStart, yStart);
-  // ctx.lineTo(xEnd, yEnd);
-  // ctx.stroke();
-  // ctx.closePath();
+function drawLine(ctx, xStart, yStart, xEnd, yEnd, color) {
+  ctx.fillStyle = color;
+  ctx.strokeStyle = color;
   ctx.rect(xStart, yStart, xEnd - xStart, yEnd - yStart);
   ctx.fill();
+  console.log(ctx);
 }
 
 class Canvas {
-  constructor(canvasEl_) {
-    this.canvasEl = canvasEl_;
+  constructor(canvas) {
+    this.canvasEl = canvas;
     this.canvasEl.addEventListener("mousemove", this.handleEvent.bind(this));
     this.canvasEl.addEventListener("mousedown", this.handleEvent.bind(this));
     this.canvasEl.addEventListener("mouseup", this.handleEvent.bind(this));
@@ -36,9 +35,18 @@ class Canvas {
     this.newRect = false;
     this.x = 0;
     this.y = 0;
+    this.context.lineWidth = 10 * this.widthFactor;
     this.context.fillStyle = "rgba(144, 219, 244, 0.2)";
     this.context.strokeStyle = "rgba(144, 219, 244, 0.2)";
-    this.context.lineWidth = 10 * this.widthFactor;
+    this.elementArray = [];
+  }
+
+  getElementArray(){
+    return this.elementArray;
+  }
+
+  setElementArray(array){
+    this.elementArray = array;
   }
 
   getLineArray(){
@@ -68,8 +76,6 @@ class Canvas {
   // Starts the drawing mechanism
   setStartPoint(e) {
     this.context.beginPath();
-    this.context.moveTo(e.clientX - this.canvasEl.offsetLeft,
-      e.clientY - this.canvasEl.offsetTop);
     this.x = e.offsetX;
     this.y = e.offsetY;
     this.isDrawing = true;
@@ -81,9 +87,10 @@ class Canvas {
       if(this.newRect){
         this.undoStroke();
       }
+      
       drawLine(this.context, this.x * this.widthFactor, this.y * this
         .heightFactor, e.offsetX * this.widthFactor, e.offsetY * this
-        .heightFactor);
+        .heightFactor, "rgba(144, 219, 244, 0.2)");
       lineArray.push(this.context.getImageData(0, 0, this.canvasEl.width, this.canvasEl.height));
       indexLineArray += 1;
       this.newRect = true;
@@ -96,6 +103,13 @@ class Canvas {
   stopDrawing(e) {
     if (this.isDrawing) {
       this.draw(e);
+      let element = {
+        "xStart": this.x,
+        "xEnd": e.offsetX,
+        "yStart": this.y,
+        "yEnd": e.offsetY,
+      };
+      this.elementArray.push(element);
       this.x = 0;
       this.y = 0;
       this.isDrawing = false;
@@ -110,6 +124,31 @@ class Canvas {
       lineArray.pop();
       this.context.putImageData(lineArray[indexLineArray], 0, 0);
     }
+  }
+
+  drawPage(page){
+    let pageEl = page[0];
+    if(pageEl !== undefined){
+      
+      let ctx = this.canvasEl.getContext("2d");
+      ctx.putImageData(ctx.getImageData(0, 0, this.canvasEl.width, this.canvasEl.height));
+      ctx.beginPath();
+      console.log(ctx);
+      console.log(pageEl);
+      ctx.globalCompositeOperation="source-over";
+      pageEl.elements.forEach(element => {
+        ctx.fillStyle = "rgb(233, 3, 33)";
+        ctx.rect(0, 0, 500, 500);
+        ctx.fill();
+      });
+      // 0 is unten links? und alles hinter grafiken
+      ctx.stroke(); 
+      // console.log(element);
+        // drawLine(this.context, element.xStart * this.widthFactor, element.yStart * this.heightFactor,
+        //   element.xEnd * this.widthFactor,
+        //   element.yEnd * this.heightFactor, "rgba(144, 219, 244, 1)");
+    }
+   
   }
 
 }

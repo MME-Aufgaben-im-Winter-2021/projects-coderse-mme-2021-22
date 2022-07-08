@@ -25,18 +25,14 @@ class DropView extends Observable {
         this.view.classList.add("hidden");
         this.hidden = true;
     }
-
-    
+ 
     onFileReady() {
         let fileType = this.currentFile.type;
         switch (fileType){
-            case "text/plain":
-                loadTextFile(this);
-                break;
             case "application/pdf":
                 loadPdfFile(this);
                 break;
-            case "image/png" || "image/jpeg" || "image/jpg":
+            case "image/png":
                 loadImage(this);
                 break;
             case "image/jpeg":
@@ -46,6 +42,7 @@ class DropView extends Observable {
                 loadImage(this);
                 break;
             default:
+                loadTextFile(this);
                 break;
         }
         
@@ -89,13 +86,14 @@ function loadTextFile(self){
     let reader = new FileReader();
         // If a file is loaded, it fires a event with the file converted to a string
         reader.onload = (ev) => {
-            let event = new Event("file-ready", ev.target.result);
-            this.notifyAll(event);
-            this.hide();
+            let event = new Event("file-ready-txt", ev.target.result);
+            self.notifyAll(event);
+            self.hide();
         };
         // If a file is available it is parsed to text
-        if (this.currentFile !== null) {
-            reader.readAsText(this.currentFile, "utf-8");
+        if (self.currentFile !== null) {
+            reader.readAsText(self.currentFile, "utf-8");
+    }
 }
 
 async function loadPdfFile(self){

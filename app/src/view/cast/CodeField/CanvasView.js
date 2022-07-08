@@ -11,15 +11,27 @@ class CanvasView {
         this.pageNum = 1;
         this.scale = 2;
         this.pictureUrl = undefined;
+        this.can = undefined;
         this.canvas = this.createCanvas();
+        this.canvasModel = undefined;
         this.container.appendChild(this.canvas);
-        this.canvasModel = new Canvas(this.canvas);
+        this.pdfPages = [];
+        
     }
 
+    createCanvas(){
+        let canvas = document.createElement("canvas");
+        // canvas.id = "pdf-canvas";
+        canvas.classList.add("main-right-canvas");
+        this.showCanvas(canvas);
+        return canvas;
+      }
+
     getPDF(){
+        this.safeCurrentPage();
         let data = {
             "pdf": this.pdf["_transport"]["_params"].url,
-            "lines": this.can.getLineArray(),
+            "pages": this.pdfPages,
         };
         return data;
     }
@@ -27,20 +39,13 @@ class CanvasView {
     getImage(){
         let data = {
             "imageURL": this.pictureUrl,
-            "lines": this.can.getLineArray(),
+            "lines": this.canvasModel.getLineArray(),
         };
         return data;
     }
 
-    createCanvas(){
-        let canvas = document.createElement("canvas");
-        // canvas.id = "pdf-canvas";
-        canvas.classList.add("main-right-canvas");
-        return canvas;
-    }
-
-    showCanvas(){
-        this.canvas.style.display = "block";
+    showCanvas(canvas){
+        canvas.style.display = "block";
     }
 
     addCanvasControl(container){
@@ -52,15 +57,36 @@ class CanvasView {
 
     }
 
+    safeCurrentPage(){
+        this.pdfPages = this.pdfPages.filter(page => page.pageNum !== this.pageNum);
+        let pageInfo = {
+            "pageNum": this.pageNum,
+            "elements": this.canvasModel.getElementArray(),
+        };
+        this.canvasModel.setElementArray([]);
+        this.pdfPages.push(pageInfo);
+    }
+
     switchNextPage(){
+        this.safeCurrentPage();
         // TODO: bei maximaler Seite ausgrauen oder so
         this.pageNum += 1;
-        this.showPdf();
+        this.showPdf().then(() => {
+            this.drawCurrentPageElements();
+        });
     }
 
     switchPreviousPage(){
+        this.safeCurrentPage();
         this.pageNum -= 1;
-        this.showPdf();
+        this.showPdf().then(() => {
+            this.drawCurrentPageElements();
+        });
+    }
+
+    drawCurrentPageElements(){
+        let page = this.pdfPages.filter(page => page.pageNum === this.pageNum);
+        this.canvasModel.drawPage(page);
     }
 
     // zoomInPage(){
@@ -107,7 +133,7 @@ class CanvasView {
         };
 
         await page.render(renderContext);
-        this.showCanvas();
+        this.canvasModel = new Canvas(this.canvas);
     }
 
     showPicture(){
@@ -117,7 +143,7 @@ class CanvasView {
             this.canvas.width = image.naturalWidth;
             this.canvas.height = image.naturalHeight;
             context.drawImage(image,0,0,this.canvas.width,this.canvas.height);
-            this.showCanvas();
+            this.canvasModel = new Canvas(this.canvas);
         });
         image.src = this.pictureUrl;   
     }

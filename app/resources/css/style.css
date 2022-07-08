@@ -647,6 +647,7 @@ div[class^="fab-syntax-"]>* {
 
 .main-right-code-container-unhighlighted * {
     color: white !important;
+}
 
 .nextPage {
     position: absolute;

@@ -138,7 +138,7 @@ class CastManager extends Observable {
 
     saveCastPDF(pdf) {
         console.log(pdf);
-        saveCastCanvas(this.cast.getTitle(), pdf.pdf, this, "pdf");
+        // saveCastCanvas(this.cast.getTitle(), pdf.pdf, this, "pdf");
     }
 
     saveCastImage(image) {
