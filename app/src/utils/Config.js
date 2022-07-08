@@ -3,7 +3,9 @@
 // Configuration object for values shared by multiple components
 
 const Config = {
-    VALID_FILETYPES: [".java", ".py", ".txt", ".js", ".html", ".rtf", ".json"],
+
+    VALID_FILETYPES: [".java", ".py", ".txt", ".js", ".html", ".pdf", ".png", ".jpg"],
+
     MS_OF_SEC: 1000,
     SEC_OF_MIN: 60,
     INTERVAL_REFRESH_RATE: 100,

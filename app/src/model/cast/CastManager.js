@@ -132,8 +132,18 @@ class CastManager extends Observable {
         }
     }
 
-    saveCast(codeHTML) {
-        saveCast(this.cast.getTitle(), codeHTML, this);
+    saveCastText(codeHTML) {
+        saveCastText(this.cast.getTitle(), codeHTML, this);
+    }
+
+    saveCastPDF(pdf) {
+        console.log(pdf);
+        saveCastCanvas(this.cast.getTitle(), pdf.pdf, this, "pdf");
+    }
+
+    saveCastImage(image) {
+        console.log(image);
+        saveCastCanvas(this.cast.getTitle(), image.imageURL, this, "img");
     }
 
     onCastDownloaded(cast) {
@@ -203,8 +213,13 @@ function setNewCodeFileID(self) {
     self.cast.setCodeFileID(uuid().substring(substring) + "_code.txt");
 }
 
+function setNewCanvasFileID(self, fileType) {
+    let substring = 14;
+    self.cast.setCodeFileID(uuid().substring(substring) + "_canvas." + fileType);
+}
+
 // Creates JSON with data from the current cast
-async function saveCast(title, codeHTML, self) {
+async function saveCastText(title, codeHTML, self) {
     let user = await getUser(),
         castDocumentJSON,
         records,
@@ -237,10 +252,50 @@ async function saveCast(title, codeHTML, self) {
     }
 }
 
+// Creates JSON with data from the current cast
+async function saveCastCanvas(title, blob, self, fileType) {
+    let user = await getUser(),
+        castDocumentJSON,
+        records,
+        doesCastExistInCloud;
+
+    if (self.cast.castServerID) {
+        doesCastExistInCloud = true;
+    } else {
+        doesCastExistInCloud = false;
+    }
+
+    if (!self.cast.codeFileID) {
+        setNewCanvasFileID(self, fileType);
+    }
+
+    deleteFile(self.cast.codeFileID).then();
+    setNewCanvasFileID(self, fileType);
+    saveCanvasAsFileToServer(blob, self).then();
+
+    records = await recordManager.createDBRecord();
+    self.cast.setRecords(records);
+
+    castDocumentJSON = self.cast.getJSON(user);
+    if (doesCastExistInCloud) { //if the cast was already once saved in the cloud then update and don't create a new one
+        await updateDocument(Config.CAST_COLLECTION_ID, self.cast.castServerID, castDocumentJSON)
+        .then(self.notifyAll(new Event("cast-reached-cloud","cast reached cloud")));
+    } else { //create a new castDocument on the server
+        await createDocument(Config.CAST_COLLECTION_ID, castDocumentJSON)
+        .then(self.notifyAll(new Event("cast-reached-cloud","cast reached cloud")));
+    }
+}
+
 //https://redstapler.co/generate-text-file-javascript/ aufgerufen am 15.03.22
 async function saveCodeAsFileToServer(codeHTML, self) {
     let blob = new Blob([codeHTML], { type: "text/plain;charset=utf-8" }),
         file = new File([blob], self.cast.codeFileID, { type: "text/plain;charset=utf-8" });
+    await createFile(self.cast.codeFileID, file);
+}
+
+async function saveCanvasAsFileToServer(url, self) {
+    let blob = await fetch(url).then(r => r.blob()),
+        file = new File([blob], self.cast.codeFileID);
     await createFile(self.cast.codeFileID, file);
 }
 

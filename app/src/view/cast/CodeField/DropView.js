@@ -2,6 +2,8 @@
 import { Observable, Event } from "../../../utils/Observable.js";
 import DropZone from "./DropZone.js";
 
+var pdfJs = window.pdfjsLib;
+
 // View for the Code section of the cast edit
 class DropView extends Observable {
 
@@ -24,24 +26,34 @@ class DropView extends Observable {
         this.hidden = true;
     }
 
-    // Reads a file with FileReader
-    // Source: https://riptutorial.com/javascript/example/7081/read-file-as-string
+    
     onFileReady() {
-        let reader = new FileReader();
-        // If a file is loaded, it fires a event with the file converted to a string
-        reader.onload = (ev) => {
-            let event = new Event("file-ready", ev.target.result);
-            this.notifyAll(event);
-            this.hide();
-        };
-        // If a file is available it is parsed to text
-        if (this.currentFile !== null) {
-            reader.readAsText(this.currentFile, "utf-8");
+        let fileType = this.currentFile.type;
+        switch (fileType){
+            case "text/plain":
+                loadTextFile(this);
+                break;
+            case "application/pdf":
+                loadPdfFile(this);
+                break;
+            case "image/png" || "image/jpeg" || "image/jpg":
+                loadImage(this);
+                break;
+            case "image/jpeg":
+                loadImage(this);
+                break;
+            case "image/jpg":
+                loadImage(this);
+                break;
+            default:
+                break;
         }
+        
     }
 
     // Informs CodeView and stores the current file
     onFileDropped(file) {
+        console.log(file);
         this.showButton();
         this.dropZone.onFileDropped(file);
         this.currentFile = file;
@@ -69,6 +81,43 @@ class DropView extends Observable {
             this.notifyAll(event);
         };
     }
+}
+
+// Reads a file with FileReader
+// Source: https://riptutorial.com/javascript/example/7081/read-file-as-string
+function loadTextFile(self){
+    let reader = new FileReader();
+        // If a file is loaded, it fires a event with the file converted to a string
+        reader.onload = (ev) => {
+            let event = new Event("file-ready", ev.target.result);
+            this.notifyAll(event);
+            this.hide();
+        };
+        // If a file is available it is parsed to text
+        if (this.currentFile !== null) {
+            reader.readAsText(this.currentFile, "utf-8");
+}
+
+async function loadPdfFile(self){
+    let pdf, event, url;
+    try {
+        url = URL.createObjectURL(self.currentFile);
+        pdf = await pdfJs.getDocument({ url: url });
+    }
+    catch(error) {
+        console.log(error);
+    }
+    event = new Event("file-ready-pdf", pdf);
+    self.notifyAll(event);
+    self.hide();
+}
+
+function loadImage(self){
+    let event, url;
+    url = URL.createObjectURL(self.currentFile);
+    event = new Event("file-ready-pic", url);
+    self.notifyAll(event);
+    self.hide();
 }
 
 export default DropView;

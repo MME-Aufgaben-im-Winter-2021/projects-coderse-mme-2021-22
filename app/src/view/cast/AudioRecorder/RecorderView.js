@@ -62,6 +62,7 @@ class Recorder extends Observable {
         this.notifyAll(new Event("enable-syntax", "enable-syntax-highlighting"));
     }
 
+    // Player will be full bottom size
     hideRecorder() {
         this.bottomBar.style.justifyContent = "center";
         this.containerControls.classList.remove("bottom-left");

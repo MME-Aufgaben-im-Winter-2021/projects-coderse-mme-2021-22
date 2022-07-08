@@ -11,6 +11,7 @@ import { Observable, Event } from "../utils/Observable.js";
 import Cast from "../model/cast/Cast.js";
 import { generateAdModal, generateIntroModal } from "../view/utilViews/Modal.js";
 import LocalStorageProvider from "../utils/LocalStorageProvider.js";
+import CanvasView from "../view/cast/CodeField/CanvasView.js";
 
 var castManager;
 
@@ -71,9 +72,16 @@ class CastController extends Observable {
         this.codeView.addEventListener("disable-syntax", this.disableSyntaxHighlighting.bind(this));
         this.codeView.addEventListener("enable-syntax", this.enableSyntaxHighlighting.bind(this));
 
+        this.file = "";
+
+        // Canvas
+        this.canvasView = new CanvasView();
+
         // Drop View
         this.dropView = new DropView();
-        this.dropView.addEventListener("file-ready", this.onFileReady.bind(this));
+        this.dropView.addEventListener("file-ready-txt", this.onFileReadyTxt.bind(this));
+        this.dropView.addEventListener("file-ready-pdf", this.onFileReadyPdf.bind(this));
+        this.dropView.addEventListener("file-ready-pic", this.onFileReadyPic.bind(this));
         this.dropView.addEventListener("file-dropped", this.onFileDropped.bind(this));
         this.dropView.addEventListener("file-selected", this.onFileSelected.bind(this));
 
@@ -364,10 +372,26 @@ class CastController extends Observable {
 
     /* ---------------------------------------------------dropView--------------------------------------------------------------- */
 
-    onFileReady(event) {
+    onFileReadyTxt(event) {
+        this.file = "text";
         this.showAdvancedIntro();
         this.codeView.showFile(event.data);
         this.computeOnboarding();
+    }
+
+    onFileReadyPdf(event) {
+        this.file = "pdf";
+        this.canvasView.setDocument(event.data);
+        this.canvasView.showPdf();
+        this.showAdvancedIntro();
+        this.computeOnboarding();
+    }
+
+    onFileReadyPic(event) {
+        this.file = "image";
+        this.textFile = false;
+        this.canvasView.setPictureUrl(event.data);
+        this.canvasView.showPicture();
     }
 
     // Validator checks dropped file
@@ -400,7 +424,13 @@ class CastController extends Observable {
     // Safes cast to cloud
     safeCast() {
         castManager.checkForModal();
-        castManager.saveCast(this.codeView.getHTML());
+        if(this.file === "text"){
+            castManager.saveCastText(this.codeView.getHTML());
+        } else if(this.file === "pdf") {
+            castManager.saveCastPDF(this.canvasView.getPDF());
+        } else if(this.file === "image") {
+            castManager.saveCastImage(this.canvasView.getImage());
+        }
     }
     // Sets changed title
     onCastTitleChanged(event) {
