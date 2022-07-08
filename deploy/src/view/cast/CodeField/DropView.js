@@ -19,7 +19,7 @@ class DropView extends Observable {
         this.hidden = false;
     }
 
-    hide(){
+    hide() {
         this.view.classList.add("hidden");
         this.hidden = true;
     }
@@ -36,7 +36,7 @@ class DropView extends Observable {
         };
         // If a file is available it is parsed to text
         if (this.currentFile !== null) {
-            reader.readAsText(this.currentFile);
+            reader.readAsText(this.currentFile, "utf-8");
         }
     }
 

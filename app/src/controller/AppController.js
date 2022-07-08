@@ -25,6 +25,7 @@ import { deleteSession } from "../api/Session/deleteSession.js";
 import { getUser } from "../api/User/getUser.js";
 import ImpressumController from "./ImpressumController.js";
 import LandingController from "./LandingController.js";
+import Modal from "../view/utilViews/Modal.js";
 
 // The App Controller keeps track of the switches between certain parts of the application
 // It uses a self build router, which keeps track of certain states
@@ -60,6 +61,7 @@ class AppController {
         this.navView = new NavView();
         this.navView.addEventListener("user-logout", this.onUserLogOutClicked.bind(this));
         this.navView.addEventListener("cast-safe", this.onSaveCastClicked.bind(this));
+        this.navView.addEventListener("onNavHomeClicked", this.onHomeClicked.bind(this));
     }
 
     checkIfUserLeavesCastCreation() {
@@ -119,7 +121,7 @@ class AppController {
                 this.controller = new HomeController();
                 this.controller.init(this.navView);
                 this.controller.addEventListener("on-view", this.onViewCastClicked.bind(this));
-                this.controller.addEventListener("on-fab-clicked", () => this.setHash("#create"));
+                this.controller.addEventListener("ad-status", (event) => this.onAdStatusChanged(event));
                 break;
             case "#login":
                 this.container.innerHTML = template.template;
@@ -249,6 +251,24 @@ class AppController {
 
     onAccountUpdate() {
         this.setHash("home");
+    }
+
+    onAdStatusChanged(event) {
+        let status = event.data;
+        if (status === "ad-successfull") {
+            this.setHash("create");
+        }
+    }
+
+    onHomeClicked() {
+        if (this.controller instanceof CastController) {
+            let warning = new Modal("Warning: Cast not saved!",
+                `If you <b>continue</b>, your cast wont be <b>saved</b>! <br>
+        Please press "Save" if you want to keep your cast`, "Cancel", "Continue home");
+            warning.addEventListener("onDeclineClicked", this.setHash.bind(this, "home"));
+        } else {
+            this.setHash("home");
+        }
     }
 }
 export default AppController;

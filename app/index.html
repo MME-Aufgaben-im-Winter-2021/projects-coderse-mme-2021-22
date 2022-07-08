@@ -13,6 +13,11 @@
 </head>
 
 <body>
+    <!-- <script type="text/javascript" src="https://cdn.applixir.com/applixir.sdk3.0m.js"></script>
+    <div class="ad-background-blur hidden"></div>
+    <div id="applixir_vanishing_div" hidden>
+        <iframe id="applixir_parent" allow="autoplay; fullscreen"></iframe>
+    </div> -->
     <div class="main">
         <div class="nav-bar">
             <div class="nav-align-left">
@@ -30,7 +35,9 @@
 
             <div class="nav-align-right">
 
-                <a id="home-link" href="#home" class="home nav-link hidden">
+                <!-- href="#home" -->
+
+                <a id="home-link" class="home nav-link hidden">
                     Home
                 </a>
                 <!-- <a id="create-link" href="#create" class="home nav-link hidden">
@@ -112,8 +119,12 @@
                     <div class="modal-warning-img-container">
                         <img id="modal-warning-img" src="./resources/icons/alert-triangle.svg">
                         <img id="modal-success-img" class="hidden" src="./resources/icons/check-circle.svg">
+                        <img id="modal-info-img" class="hidden" src="./resources/icons/info.svg">
                     </div>
                     <div class="modal-title">demo title</div>
+                    <div class="modal-X-container hidden">
+                        <img id="modal-X-img" src="./resources/icons/x.svg">
+                    </div>
                 </div>
                 <div class="modal-content">demo content</div>
                 <div class="modal-btn-container">
@@ -128,7 +139,6 @@
     <!-- Install Appwrite via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/appwrite@6.0.1"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/5.0.0/intro.min.js" integrity="sha512-sjzr7wOVjpnvPO03NIXQ7ah4pK1lYr1HfVPnIZ1ZSRBHgXJHWhXL/DELFN2Nnssup1KDDfIUPTtbGlS5eRUEkg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
 </body>

@@ -38,6 +38,28 @@ class Recorder extends Observable {
         this.bottomBar = document.querySelector(".bottom-bar");
         this.containerControls = document.querySelector(".bottom-left");
         this.iconStopPlaceholder = document.querySelector(".recorder-icon-stop-grey-container");
+        this.iconRemoveCurrentMarking = document.querySelector(".recorder-icon-remove-marking-container");
+        this.iconEye = document.querySelector(".recorder-icon-hljs-eye-container");
+        this.iconEyeOff = document.querySelector(".recorder-icon-hljs-eye-off-container");
+        this.iconRemoveCurrentMarking.addEventListener("click", this.onRemoveCurrentMarkingClicked.bind(this));
+        this.iconEye.addEventListener("click", this.onDisableSyntaxClicked.bind(this));
+        this.iconEyeOff.addEventListener("click", this.onEnableSyntaxClicked.bind(this));
+    }
+
+    onRemoveCurrentMarkingClicked() {
+        this.notifyAll(new Event("remove-current-marking", "remove marking"));
+    }
+
+    onDisableSyntaxClicked() {
+        this.iconEye.classList.add("hidden");
+        this.iconEyeOff.classList.remove("hidden");
+        this.notifyAll(new Event("disable-syntax", "disable-syntax-highlighting"));
+    }
+
+    onEnableSyntaxClicked() {
+        this.iconEye.classList.remove("hidden");
+        this.iconEyeOff.classList.add("hidden");
+        this.notifyAll(new Event("enable-syntax", "enable-syntax-highlighting"));
     }
 
     // Player will be full bottom size

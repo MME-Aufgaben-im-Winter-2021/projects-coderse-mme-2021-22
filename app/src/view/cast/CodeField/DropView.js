@@ -21,13 +21,12 @@ class DropView extends Observable {
         this.hidden = false;
     }
 
-    hide(){
+    hide() {
         this.view.classList.add("hidden");
         this.hidden = true;
     }
 
-    // Reads a file with FileReader
-    // Source: https://riptutorial.com/javascript/example/7081/read-file-as-string
+    
     onFileReady() {
         let fileType = this.currentFile.type;
         switch (fileType){
@@ -84,19 +83,19 @@ class DropView extends Observable {
     }
 }
 
+// Reads a file with FileReader
+// Source: https://riptutorial.com/javascript/example/7081/read-file-as-string
 function loadTextFile(self){
     let reader = new FileReader();
         // If a file is loaded, it fires a event with the file converted to a string
         reader.onload = (ev) => {
-            let event = new Event("file-ready-txt", ev.target.result);
-            self.notifyAll(event);
-            self.hide();
+            let event = new Event("file-ready", ev.target.result);
+            this.notifyAll(event);
+            this.hide();
         };
-
         // If a file is available it is parsed to text
-        if (self.currentFile !== null) {
-            reader.readAsText(self.currentFile);
-        }
+        if (this.currentFile !== null) {
+            reader.readAsText(this.currentFile, "utf-8");
 }
 
 async function loadPdfFile(self){
